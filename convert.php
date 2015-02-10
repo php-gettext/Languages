@@ -159,22 +159,30 @@ switch ($output) {
                 <tbody><?php
                     foreach ($plurals as $locale => $info) {
                         ?><tr>
-                            <td><?php echo h($locale); ?></td>
-                            <td><?php echo h($info['name']); ?></td>
-                            <td><?php echo $info['plurals']; ?></td>
-                            <td><?php echo h($info['formula']); ?></td>
+                            <td><?php echo h($locale);
+                        ?></td>
+                            <td><?php echo h($info['name']);
+                        ?></td>
+                            <td><?php echo $info['plurals'];
+                        ?></td>
+                            <td><?php echo h($info['formula']);
+                        ?></td>
                             <td>
                                 <ol class="cases" start="0"><?php
                                     foreach ($info['cases'] as $case) {
                                         ?><li><span><?php echo h($case)?></span><?php
                                         if (isset($info['examples'][$case])) {
-                                            ?><code><?php echo h($info['examples'][$case]); ?></code><?php
+                                            ?><code><?php echo h($info['examples'][$case]);
+                                            ?></code><?php
+
                                         }
                                         ?></li><?php
+
                                     }
-                                ?></ol>
+                        ?></ol>
                             </td>
                         </tr><?php
+
                     }
                 ?></tbody>
             </table>
@@ -281,21 +289,13 @@ function parseRules($language, $rulesDefs, $tests)
             $formula = $formulaForCase[0].' ? 0 : '.$formula;
         }
     }
-    $result = array(
+
+    return array(
         'plurals' => count($finalCases),
         'formula' => $formula,
         'cases' => $finalCases,
         'examples' => $tests,
     );
-    try {
-        foreach ($tests as $rule => $numbers) {
-            Tester::run($result, $numbers, $rule);
-        }
-    } catch (Exception $x) {
-        throw new Exception("Test failed for '$language':\n".$x->getMessage());
-    }
-
-    return $result;
 }
 
 class FormulaParser
@@ -501,59 +501,6 @@ function reverseFinalFormula($formula, $language)
             return 'n >= 2 && (n < 11 || n > 99)';
     }
     throw new Exception("Unhandled formula reverse for '$language': $formula");
-}
-
-class Tester
-{
-    private static function expandNumbers($numbers)
-    {
-        $result = array();
-        if (substr($numbers, -strlen(', …')) === ', …') {
-            $numbers = substr($numbers, 0, strlen($numbers) -strlen(', …'));
-        }
-        foreach (explode(',', str_replace(' ', '', $numbers)) as $range) {
-            if (preg_match('/^\d+$/', $range)) {
-                $result[] = intval($range);
-            } elseif (preg_match('/^(\d+)~(\d+)$/', $range, $m)) {
-                $from = intval($m[1]);
-                $to = intval($m[2]);
-                $delta = $to - $from;
-                $step = (int) max(1, $delta / 100);
-                for ($i = $from; $i < $to; $i += $step) {
-                    $result[] = $i;
-                }
-                $result[] = $to;
-            } else {
-                throw new Exception("Unhandled test range '$range' in '$numbers'");
-            }
-        }
-        if (empty($result)) {
-            throw new Exception("No test numbers from '$numbers'");
-        }
-
-        return $result;
-    }
-    public static function run($defs, $numbers, $expectedCase)
-    {
-        $expectedCaseIndex = in_array($expectedCase, $defs['cases']);
-        foreach (self::expandNumbers($numbers) as $number) {
-            $formula = preg_replace('/\bn\b/', strval($number), $defs['formula']);
-            if (!preg_match('/^[\d %!=<>&\|()?:]+$/', $formula)) {
-                throw new Exception("Invalid formula '$formula' (original: '{$defs['formula']}')");
-            }
-            $caseIndex = @eval("return (($formula) === true) ? 1 : ((($formula) === false) ? 0 : ($formula));");
-            if (!is_int($caseIndex)) {
-                throw new Exception("Error getting the result from '{$defs['formula']}'");
-            }
-            if (!isset($defs['cases'][$caseIndex])) {
-                throw new Exception("The formula '{$defs['formula']}' evaluated for $number gave an out-of-range case index ($caseIndex)");
-            }
-            $case = $defs['cases'][$caseIndex];
-            if ($case !== $expectedCase) {
-                throw new Exception("The formula '{$defs['formula']}' evaluated for $number resulted in '$case' ($caseIndex) instead of '$expectedCase' ($expectedCaseIndex)");
-            }
-        }
-    }
 }
 
 function h($str)
