@@ -514,15 +514,15 @@ class ManualReducer
     }
 }
 
-function stripNeverOccurringCases(&$formula, &$finalCases, &$tests)
+function stripNeverOccurringCases(&$formula, &$cases, &$tests)
 {
-    $casesWithoutExamples = array_diff($finalCases, array_keys($tests));
+    $casesWithoutExamples = array_diff($cases, array_keys($tests));
     if (empty($casesWithoutExamples)) {
         return;
     }
     switch (implode(',', $casesWithoutExamples)) {
         case 'other':
-            switch (implode(',', $finalCases)) {
+            switch (implode(',', $cases)) {
                 case 'one,few,many,other':
                     switch ($formula) {
                         case '(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : ((n % 10 == 0 || n % 10 >= 5 && n % 10 <= 9 || n % 100 >= 11 && n % 100 <= 14) ? 2 : 3))':
@@ -541,19 +541,38 @@ function stripNeverOccurringCases(&$formula, &$finalCases, &$tests)
                             // Numbers ending with 8                 => case 2 ('many')
                             // Numbers ending with 9                 => case 2 ('many')
                             // => the 'other' case never occurs: use 'other' for 'many'
-                            $formula = '(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)';
-                            $finalCases = array('one', 'few', 'other');
+                            $formula = substr($formula, 0, strpos($formula, ' ? 1 : ') + strlen(' ? 1 : ')).'2)';
+                            $cases = array('one', 'few', 'other');
                             $tests['other'] = $tests['many'];
                             unset($tests['many']);
                             break;
                         case '(n == 1) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : ((n != 1 && (n % 10 == 0 || n % 10 == 1) || n % 10 >= 5 && n % 10 <= 9 || n % 100 >= 12 && n % 100 <= 14) ? 2 : 3))':
+                            // Numbers ending with 0                  => case 2 ('many')
+                            // Numbers ending with 1 but not number 1 => case 2 ('many')
+                            // Number 1                               => case 0 ('one')
+                            // Numbers ending with 2 but not with 12  => case 1 ('few')
+                            // Numbers ending with 12                 => case 2 ('many')
+                            // Numbers ending with 3 but not with 13  => case 1 ('few')
+                            // Numbers ending with 13                 => case 2 ('many')
+                            // Numbers ending with 4 but not with 14  => case 1 ('few')
+                            // Numbers ending with 14                 => case 2 ('many')
+                            // Numbers ending with 5                  => case 2 ('many')
+                            // Numbers ending with 6                  => case 2 ('many')
+                            // Numbers ending with 7                  => case 2 ('many')
+                            // Numbers ending with 8                  => case 2 ('many')
+                            // Numbers ending with 9                  => case 2 ('many')
+                            // => the 'other' case never occurs: use 'other' for 'many'
+                            $formula = substr($formula, 0, strpos($formula, ' ? 1 : ') + strlen(' ? 1 : ')).'2)';
+                            $cases = array('one', 'few', 'other');
+                            $tests['other'] = $tests['many'];
+                            unset($tests['many']);
                             break;
                         default:
                             throw new Exception("Unhandled formula from which we should strip the 'many' case: ".$formula);
                     }
                     break;
                 default:
-                    throw new Exception("Unhandled case of plurals from which we should strip a case: ".implode(', ', $finalCases));
+                    throw new Exception("Unhandled case of plurals from which we should strip a case: ".implode(', ', $cases));
             }
             break;
         default:
