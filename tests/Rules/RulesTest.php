@@ -77,4 +77,27 @@ class RulesTest extends PHPUnit_Framework_TestCase
             $this->assertSame($expectedCase, $case, "The formula '$formula' evaluated for $number resulted in '$case' ($caseIndex) instead of '$expectedCase' ($expectedCaseIndex)");
         }
     }
+
+    public function providerTestExamplesExist()
+    {
+        $testData = array();
+        foreach ($this->readData() as $locale => $info) {
+            foreach ($info['cases'] as $case) {
+                $testData[] = array(
+                    $locale,
+                    $case,
+                    $info['examples'],
+                );
+            }
+        }
+
+        return $testData;
+    }
+    /**
+     * @dataProvider providerTestExamplesExist
+     */
+    public function testExamplesExist($locale, $case, $examples)
+    {
+        $this->assertArrayHasKey($case, $examples, "The language '$locale' does not have tests for the case '$case'");
+    }
 }

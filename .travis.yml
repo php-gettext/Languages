@@ -9,3 +9,6 @@ php:
 
 script:
   - phpunit
+
+notifications:
+  email: false
