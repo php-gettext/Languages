@@ -1,7 +1,7 @@
 <phpunit bootstrap="./tests/bootstrap.php">
-	<testsuites>
-		<testsuite name="Rule checks">
-			<directory>./tests/Rules/</directory>
-		</testsuite>
-	</testsuites>
+    <testsuites>
+        <testsuite name="Rule checks">
+            <directory>./tests/Rules/</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
