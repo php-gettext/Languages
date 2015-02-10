@@ -159,30 +159,22 @@ switch ($output) {
                 <tbody><?php
                     foreach ($plurals as $locale => $info) {
                         ?><tr>
-                            <td><?php echo h($locale);
-                        ?></td>
-                            <td><?php echo h($info['name']);
-                        ?></td>
-                            <td><?php echo $info['plurals'];
-                        ?></td>
-                            <td><?php echo h($info['formula']);
-                        ?></td>
+                            <td><?php echo h($locale); ?></td>
+                            <td><?php echo h($info['name']); ?></td>
+                            <td><?php echo $info['plurals']; ?></td>
+                            <td><?php echo h($info['formula']); ?></td>
                             <td>
                                 <ol class="cases" start="0"><?php
                                     foreach ($info['cases'] as $case) {
                                         ?><li><span><?php echo h($case)?></span><?php
                                         if (isset($info['examples'][$case])) {
-                                            ?><code><?php echo h($info['examples'][$case]);
-                                            ?></code><?php
-
+                                            ?><code><?php echo h($info['examples'][$case]); ?></code><?php
                                         }
                                         ?></li><?php
-
                                     }
-                        ?></ol>
+                                ?></ol>
                             </td>
                         </tr><?php
-
                     }
                 ?></tbody>
             </table>
