@@ -23,9 +23,10 @@ switch($output) {
     case 'html':
     case 'json':
     case 'prettyjson':
+    case 'php':
         break;
     default:
-        echo 'Syntax: php '.basename(__FILE__).' <html|json|prettyjson>';
+        echo 'Syntax: php '.basename(__FILE__).' <html|json|prettyjson|php>';
         die(1);
 }
 
@@ -186,6 +187,23 @@ switch($output) {
         break;
     case 'prettyjson':
         echo json_encode($plurals, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        break;
+    case 'php':
+        echo "<?php\nreturn array(";
+        foreach($plurals as $locale => $info) {
+            echo "\n    '", $locale, "' => array(";
+            echo "\n        'name' => '", addslashes($info['name']), "',";
+            echo "\n        'plurals' => {$info['plurals']},";
+            echo "\n        'formula' => '", addslashes($info['formula']), "',";
+            echo "\n        'cases' => array('", implode("', '", $info['cases']), "'),";
+            echo "\n        'examples' => array(";
+            foreach($info['examples'] as $case => $example) {
+                echo "\n            '$case' => '", addslashes($example), "',";
+            }
+            echo "\n        ),";
+            echo "\n    ),";
+        }
+        echo "\n);\n";
         break;
 }
 die(0);
