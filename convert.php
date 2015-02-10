@@ -19,7 +19,7 @@ error_reporting(E_ALL);
 date_default_timezone_set('UTC');
 
 $output = (isset($argv) && isset($argv[1]) && is_string($argv[1])) ? strtolower(trim($argv[1])) : '';
-switch($output) {
+switch ($output) {
     case 'html':
     case 'json':
     case 'prettyjson':
@@ -29,7 +29,6 @@ switch($output) {
         echo 'Syntax: php '.basename(__FILE__).' <html|json|prettyjson|php>';
         die(1);
 }
-
 
 $json = json_decode(file_get_contents(__DIR__.'/cldr/main/en-US/languages.json'), true);
 $languageNames = $json['main']['en-US']['localeDisplayNames']['languages'];
@@ -45,13 +44,13 @@ $plurals = array();
 $rulesOrder = array('zero', 'one', 'two', 'few', 'many', 'other');
 foreach ($cldrPlurals as $language => $sourceRules) {
     $normalizedLanguage = str_replace('-', '_', $language);
-    if(isset($languageNames[$language])) {
+    if (isset($languageNames[$language])) {
         $languageName = $languageNames[$language];
     } else {
         $chunks = explode('_', $normalizedLanguage);
         $skipLanguage = false;
-        if(!isset($languageNames[$chunks[0]])) {
-            switch($chunks[0]) {
+        if (!isset($languageNames[$chunks[0]])) {
+            switch ($chunks[0]) {
                 case 'bh':
                     $languageNames[$chunks[0]] = 'Bihari';
                     break;
@@ -79,11 +78,11 @@ foreach ($cldrPlurals as $language => $sourceRules) {
             continue;
         }
         $languageName = $languageNames[$chunks[0]];
-        switch(count($chunks)) {
+        switch (count($chunks)) {
             case 1:
                 break;
             case 2:
-                if(!isset($territoryNames[$chunks[1]])) {
+                if (!isset($territoryNames[$chunks[1]])) {
                     throw new Exception("Unknown territory code: {$chunks[2]}");
                 }
                 $languageName .= " ({$territoryNames[$chunks[1]]})";
@@ -100,7 +99,7 @@ foreach ($cldrPlurals as $language => $sourceRules) {
             throw new Exception('Duplicated case: '.$x['case']);
         }
         $rulesDefs[$x['case']] = $x['rule'];
-        if($x['test'] !== '') {
+        if ($x['test'] !== '') {
             $tests[$x['case']] = $x['test'];
         }
     }
@@ -124,7 +123,7 @@ foreach ($cldrPlurals as $language => $sourceRules) {
 }
 ksort($plurals);
 
-switch($output) {
+switch ($output) {
     case 'html':
         ?><!doctype html>
 <html lang="en">
@@ -132,7 +131,7 @@ switch($output) {
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		  <meta name="author" content="Michele Locati">
+        <meta name="author" content="Michele Locati">
         <title>gettext plural rules - built from CLDR</title>
         <meta name="description" content="List of all language rules for gettext .po files automatically generated from the Unicode CLDR data" />
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -157,7 +156,7 @@ switch($output) {
                     </tr>
                 </thead>
                 <tbody><?php
-                    foreach($plurals as $locale => $info) {
+                    foreach ($plurals as $locale => $info) {
                         ?><tr>
                             <td><?php echo h($locale); ?></td>
                             <td><?php echo h($info['name']); ?></td>
@@ -165,9 +164,9 @@ switch($output) {
                             <td><?php echo h($info['formula']); ?></td>
                             <td>
                                 <ol class="cases" start="0"><?php
-                                    foreach($info['cases'] as $case) {
+                                    foreach ($info['cases'] as $case) {
                                         ?><li><span><?php echo h($case)?></span><?php
-                                        if(isset($info['examples'][$case])) {
+                                        if (isset($info['examples'][$case])) {
                                             ?><code><?php echo h($info['examples'][$case]); ?></code><?php
                                         }
                                         ?></li><?php
@@ -190,14 +189,14 @@ switch($output) {
         break;
     case 'php':
         echo "<?php\nreturn array(";
-        foreach($plurals as $locale => $info) {
+        foreach ($plurals as $locale => $info) {
             echo "\n    '", $locale, "' => array(";
             echo "\n        'name' => '", addslashes($info['name']), "',";
             echo "\n        'plurals' => {$info['plurals']},";
             echo "\n        'formula' => '", addslashes($info['formula']), "',";
             echo "\n        'cases' => array('", implode("', '", $info['cases']), "'),";
             echo "\n        'examples' => array(";
-            foreach($info['examples'] as $case => $example) {
+            foreach ($info['examples'] as $case => $example) {
                 echo "\n            '$case' => '", addslashes($example), "',";
             }
             echo "\n        ),";
@@ -264,11 +263,12 @@ function parseRules($language, $rulesDefs, $tests)
             throw new Exception('Unhandled excessive simplification');
         }
         if (count($finalCases) === 2) {
-            $formula = reverseFinalFormula($formulaForCase[0], $language);
+            $formula = ManualReducer::reduce(reverseFinalFormula($formulaForCase[0], $language));
         } else {
             // We need to add some parenthesis. In C it's not mandatory, in other languages (like PHP) it is.
-            // Example: '(0 == 0) ? 0 : (0 == 1) ? 1 : 2' results in 0 in C (see http://codepad.org/Epw5WkmJ ) but in 2 in PHP (see http://3v4l.org/QAAnA ) 
+            // Example: '(0 == 0) ? 0 : (0 == 1) ? 1 : 2' results in 0 in C (see http://codepad.org/Epw5WkmJ ) but in 2 in PHP (see http://3v4l.org/QAAnA )
             foreach (array_keys($formulaForCase) as $i) {
+                $formulaForCase[$i] = ManualReducer::reduce($formulaForCase[$i]);
                 if (!preg_match('/^\([^()]+\)$/', $formulaForCase[$i])) {
                     $formulaForCase[$i] = '('.$formulaForCase[$i].')';
                 }
@@ -284,7 +284,7 @@ function parseRules($language, $rulesDefs, $tests)
         'plurals' => count($finalCases),
         'formula' => $formula,
         'cases' => $finalCases,
-        'examples' => $tests
+        'examples' => $tests,
     );
     try {
         foreach ($tests as $rule => $numbers) {
@@ -558,4 +558,16 @@ class Tester
 function h($str)
 {
     return htmlspecialchars($str, ENT_COMPAT, 'UTF-8');
+}
+
+class ManualReducer
+{
+    private static $map = array(
+        'n != 0 && n != 1'              =>  'n > 1' ,
+        '(n == 0 || n == 1) && n != 0'  =>  'n == 1',
+    );
+    public static function reduce($formula)
+    {
+        return isset(self::$map[$formula]) ? self::$map[$formula] : $formula;
+    }
 }
