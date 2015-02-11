@@ -1,3 +1,4 @@
+[![Build Status](https://api.travis-ci.org/mlocati/cldr-to-gettext-plural-rules.svg?branch=master)](https://travis-ci.org/mlocati/cldr-to-gettext-plural-rules)
 gettext plural rules generated from CLDR data
 =============================================
 
