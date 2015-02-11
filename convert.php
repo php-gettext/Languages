@@ -178,13 +178,7 @@ switch ($outputFormat) {
         <title>gettext plural rules - built from CLDR</title>
         <meta name="description" content="List of all language rules for gettext .po files automatically generated from the Unicode CLDR data" />
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-        <style>
-            ol.cases code {
-                white-space: nowrap;
-                display: block;
-                clear: both;
-            }
-        </style>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <a href="https://github.com/mlocati/cldr-to-gettext-plural-rules" class="hidden-xs"><img style="position: fixed; top: 0; right: 0; border: 0; z-index: 2000" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
