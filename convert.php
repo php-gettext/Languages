@@ -16,114 +16,157 @@
  // - t == empty
  */
 error_reporting(E_ALL);
-date_default_timezone_set('UTC');
 
-$output = (isset($argv) && isset($argv[1]) && is_string($argv[1])) ? strtolower(trim($argv[1])) : '';
-switch ($output) {
-    case 'html':
-    case 'json':
-    case 'prettyjson':
-    case 'php':
-        break;
-    default:
-        echo 'Syntax: php '.basename(__FILE__).' <html|json|prettyjson|php>';
-        die(1);
-}
-
-$json = json_decode(file_get_contents(__DIR__.'/cldr/main/en-US/languages.json'), true);
-$languageNames = $json['main']['en-US']['localeDisplayNames']['languages'];
-
-$json = json_decode(file_get_contents(__DIR__.'/cldr/main/en-US/territories.json'), true);
-$territoryNames = $json['main']['en-US']['localeDisplayNames']['territories'];
-
-$json = json_decode(file_get_contents(__DIR__.'/cldr/supplemental/plurals.json'), true);
-$cldrPlurals = $json['supplemental']['plurals-type-cardinal'];
-
-$plurals = array();
-
-$rulesOrder = array('zero', 'one', 'two', 'few', 'many', 'other');
-foreach ($cldrPlurals as $language => $sourceRules) {
-    $normalizedLanguage = str_replace('-', '_', $language);
-    if (isset($languageNames[$language])) {
-        $languageName = $languageNames[$language];
-    } else {
-        $chunks = explode('_', $normalizedLanguage);
-        $skipLanguage = false;
-        if (!isset($languageNames[$chunks[0]])) {
-            switch ($chunks[0]) {
-                case 'bh':
-                    $languageNames[$chunks[0]] = 'Bihari';
-                    break;
-                case 'guw':
-                    $languageNames[$chunks[0]] = 'Gun';
-                    break;
-                case 'nah':
-                    $languageNames[$chunks[0]] = 'Nahuatl';
-                    break;
-                case 'smi':
-                    $languageNames[$chunks[0]] = 'Sami';
-                    break;
-                case 'in': // Former Indonesian
-                case 'iw': // Former Hebrew
-                case 'ji': // Former Yiddish
-                case 'jw': // Former Javanese
-                case 'mo': // Former Moldavian - See ro-MD
-                    $skipLanguage = true;
-                    break;
-                default:
-                    throw new Exception("Unknown language code: $language");
-            }
-        }
-        if ($skipLanguage) {
+$outputUSAscii = false;
+$outputFormat = null;
+if (isset($argv) && is_array($argv)) {
+    foreach ($argv as $argi => $arg) {
+        if ($argi === 0) {
             continue;
         }
-        $languageName = $languageNames[$chunks[0]];
-        switch (count($chunks)) {
-            case 1:
-                break;
-            case 2:
-                if (!isset($territoryNames[$chunks[1]])) {
-                    throw new Exception("Unknown territory code: {$chunks[2]}");
-                }
-                $languageName .= " ({$territoryNames[$chunks[1]]})";
-                break;
-            default:
-                throw new Exception("Unknown locale code: $language");
+        if (is_string($arg)) {
+            $arg = trim(strtolower($arg));
+            switch ($arg) {
+                case '--us-ascii':
+                    $outputUSAscii = true;
+                    break;
+                case 'html':
+                case 'json':
+                case 'prettyjson':
+                case 'php':
+                    if (isset($outputFormat)) {
+                        echoErr("The output format has been specified more than once!\n");
+                        showSyntax();
+                        die(3);
+                    }
+                    $outputFormat = $arg;
+                    break;
+                default:
+                    echoErr("Unknown option: $arg\n");
+                    showSyntax();
+                    die(2);
+            }
         }
     }
-    $rulesDefs = array();
-    $tests = array();
-    foreach ($sourceRules as $case => $rule) {
-        $x = extractRules($case, $rule);
-        if (isset($rules[$x['case']])) {
-            throw new Exception('Duplicated case: '.$x['case']);
-        }
-        $rulesDefs[$x['case']] = $x['rule'];
-        if ($x['test'] !== '') {
-            $tests[$x['case']] = $x['test'];
-        }
-    }
-    if (!isset($rulesDefs['other'])) {
-        throw new Exception('Missing case: other');
-    }
-    foreach (array_keys($rulesDefs) as $key) {
-        if (!in_array($key, $rulesOrder)) {
-            throw new Exception("Unknown rule: $key");
-        }
-    }
-    uksort($rulesDefs, function ($key1, $key2) {
-        global $rulesOrder;
-
-        return array_search($key1, $rulesOrder) - array_search($key2, $rulesOrder);
-    });
-    $plurals[$normalizedLanguage] = array_merge(
-        array('name' => $languageName),
-        parseRules($normalizedLanguage, $rulesDefs, $tests)
-    );
 }
-ksort($plurals);
+if (!isset($outputFormat)) {
+    showSyntax();
+    die(1);
+}
 
-switch ($output) {
+try {
+    $json = json_decode(file_get_contents(__DIR__.'/cldr/main/en-US/languages.json'), true);
+    $languageNames = $json['main']['en-US']['localeDisplayNames']['languages'];
+    
+    $json = json_decode(file_get_contents(__DIR__.'/cldr/main/en-US/territories.json'), true);
+    $territoryNames = $json['main']['en-US']['localeDisplayNames']['territories'];
+    
+    $json = json_decode(file_get_contents(__DIR__.'/cldr/supplemental/plurals.json'), true);
+    $cldrPlurals = $json['supplemental']['plurals-type-cardinal'];
+    
+    $plurals = array();
+    
+    $rulesOrder = array('zero', 'one', 'two', 'few', 'many', 'other');
+    foreach ($cldrPlurals as $language => $sourceRules) {
+        $normalizedLanguage = str_replace('-', '_', $language);
+        if (isset($languageNames[$language])) {
+            $languageName = $languageNames[$language];
+        } else {
+            $chunks = explode('_', $normalizedLanguage);
+            $skipLanguage = false;
+            if (!isset($languageNames[$chunks[0]])) {
+                switch ($chunks[0]) {
+                    case 'bh':
+                        $languageNames[$chunks[0]] = 'Bihari';
+                        break;
+                    case 'guw':
+                        $languageNames[$chunks[0]] = 'Gun';
+                        break;
+                    case 'nah':
+                        $languageNames[$chunks[0]] = 'Nahuatl';
+                        break;
+                    case 'smi':
+                        $languageNames[$chunks[0]] = 'Sami';
+                        break;
+                    case 'in': // Former Indonesian
+                    case 'iw': // Former Hebrew
+                    case 'ji': // Former Yiddish
+                    case 'jw': // Former Javanese
+                    case 'mo': // Former Moldavian - See ro-MD
+                        $skipLanguage = true;
+                        break;
+                    default:
+                        throw new Exception("Unknown language code: $language");
+                }
+            }
+            if ($skipLanguage) {
+                continue;
+            }
+            $languageName = $languageNames[$chunks[0]];
+            switch (count($chunks)) {
+                case 1:
+                    break;
+                case 2:
+                    if (!isset($territoryNames[$chunks[1]])) {
+                        throw new Exception("Unknown territory code: {$chunks[2]}");
+                    }
+                    $languageName .= " ({$territoryNames[$chunks[1]]})";
+                    break;
+                default:
+                    throw new Exception("Unknown locale code: $language");
+            }
+        }
+        $rulesDefs = array();
+        $tests = array();
+        foreach ($sourceRules as $case => $rule) {
+            $x = extractRules($case, $rule);
+            if (isset($rules[$x['case']])) {
+                throw new Exception('Duplicated case: '.$x['case']);
+            }
+            $rulesDefs[$x['case']] = $x['rule'];
+            if ($x['test'] !== '') {
+                $tests[$x['case']] = $x['test'];
+            }
+        }
+        if (!isset($rulesDefs['other'])) {
+            throw new Exception('Missing case: other');
+        }
+        foreach (array_keys($rulesDefs) as $key) {
+            if (!in_array($key, $rulesOrder)) {
+                throw new Exception("Unknown rule: $key");
+            }
+        }
+        uksort($rulesDefs, function ($key1, $key2) {
+            global $rulesOrder;
+    
+            return array_search($key1, $rulesOrder) - array_search($key2, $rulesOrder);
+        });
+        $plurals[$normalizedLanguage] = array_merge(
+            array('name' => $languageName),
+            parseRules($normalizedLanguage, $rulesDefs, $tests)
+        );
+    }
+    ksort($plurals);
+
+    if ($outputUSAscii) {
+        array_walk_recursive($plurals, function (&$value) {
+            if (is_string($value) && ($value !== '')) {
+                $transliterated = @iconv('UTF-8', 'US-ASCII//IGNORE//TRANSLIT', $value);
+                if (($transliterated === false) || ($transliterated === '')) {
+                    throw new Exception("Unable to transliterate '$value'");
+                }
+                $value = $transliterated;
+            }
+        });
+    }
+} catch(Exception $x) {
+    echoErr($x->getMessage()."\n");
+    echoErr("Trace:\n");
+    echoErr($x->getTraceAsString()."\n");
+    die(4);
+}
+
+switch ($outputFormat) {
     case 'html':
         ?><!doctype html>
 <html lang="en">
@@ -577,5 +620,21 @@ function stripNeverOccurringCases(&$formula, &$cases, &$tests)
             break;
         default:
             throw new Exception('Unhandled case of plurals without examples: '.implode(', ', $casesWithoutExamples));
+    }
+}
+
+function showSyntax()
+{
+    echoErr("Syntax: php ".basename(__FILE__)." [--us-ascii] <html|json|prettyjson|php>\n");
+}
+
+function echoErr($str)
+{
+    $hStdErr = @fopen('php://stderr', 'a');
+    if ($hStdErr === false) {
+        echo $str;
+    } else {
+        fwrite($hStdErr, $str);
+        fclose($hStdErr);
     }
 }
