@@ -43,50 +43,50 @@ abstract class Exporter
         return __NAMESPACE__.'\\'.ucfirst(strtolower($exporterHandle));
     }
     /**
-     * Convert a list of LanguageConverter instances to string.
-     * @param LanguageConverter[] $languageConverters The LanguageConverter instances to convert
+     * Convert a list of Language instances to string.
+     * @param Language[] $languages The Language instances to convert
      * @return string
      */
-    public static function toString($languageConverters)
+    public static function toString($languages)
     {
         throw new Exception(get_class().' does not implement the method '.__FUNCTION__);
     }
     /**
-     * Save the LanguageConverter instances to a file.
-     * @param LanguageConverter[] $languageConverters The LanguageConverter instances to convert
+     * Save the Language instances to a file.
+     * @param Language[] $languages The Language instances to convert
      * @throws Exception
      */
-    final public static function toFile($languageConverters, $filename)
+    final public static function toFile($languages, $filename)
     {
-        $data = static::toString($languageConverters);
+        $data = static::toString($languages);
         if (@file_put_contents($filename, $data) === false) {
             throw new Exception("Error writing data to '$filename'");
         }
     }
     /**
-     * Convert a list of LanguageConverter instances to a standard php array
-     * @param LanguageConverter[] $languageConverters
+     * Convert a list of Language instances to a standard php array
+     * @param Language[] $languages
      * @return array
      */
-    final protected static function toArray($languageConverters)
+    final protected static function toArray($languages)
     {
         $result = array();
-        foreach ($languageConverters as $languageConverter) {
+        foreach ($languages as $language) {
             $array = array(
-                'name' => $languageConverter->name,
-                'plurals' => count($languageConverter->categories),
-                'formula' => $languageConverter->formula,
+                'name' => $language->name,
+                'plurals' => count($language->categories),
+                'formula' => $language->formula,
                 'cases' => array(),
                 'examples' => array(),
             );
-            foreach ($languageConverter->categories as $category) {
+            foreach ($language->categories as $category) {
                 $array['cases'][] = $category->id;
                 $array['examples'][$category->id] = $category->examples;
             }
-            if (isset($languageConverter->supersededBy)) {
-                $array['supersededBy'] = $languageConverter->supersededBy;
+            if (isset($language->supersededBy)) {
+                $array['supersededBy'] = $language->supersededBy;
             }
-            $result[$languageConverter->languageId] = $array;
+            $result[$language->languageId] = $array;
         }
 
         return $result;

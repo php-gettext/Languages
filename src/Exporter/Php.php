@@ -6,12 +6,12 @@ class Php extends Exporter
     /**
      * @see Exporter::toString
      */
-    public static function toString($languageConverters)
+    public static function toString($languages)
     {
         $lines = array();
         $lines[] = '<?php';
         $lines[] = 'return array(';
-        foreach ($languageConverters as $lc) {
+        foreach ($languages as $lc) {
             $lines[] = '    \''.$lc->languageId.'\' => array(';
             $lines[] = '        \'name\' => \''.addslashes($lc->name).'\',';
             $lines[] = '        \'plurals\' => '.count($lc->categories).',';

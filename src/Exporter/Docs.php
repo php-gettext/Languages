@@ -6,7 +6,7 @@ class Docs extends Html
     /**
      * @see Exporter::toString
      */
-    public static function toString($languageConverters)
+    public static function toString($languages)
     {
         $result = <<<EOT
 <!doctype html>
@@ -26,7 +26,7 @@ class Docs extends Html
         <div class="container-fluid">
 
 EOT;
-        $result .= static::buildTable($languageConverters, true);
+        $result .= static::buildTable($languages, true);
         $result .= <<<EOT
 
         </div>

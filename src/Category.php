@@ -6,7 +6,7 @@ use Exception;
 /**
  * A helper class that handles a single category rules (eg 'zero', 'one', ...) and its formula and examples.
  */
-class CategoryConverter
+class Category
 {
     /**
      * The category identifier (eg 'zero', 'one', ..., 'other').

@@ -6,7 +6,7 @@ use Exception;
 /**
  * Main class to convert the plural rules of a language from CLDR to gettext.
  */
-class LanguageConverter
+class Language
 {
     /**
      * The language ID.
@@ -25,7 +25,7 @@ class LanguageConverter
     public $supersededBy;
     /**
      * The list of categories.
-     * @var CategoryConverter[]
+     * @var Category[]
      */
     public $categories;
     /**
@@ -48,7 +48,7 @@ class LanguageConverter
         // Let's build the category list
         $this->categories = array();
         foreach ($cldrCategories as $cldrCategoryId => $cldrFormulaAndExamples) {
-            $category = new CategoryConverter($cldrCategoryId, $cldrFormulaAndExamples);
+            $category = new Category($cldrCategoryId, $cldrFormulaAndExamples);
             foreach ($this->categories as $c) {
                 if ($category->id === $c->id) {
                     throw new Exception("The category '{$category->id}' is specified more than once");
@@ -60,7 +60,7 @@ class LanguageConverter
             throw new Exception("The language '$cldrLanguageId' does not have any plural category");
         }
         // Let's sort the categories from 'zero' to 'other'
-        usort($this->categories, function (CategoryConverter $category1, CategoryConverter $category2) {
+        usort($this->categories, function (Category $category1, Category $category2) {
             return array_search($category1->id, CldrData::$categories) - array_search($category2->id, CldrData::$categories);
         });
         // The 'other' category should always be there
@@ -81,7 +81,6 @@ class LanguageConverter
     {
         $alwaysTrueCategory = null;
         foreach ($this->categories as $category) {
-            /* @var $category CategoryConverter */
             if ($category->formula === true) {
                 if (!isset($category->examples)) {
                     throw new Exception("The category '{$category->id}' should always occur, but it does not have examples (so for CLDR it will never occur for integers!)");
@@ -110,7 +109,6 @@ class LanguageConverter
     {
         $filtered = array();
         foreach ($this->categories as $category) {
-            /* @var $category CategoryConverter */
             if ($category->formula === false) {
                 if (isset($category->examples)) {
                     throw new Exception("The category '{$category->id}' should never occur, but it has examples (so for CLDR it may occur!)");

@@ -6,15 +6,15 @@ class Html extends Exporter
     /**
      * @see Exporter::toString
      */
-    public static function toString($languageConverters)
+    public static function toString($languages)
     {
-        return self::buildTable($languageConverters, false);
+        return self::buildTable($languages, false);
     }
     protected static function h($str)
     {
         return htmlspecialchars($str, ENT_COMPAT, 'UTF-8');
     }
-    protected static function buildTable($languageConverters, $forDocs)
+    protected static function buildTable($languages, $forDocs)
     {
         $prefix = $forDocs ? '            ' : '';
         $lines = array();
@@ -29,7 +29,7 @@ class Html extends Exporter
         $lines[] = $prefix.'        </tr>';
         $lines[] = $prefix.'    </thead>';
         $lines[] = $prefix.'    <tbody>';
-        foreach ($languageConverters as $lc) {
+        foreach ($languages as $lc) {
             $lines[] = $prefix.'        <tr>';
             $lines[] = $prefix.'            <td>'.$lc->languageId.'</td>';
             $name = self::h($lc->name);

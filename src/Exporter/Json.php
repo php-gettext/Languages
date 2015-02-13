@@ -14,8 +14,8 @@ class Json extends Exporter
     /**
      * @see Exporter::toString
      */
-    public static function toString($languageConverters)
+    public static function toString($languages)
     {
-        return json_encode(self::toArray($languageConverters), static::getEncodeOptions());
+        return json_encode(self::toArray($languages), static::getEncodeOptions());
     }
 }

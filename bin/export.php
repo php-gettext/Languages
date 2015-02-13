@@ -1,7 +1,7 @@
 <?php
 use GettextLanguages\Exporter\Exporter;
 use GettextLanguages\CldrData;
-use GettextLanguages\LanguageConverter;
+use GettextLanguages\Language;
 
 // Let's start by imposing that we don't accept any error or warning.
 // This is a really life-saving approach.
@@ -19,7 +19,7 @@ Enviro::initialize();
 try {
     $gettextPlurals = array();
     foreach (CldrData::getPlurals() as $cldrLanguageId => $cldrLanguageCategories) {
-        $gettextPlural = new LanguageConverter($cldrLanguageId, $cldrLanguageCategories);
+        $gettextPlural = new Language($cldrLanguageId, $cldrLanguageCategories);
         if (Enviro::$outputUSAscii) {
             $gettextPlural->asciify();
         }
