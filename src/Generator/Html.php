@@ -1,5 +1,5 @@
 <?php
-namespace Cldr2Gettext\Generator;
+namespace GettextLanguages\Generator;
 
 class Html extends Generator
 {
@@ -30,7 +30,6 @@ class Html extends Generator
         $lines[] = $prefix.'    </thead>';
         $lines[] = $prefix.'    <tbody>';
         foreach ($languageConverters as $lc) {
-            /* @var $lc \Cldr2Gettext\LanguageConverter */
             $lines[] = $prefix.'        <tr>';
             $lines[] = $prefix.'            <td>'.$lc->languageId.'</td>';
             $name = self::h($lc->name);

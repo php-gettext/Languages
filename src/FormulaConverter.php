@@ -1,5 +1,5 @@
 <?php
-namespace Cldr2Gettext;
+namespace GettextLanguages;
 
 use Exception;
 

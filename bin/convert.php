@@ -1,7 +1,7 @@
 <?php
-use Cldr2Gettext\Generator\Generator;
-use Cldr2Gettext\CldrData;
-use Cldr2Gettext\LanguageConverter;
+use GettextLanguages\Generator\Generator;
+use GettextLanguages\CldrData;
+use GettextLanguages\LanguageConverter;
 
 // Let's start by imposing that we don't accept any error or warning.
 // This is a really life-saving approach.

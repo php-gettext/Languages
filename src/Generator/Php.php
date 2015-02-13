@@ -1,5 +1,5 @@
 <?php
-namespace Cldr2Gettext\Generator;
+namespace GettextLanguages\Generator;
 
 class Php extends Generator
 {
@@ -12,7 +12,6 @@ class Php extends Generator
         $lines[] = '<?php';
         $lines[] = 'return array(';
         foreach ($languageConverters as $lc) {
-            /* @var $lc \Cldr2Gettext\LanguageConverter */
             $lines[] = '    \''.$lc->languageId.'\' => array(';
             $lines[] = '        \'name\' => \''.addslashes($lc->name).'\',';
             $lines[] = '        \'plurals\' => '.count($lc->categories).',';
