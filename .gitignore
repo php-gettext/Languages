@@ -2,4 +2,4 @@
 /.settings/
 /.buildpath
 /.project
-/tests/data.php
+/tests/data.*

@@ -1,57 +1,41 @@
 <?php
 class RulesTest extends PHPUnit_Framework_TestCase
 {
-    private function readData()
+    private function readData($format)
     {
-        static $data;
-        if (!isset($data)) {
-            $data = require dirname(dirname(__FILE__)).'/data.php';
-        }
-
-        return $data;
-    }
-
-    private static function expandNumbers($numbers)
-    {
-        $result = array();
-        if (substr($numbers, -strlen(', …')) === ', …') {
-            $numbers = substr($numbers, 0, strlen($numbers) -strlen(', …'));
-        }
-        foreach (explode(',', str_replace(' ', '', $numbers)) as $range) {
-            if (preg_match('/^\d+$/', $range)) {
-                $result[] = intval($range);
-            } elseif (preg_match('/^(\d+)~(\d+)$/', $range, $m)) {
-                $from = intval($m[1]);
-                $to = intval($m[2]);
-                $delta = $to - $from;
-                $step = (int) max(1, $delta / 100);
-                for ($i = $from; $i < $to; $i += $step) {
-                    $result[] = $i;
-                }
-                $result[] = $to;
-            } else {
-                throw new Exception("Unhandled test range '$range' in '$numbers'");
+        static $data = array();
+        if (!isset($data[$format])) {
+            $filename = dirname(dirname(__FILE__)).'/data.'.$format;
+            switch ($format) {
+                case 'php':
+                    $data[$format] = require $filename;
+                    break;
+                case 'json':
+                    $data[$format] = json_decode(file_get_contents($filename), true);
+                    break;
+                default:
+                    throw new Exception("Unhandled format: $format");
             }
         }
-        if (empty($result)) {
-            throw new Exception("No test numbers from '$numbers'");
-        }
 
-        return $result;
+        return $data[$format];
     }
 
     public function providerTestRules()
     {
         $testData = array();
-        foreach ($this->readData() as $locale => $info) {
-            foreach ($info['examples'] as $rule => $numbers) {
-                $testData[] = array(
-                    $locale,
-                    $info['formula'],
-                    $info['cases'],
-                    $numbers,
-                    $rule,
-                );
+        foreach (array('php', 'json') as $format) {
+            foreach ($this->readData($format) as $locale => $info) {
+                foreach ($info['examples'] as $rule => $numbers) {
+                    $testData[] = array(
+                            $format,
+                        $locale,
+                        $info['formula'],
+                        $info['cases'],
+                        $numbers,
+                        $rule,
+                    );
+                }
             }
         }
 
@@ -60,34 +44,37 @@ class RulesTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerTestRules
      */
-    public function testRules($locale, $formula, $allCases, $numbers, $expectedCase)
+    public function testRules($format, $locale, $formula, $allCases, $numbers, $expectedCase)
     {
         $expectedCaseIndex = in_array($expectedCase, $allCases);
-        foreach (self::expandNumbers($numbers) as $number) {
+        foreach (\Cldr2Gettext\CategoryConverter::expandExamples($numbers) as $number) {
             $numericFormula = preg_replace('/\bn\b/', strval($number), $formula);
             $extraneousChars = preg_replace('/^[\d %!=<>&\|()?:]+$/', '', $numericFormula);
-            $this->assertSame('', $extraneousChars, "The formula '$numericFormula' contains extraneous characters: '$extraneousChars'");
+            $this->assertSame('', $extraneousChars, "The formula '$numericFormula' contains extraneous characters: '$extraneousChars' (format: $format)");
 
             $caseIndex = @eval("return (($numericFormula) === true) ? 1 : ((($numericFormula) === false) ? 0 : ($numericFormula));");
-            $this->assertInternalType('integer', $caseIndex, "Error evaluating the numeric formula '$numericFormula'");
+            $this->assertInternalType('integer', $caseIndex, "Error evaluating the numeric formula '$numericFormula' (format: $format)");
 
-            $this->assertArrayHasKey($caseIndex, $allCases, "The formula '$formula' evaluated for $number gave an out-of-range case index ($caseIndex)");
+            $this->assertArrayHasKey($caseIndex, $allCases, "The formula '$formula' evaluated for $number gave an out-of-range case index ($caseIndex) (format: $format)");
 
             $case = $allCases[$caseIndex];
-            $this->assertSame($expectedCase, $case, "The formula '$formula' evaluated for $number resulted in '$case' ($caseIndex) instead of '$expectedCase' ($expectedCaseIndex)");
+            $this->assertSame($expectedCase, $case, "The formula '$formula' evaluated for $number resulted in '$case' ($caseIndex) instead of '$expectedCase' ($expectedCaseIndex) (format: $format)");
         }
     }
 
     public function providerTestExamplesExist()
     {
         $testData = array();
-        foreach ($this->readData() as $locale => $info) {
-            foreach ($info['cases'] as $case) {
-                $testData[] = array(
-                    $locale,
-                    $case,
-                    $info['examples'],
-                );
+        foreach (array('php', 'json') as $format) {
+            foreach ($this->readData($format) as $locale => $info) {
+                foreach ($info['cases'] as $case) {
+                    $testData[] = array(
+                    		$format,
+                        $locale,
+                        $case,
+                        $info['examples'],
+                    );
+                }
             }
         }
 
@@ -96,8 +83,8 @@ class RulesTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerTestExamplesExist
      */
-    public function testExamplesExist($locale, $case, $examples)
+    public function testExamplesExist($format, $locale, $case, $examples)
     {
-        $this->assertArrayHasKey($case, $examples, "The language '$locale' does not have tests for the case '$case'");
+        $this->assertArrayHasKey($case, $examples, "The language '$locale' does not have tests for the case '$case' (format: $format)");
     }
 }

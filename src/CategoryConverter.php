@@ -61,4 +61,48 @@ class CategoryConverter
                 break;
         }
     }
+    /**
+     * Return a list of numbers corresponding to the $examples value
+     * @throws Exception Throws an Exception if we weren't able to expand the examples
+     * @return int[]
+     */
+    public function getExampleIntegers()
+    {
+        return self::expandExamples($this->examples);
+    }
+    /**
+     * Expand a list of examples as defined by CLDR
+     * @param string $examples A string like '1, 2, 5...7, …'
+     * @throws Exception Throws an Exception if we weren't able to expand $examples
+     * @return int[]
+     */
+    public static function expandExamples($examples)
+    {
+        $result = array();
+        $m = null;
+        if (substr($examples, -strlen(', …')) === ', …') {
+            $examples = substr($examples, 0, strlen($examples) -strlen(', …'));
+        }
+        foreach (explode(',', str_replace(' ', '', $examples)) as $range) {
+            if (preg_match('/^\d+$/', $range)) {
+                $result[] = intval($range);
+            } elseif (preg_match('/^(\d+)~(\d+)$/', $range, $m)) {
+                $from = intval($m[1]);
+                $to = intval($m[2]);
+                $delta = $to - $from;
+                $step = (int) max(1, $delta / 100);
+                for ($i = $from; $i < $to; $i += $step) {
+                    $result[] = $i;
+                }
+                $result[] = $to;
+            } else {
+                throw new Exception("Unhandled test range '$range' in '$examples'");
+            }
+        }
+        if (empty($result)) {
+            throw new Exception("No test numbers from '$examples'");
+        }
+
+        return $result;
+    }
 }
