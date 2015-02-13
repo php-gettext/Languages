@@ -37,7 +37,8 @@
 
 Yes - as far as you trust the CLDR Project.
 
-The conversion from CLDR to gettext includes also [a lot of tests](https://api.travis-ci.org/mlocati/cldr-to-gettext-plural-rules.svg?branch=master) to check the results. And all passes :wink:.
+The conversion from CLDR to gettext includes also [a lot of tests](https://travis-ci.org/mlocati/cldr-to-gettext-plural-rules) to check the results.
+And all passes :wink:.
 
 
 
