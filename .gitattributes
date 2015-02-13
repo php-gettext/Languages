@@ -1,4 +1,4 @@
 /tests/ export-ignore
 /.* export-ignore
-/README.md
-/phpunit.xml
+/README.md export-ignore
+/phpunit.xml export-ignore
