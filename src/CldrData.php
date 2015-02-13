@@ -9,7 +9,7 @@ use Exception;
 class CldrData
 {
     /**
-     * Super-special plural category: this should always be present for any language
+     * Super-special plural category: this should always be present for any language.
      * @var string
      */
     const OTHER_CATEGORY = 'other';

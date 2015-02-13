@@ -4,7 +4,7 @@ namespace GettextLanguages\Exporter;
 class Json extends Exporter
 {
     /**
-     * Return the options for json_encode
+     * Return the options for json_encode.
      * @return int
      */
     protected static function getEncodeOptions()

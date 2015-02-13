@@ -29,12 +29,12 @@ class Language
      */
     public $categories;
     /**
-     * The gettext formula to decide which category should be applied
+     * The gettext formula to decide which category should be applied.
      * @var string
      */
     public $formula;
     /**
-     * Initialize the instance and parse the language code
+     * Initialize the instance and parse the language code.
      * @param string $cldrLanguageId The CLDR language identifier.
      * @param array $cldrCategories The CLDR categories definition.
      * @throws Exception Throws an Exception if $fullId is not valid.
@@ -73,7 +73,7 @@ class Language
         $this->formula = $this->buildFormula();
     }
     /**
-     * Return a list of all languages available
+     * Return a list of all languages available.
      * @throws Exception
      * @return Language[]
      */
@@ -284,7 +284,7 @@ class Language
         return isset($map[$formula]) ? $map[$formula] : $formula;
     }
     /**
-     * Take one variable and, if it's a string, we transliterate it to US-ASCII
+     * Take one variable and, if it's a string, we transliterate it to US-ASCII.
      * @param mixed $value The variable to work on.
      * @throws Exception
      */

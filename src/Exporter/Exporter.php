@@ -5,7 +5,7 @@ use Exception;
 use GettextLanguages\Language;
 
 /**
- * Base class for all the exporters
+ * Base class for all the exporters.
  */
 abstract class Exporter
 {
@@ -14,7 +14,7 @@ abstract class Exporter
      */
     private static $exporters;
     /**
-     * Return the list of all the available exporters. Keys are the exporter handles, values are the exporter class names
+     * Return the list of all the available exporters. Keys are the exporter handles, values are the exporter class names.
      * @return string[]
      */
     final public static function getExporters()
@@ -36,7 +36,7 @@ abstract class Exporter
     }
     /**
      * Returns the fully qualified class name of a exporter given its handle.
-     * @param string $exporterHandle The exporter class handle
+     * @param string $exporterHandle The exporter class handle.
      * @return string
      */
     final public static function getExporterClassName($exporterHandle)
@@ -45,7 +45,7 @@ abstract class Exporter
     }
     /**
      * Convert a list of Language instances to string.
-     * @param Language[] $languages The Language instances to convert
+     * @param Language[] $languages The Language instances to convert.
      * @return string
      */
     protected static function toStringDo($languages)
@@ -54,7 +54,7 @@ abstract class Exporter
     }
     /**
      * Convert a list of Language instances to string.
-     * @param Language[] $languages The Language instances to convert
+     * @param Language[] $languages The Language instances to convert.
      * @return string
      */
     final public static function toString($languages, $options = null)
@@ -73,7 +73,7 @@ abstract class Exporter
     }
     /**
      * Save the Language instances to a file.
-     * @param Language[] $languages The Language instances to convert
+     * @param Language[] $languages The Language instances to convert.
      * @throws Exception
      */
     final public static function toFile($languages, $filename, $options = null)
@@ -84,7 +84,7 @@ abstract class Exporter
         }
     }
     /**
-     * Convert a list of Language instances to a standard php array
+     * Convert a list of Language instances to a standard php array.
      * @param Language[] $languages
      * @return array
      */
