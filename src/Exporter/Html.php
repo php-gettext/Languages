@@ -4,9 +4,9 @@ namespace GettextLanguages\Exporter;
 class Html extends Exporter
 {
     /**
-     * @see Exporter::toString
+     * @see Exporter::toStringDo
      */
-    public static function toString($languages)
+    protected static function toStringDo($languages)
     {
         return self::buildTable($languages, false);
     }
@@ -31,7 +31,7 @@ class Html extends Exporter
         $lines[] = $prefix.'    <tbody>';
         foreach ($languages as $lc) {
             $lines[] = $prefix.'        <tr>';
-            $lines[] = $prefix.'            <td>'.$lc->languageId.'</td>';
+            $lines[] = $prefix.'            <td>'.$lc->id.'</td>';
             $name = self::h($lc->name);
             if (isset($lc->supersededBy)) {
                 $name .= '<br /><small><span>Superseded by</span> '.$lc->supersededBy.'</small>';

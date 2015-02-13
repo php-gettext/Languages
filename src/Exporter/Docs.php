@@ -4,9 +4,9 @@ namespace GettextLanguages\Exporter;
 class Docs extends Html
 {
     /**
-     * @see Exporter::toString
+     * @see Exporter::toStringDo
      */
-    public static function toString($languages)
+    protected static function toStringDo($languages)
     {
         $result = <<<EOT
 <!doctype html>

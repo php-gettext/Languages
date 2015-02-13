@@ -86,19 +86,19 @@ class CldrData
     }
     /**
      * Retrieve the name of a language, as well as if a language code is deprecated in favor of another language code.
-     * @param string $fullId The CLDR language identifier.
-     * @throws Exception Throws an Exception if $fullId is not valid.
+     * @param string $id The language identifier.
+     * @throws Exception Throws an Exception if $id is not valid.
      * @return array Returns an array with the keys 'name' and 'supersededBy'.
      */
-    public static function getLanguageInfo($fullId)
+    public static function getLanguageInfo($id)
     {
         $result = array(
             'name' => null,
             'supersededBy' => null,
         );
         $matches = array();
-        if (!preg_match('/^([a-z]{2,3})(?:-([A-Z][a-z]{3}))?(?:-([A-Z]{2}|[0-9]{3}))?(?:$|-)/', $fullId, $matches)) {
-            throw new Exception("Unknown CLDR language code: $fullId");
+        if (!preg_match('/^([a-z]{2,3})(?:[_\-]([A-Z][a-z]{3}))?(?:[_\-]([A-Z]{2}|[0-9]{3}))?(?:$|-)/', $id, $matches)) {
+            throw new Exception("Invalid language code: $id");
         }
         $languageId = $matches[1];
         // $matches[2] is the script id, we don't use it
@@ -112,7 +112,7 @@ class CldrData
             if (isset($territoryId)) {
                 $territoryNames = self::getTerritoryNames();
                 if (!isset($territoryNames[$territoryId])) {
-                    throw new Exception("Unknown territory code '$territoryId' in language '$fullId'");
+                    throw new Exception("Unknown territory code '$territoryId' in language '$id'");
                 }
                 $result['name'] .= ' ('.$territoryNames[$territoryId].')';
             }
@@ -143,7 +143,7 @@ class CldrData
                         $result['name'] = 'Sami';
                         break;
                     default:
-                        throw new Exception("Unknown CLDR language code: $fullId");
+                        throw new Exception("Unknown CLDR language code: $id");
                 }
             }
         }

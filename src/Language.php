@@ -12,7 +12,7 @@ class Language
      * The language ID.
      * @var string
      */
-    public $languageId;
+    public $id;
     /**
      * The language name.
      * @var string
@@ -39,10 +39,10 @@ class Language
      * @param array $cldrCategories The CLDR categories definition.
      * @throws Exception Throws an Exception if $fullId is not valid.
      */
-    public function __construct($cldrLanguageId, $cldrCategories)
+    private function __construct($cldrLanguageId, $cldrCategories)
     {
-        $this->languageId = str_replace('-', '_', $cldrLanguageId);
         $info = CldrData::getLanguageInfo($cldrLanguageId);
+        $this->id = str_replace('-', '_', $cldrLanguageId);
         $this->name = $info['name'];
         $this->supersededBy = isset($info['supersededBy']) ? str_replace('-', '_', $info['supersededBy']) : null;
         // Let's build the category list
@@ -72,6 +72,21 @@ class Language
         $this->checkAllCategoriesWithExamples();
         $this->formula = $this->buildFormula();
     }
+    /**
+     * Return a list of all languages available
+     * @throws Exception
+     * @return Language[]
+     */
+    public static function getAll()
+    {
+        $result = array();
+        foreach (CldrData::getPlurals() as $cldrLanguageId => $cldrLanguageCategories) {
+            $result[] = new Language($cldrLanguageId, $cldrLanguageCategories);
+        }
+
+        return $result;
+    }
+
     /**
      * Let's look for categories that will always occur.
      * This because with decimals (CLDR) we may have more cases, with integers (gettext) we have just one case.
@@ -284,14 +299,21 @@ class Language
         }
     }
     /**
-     * Converts all the strings to US-ASCII.
+     * Returns a clone of this instance with all the strings to US-ASCII.
+     * @return Language
      */
-    public function asciify()
+    public function getUSAsciiClone()
     {
-        self::asciifier($this->name);
-        self::asciifier($this->formula);
+        $clone = clone $this;
+        self::asciifier($clone->name);
+        self::asciifier($clone->formula);
+        $clone->categories = array();
         foreach ($this->categories as $category) {
-            self::asciifier($category->examples);
+            $categoryClone = clone $category;
+            self::asciifier($categoryClone->examples);
+            $clone->categories[] = $categoryClone;
         }
+
+        return $clone;
     }
 }

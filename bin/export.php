@@ -1,6 +1,5 @@
 <?php
 use GettextLanguages\Exporter\Exporter;
-use GettextLanguages\CldrData;
 use GettextLanguages\Language;
 
 // Let's start by imposing that we don't accept any error or warning.
@@ -17,18 +16,11 @@ require_once dirname(__DIR__).'/src/autoloader.php';
 Enviro::initialize();
 
 try {
-    $gettextPlurals = array();
-    foreach (CldrData::getPlurals() as $cldrLanguageId => $cldrLanguageCategories) {
-        $gettextPlural = new Language($cldrLanguageId, $cldrLanguageCategories);
-        if (Enviro::$outputUSAscii) {
-            $gettextPlural->asciify();
-        }
-        $gettextPlurals[] = $gettextPlural;
-    }
+    $languages = Language::getAll();
     if (isset(Enviro::$outputFilename)) {
-        echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toFile'), $gettextPlurals, Enviro::$outputFilename);
+        echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toFile'), $languages, Enviro::$outputFilename, array('us-ascii' => Enviro::$outputUSAscii));
     } else {
-        echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toString'), $gettextPlurals);
+        echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toString'), $languages, array('us-ascii' => Enviro::$outputUSAscii));
     }
 } catch (Exception $x) {
     Enviro::echoErr($x->getMessage()."\n");

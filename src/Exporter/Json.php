@@ -12,9 +12,9 @@ class Json extends Exporter
         return 0;
     }
     /**
-     * @see Exporter::toString
+     * @see Exporter::toStringDo
      */
-    public static function toString($languages)
+    protected static function toStringDo($languages)
     {
         return json_encode(self::toArray($languages), static::getEncodeOptions());
     }

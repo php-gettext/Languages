@@ -2,6 +2,7 @@
 namespace GettextLanguages\Exporter;
 
 use Exception;
+use GettextLanguages\Language;
 
 /**
  * Base class for all the exporters
@@ -47,18 +48,37 @@ abstract class Exporter
      * @param Language[] $languages The Language instances to convert
      * @return string
      */
-    public static function toString($languages)
+    protected static function toStringDo($languages)
     {
         throw new Exception(get_class().' does not implement the method '.__FUNCTION__);
+    }
+    /**
+     * Convert a list of Language instances to string.
+     * @param Language[] $languages The Language instances to convert
+     * @return string
+     */
+    final public static function toString($languages, $options = null)
+    {
+        if (isset($options) && is_array($options)) {
+            if (isset($options['us-ascii']) && $options['us-ascii']) {
+                $asciiList = array();
+                foreach ($languages as $language) {
+                    $asciiList[] = $language->getUSAsciiClone();
+                }
+                $languages = $asciiList;
+            }
+        }
+
+        return static::toStringDo($languages);
     }
     /**
      * Save the Language instances to a file.
      * @param Language[] $languages The Language instances to convert
      * @throws Exception
      */
-    final public static function toFile($languages, $filename)
+    final public static function toFile($languages, $filename, $options = null)
     {
-        $data = static::toString($languages);
+        $data = self::toString($languages, $options);
         if (@file_put_contents($filename, $data) === false) {
             throw new Exception("Error writing data to '$filename'");
         }
@@ -86,7 +106,7 @@ abstract class Exporter
             if (isset($language->supersededBy)) {
                 $array['supersededBy'] = $language->supersededBy;
             }
-            $result[$language->languageId] = $array;
+            $result[$language->id] = $array;
         }
 
         return $result;
