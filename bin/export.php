@@ -19,24 +19,11 @@ Enviro::initialize();
 try {
     $gettextPlurals = array();
     foreach (CldrData::getPlurals() as $cldrLanguageId => $cldrLanguageCategories) {
-        if (strtolower(str_replace(array('-', '_'), '', $cldrLanguageId)) === 'ptpt') {
-            $a = 1;
+        $gettextPlural = new LanguageConverter($cldrLanguageId, $cldrLanguageCategories);
+        if (Enviro::$outputUSAscii) {
+            $gettextPlural->asciify();
         }
-        if (strtolower(str_replace(array('-', '_'), '', $cldrLanguageId)) === 'mo') {
-            $a = 1;
-        }
-
-        switch ($cldrLanguageId) {
-            case 'root':
-                break;
-            default:
-                $gettextPlural = new LanguageConverter($cldrLanguageId, $cldrLanguageCategories);
-                if (Enviro::$outputUSAscii) {
-                    $gettextPlural->asciify();
-                }
-                $gettextPlurals[] = $gettextPlural;
-                break;
-        }
+        $gettextPlurals[] = $gettextPlural;
     }
     if (isset(Enviro::$outputFilename)) {
         echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toFile'), $gettextPlurals, Enviro::$outputFilename);

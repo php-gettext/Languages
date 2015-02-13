@@ -33,6 +33,7 @@ class CldrData
         if (!isset(self::$languageNames)) {
             $json = json_decode(file_get_contents(__DIR__.'/cldr-data/main/en-US/languages.json'), true);
             self::$languageNames = $json['main']['en-US']['localeDisplayNames']['languages'];
+            unset(self::$languageNames['root']);
         }
 
         return self::$languageNames;
@@ -78,6 +79,7 @@ class CldrData
         if (!isset(self::$plurals)) {
             $json = json_decode(file_get_contents(__DIR__.'/cldr-data/supplemental/plurals.json'), true);
             self::$plurals = $json['supplemental']['plurals-type-cardinal'];
+            unset(self::$plurals['root']);
         }
 
         return self::$plurals;
