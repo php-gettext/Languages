@@ -35,14 +35,17 @@ class Language
     public $formula;
     /**
      * Initialize the instance and parse the language code.
-     * @param string $cldrLanguageId The CLDR language identifier.
+     * @param string $id The language identifier.
      * @param array $cldrCategories The CLDR categories definition.
      * @throws Exception Throws an Exception if $fullId is not valid.
      */
-    private function __construct($cldrLanguageId, $cldrCategories)
+    private function __construct($id, $cldrCategories)
     {
-        $info = CldrData::getLanguageInfo($cldrLanguageId);
-        $this->id = str_replace('-', '_', $cldrLanguageId);
+        $info = CldrData::getLanguageInfo($id);
+        if (!isset($info)) {
+            throw new Exception("Invalid language identifier: $id");
+        }
+        $this->id = str_replace('-', '_', $id);
         $this->name = $info['name'];
         $this->supersededBy = isset($info['supersededBy']) ? str_replace('-', '_', $info['supersededBy']) : null;
         // Let's build the category list
@@ -57,7 +60,7 @@ class Language
             $this->categories[] = $category;
         }
         if (empty($this->categories)) {
-            throw new Exception("The language '$cldrLanguageId' does not have any plural category");
+            throw new Exception("The language '$id' does not have any plural category");
         }
         // Let's sort the categories from 'zero' to 'other'
         usort($this->categories, function (Category $category1, Category $category2) {
@@ -65,7 +68,7 @@ class Language
         });
         // The 'other' category should always be there
         if ($this->categories[count($this->categories) - 1]->id !== CldrData::OTHER_CATEGORY) {
-            throw new Exception("The language '$cldrLanguageId' does not have the '".CldrData::OTHER_CATEGORY."' plural category");
+            throw new Exception("The language '$id' does not have the '".CldrData::OTHER_CATEGORY."' plural category");
         }
         $this->checkAlwaysTrueCategories();
         $this->checkAlwaysFalseCategories();
@@ -82,6 +85,21 @@ class Language
         $result = array();
         foreach (CldrData::getPlurals() as $cldrLanguageId => $cldrLanguageCategories) {
             $result[] = new Language($cldrLanguageId, $cldrLanguageCategories);
+        }
+
+        return $result;
+    }
+    /**
+     * Return a Language instance given the language id
+     * @param string $id
+     * @return Language|null
+     */
+    public static function getById($id)
+    {
+        $result = null;
+        $cldrCategories = CldrData::getCategoriesFor($id);
+        if (isset($cldrCategories) && CldrData::getLanguageInfo($id)) {
+            $result = new Language($id, $cldrCategories);
         }
 
         return $result;

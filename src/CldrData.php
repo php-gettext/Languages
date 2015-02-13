@@ -1,8 +1,6 @@
 <?php
 namespace GettextLanguages;
 
-use Exception;
-
 /**
  * Holds the CLDR data.
  */
@@ -85,65 +83,94 @@ class CldrData
         return self::$plurals;
     }
     /**
-     * Retrieve the name of a language, as well as if a language code is deprecated in favor of another language code.
-     * @param string $id The language identifier.
-     * @throws Exception Throws an Exception if $id is not valid.
-     * @return array Returns an array with the keys 'name' and 'supersededBy'.
+     * Retrieve the CLDR plural categories for a specific language; returns null if $languageId is not valid.
+     * @param string $languageId
+     * @return array|null
      */
-    public static function getLanguageInfo($id)
+    public static function getCategoriesFor($languageId)
     {
-        $result = array(
-            'name' => null,
-            'supersededBy' => null,
-        );
-        $matches = array();
-        if (!preg_match('/^([a-z]{2,3})(?:[_\-]([A-Z][a-z]{3}))?(?:[_\-]([A-Z]{2}|[0-9]{3}))?(?:$|-)/', $id, $matches)) {
-            throw new Exception("Invalid language code: $id");
+        $matches = null;
+        if (!preg_match('/^([a-z]{2,3})(?:[_\-]([A-Z][a-z]{3}))?(?:[_\-]([A-Z]{2}|[0-9]{3}))?(?:$|-)/', $languageId, $matches)) {
+            return;
         }
         $languageId = $matches[1];
         // $matches[2] is the script id, we don't use it
         $territoryId = isset($matches[3]) ? $matches[3] : null;
-        $normalizedFullId = isset($territoryId) ? "{$languageId}-{$territoryId}" : $languageId;
-        $languageNames = self::getLanguageNames();
-        if (isset($languageNames[$normalizedFullId])) {
-            $result['name'] = $languageNames[$normalizedFullId];
-        } elseif (isset($languageNames[$languageId])) {
-            $result['name'] = $languageNames[$languageId];
-            if (isset($territoryId)) {
-                $territoryNames = self::getTerritoryNames();
-                if (!isset($territoryNames[$territoryId])) {
-                    throw new Exception("Unknown territory code '$territoryId' in language '$id'");
-                }
-                $result['name'] .= ' ('.$territoryNames[$territoryId].')';
+        $variants = array();
+        if (isset($territoryId)) {
+            $variants[] = "$languageId-$territoryId";
+        }
+        $variants[] = $languageId;
+        $plurals = self::getPlurals();
+        $result = null;
+        foreach ($variants as $variant) {
+            if (isset($plurals[$variant])) {
+                $result = $plurals[$variant];
+                break;
             }
-        } else {
-            // The CLDR plural rules contains some language that's not defined in the language names dictionary...
-            $formerCodes = array(
-                'in' => 'id', // former Indonesian
-                'iw' => 'he', // former Hebrew
-                'ji' => 'yi', // former Yiddish
-                'jw' => 'jv', // former Javanese
-                'mo' => 'ro-MD', // former Moldavian
-            );
-            if (isset($formerCodes[$normalizedFullId]) && isset($languageNames[$formerCodes[$normalizedFullId]])) {
-                $result['supersededBy'] = str_replace('-', '_', $formerCodes[$normalizedFullId]);
-                $result['name'] = $languageNames[$formerCodes[$normalizedFullId]];
+        }
+
+        return $result;
+    }
+    /**
+     * Retrieve the name of a language, as well as if a language code is deprecated in favor of another language code.
+     * @param string $id The language identifier.
+     * @return array|null Returns an array with the keys 'name' and 'supersededBy'. If $id is not valid returns null.
+     */
+    public static function getLanguageInfo($id)
+    {
+        $result = null;
+        $matches = array();
+        if (preg_match('/^([a-z]{2,3})(?:[_\-]([A-Z][a-z]{3}))?(?:[_\-]([A-Z]{2}|[0-9]{3}))?(?:$|-)/', $id, $matches)) {
+            $languageId = $matches[1];
+            // $matches[2] is the script id, we don't use it
+            $territoryId = isset($matches[3]) ? $matches[3] : null;
+            $normalizedFullId = isset($territoryId) ? "{$languageId}-{$territoryId}" : $languageId;
+            $languageNames = self::getLanguageNames();
+            if (isset($languageNames[$normalizedFullId])) {
+                $result = array(
+                    'name' => $languageNames[$normalizedFullId],
+                    'supersededBy' => null,
+                );
+            } elseif (isset($languageNames[$languageId])) {
+                $result = array(
+                    'name' => $languageNames[$languageId],
+                    'supersededBy' => null,
+                );
+                if (isset($territoryId)) {
+                    $territoryNames = self::getTerritoryNames();
+                    if (!isset($territoryNames[$territoryId])) {
+                        return;
+                    }
+                    $result['name'] .= ' ('.$territoryNames[$territoryId].')';
+                }
             } else {
-                switch ($normalizedFullId) {
-                    case 'bh':
-                        $result['name'] = 'Bihari';
-                        break;
-                    case 'guw':
-                        $result['name'] = 'Gun';
-                        break;
-                    case 'nah':
-                        $result['name'] = 'Nahuatl';
-                        break;
-                    case 'smi':
-                        $result['name'] = 'Sami';
-                        break;
-                    default:
-                        throw new Exception("Unknown CLDR language code: $id");
+                // The CLDR plural rules contains some language that's not defined in the language names dictionary...
+                $formerCodes = array(
+                    'in' => 'id', // former Indonesian
+                    'iw' => 'he', // former Hebrew
+                    'ji' => 'yi', // former Yiddish
+                    'jw' => 'jv', // former Javanese
+                    'mo' => 'ro-MD', // former Moldavian
+                );
+                if (isset($formerCodes[$normalizedFullId]) && isset($languageNames[$formerCodes[$normalizedFullId]])) {
+                    $result = array(
+                        'name' => $languageNames[$formerCodes[$normalizedFullId]],
+                        'supersededBy' => str_replace('-', '_', $formerCodes[$normalizedFullId]),
+                    );
+                } else {
+                    $byHand = array(
+                        'bh' => 'Bihari',
+                        'guw' => 'Gun',
+                        'nah' => 'Nahuatl',
+                        'smi' => 'Sami',
+                    );
+                    if (isset($byHand[$normalizedFullId])) {
+                        $result = array(
+                            'name' => $byHand[$normalizedFullId],
+                            'supersededBy' => null,
+                        );
+                    }
                 }
             }
         }
