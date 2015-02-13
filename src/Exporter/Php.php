@@ -1,19 +1,18 @@
 <?php
-namespace Cldr2Gettext\Generator;
+namespace GettextLanguages\Exporter;
 
-class Php extends Generator
+class Php extends Exporter
 {
     /**
-     * @see Generator::toString
+     * @see Exporter::toStringDo
      */
-    public static function toString($languageConverters)
+    protected static function toStringDo($languages)
     {
         $lines = array();
         $lines[] = '<?php';
         $lines[] = 'return array(';
-        foreach ($languageConverters as $lc) {
-            /* @var $lc \Cldr2Gettext\LanguageConverter */
-            $lines[] = '    \''.$lc->languageId.'\' => array(';
+        foreach ($languages as $lc) {
+            $lines[] = '    \''.$lc->id.'\' => array(';
             $lines[] = '        \'name\' => \''.addslashes($lc->name).'\',';
             $lines[] = '        \'plurals\' => '.count($lc->categories).',';
             $lines[] = '        \'formula\' => \''.$lc->formula.'\',';

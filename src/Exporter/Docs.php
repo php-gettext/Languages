@@ -1,12 +1,12 @@
 <?php
-namespace Cldr2Gettext\Generator;
+namespace GettextLanguages\Exporter;
 
 class Docs extends Html
 {
     /**
-     * @see Generator::toString
+     * @see Exporter::toStringDo
      */
-    public static function toString($languageConverters)
+    protected static function toStringDo($languages)
     {
         $result = <<<EOT
 <!doctype html>
@@ -26,7 +26,7 @@ class Docs extends Html
         <div class="container-fluid">
 
 EOT;
-        $result .= static::buildTable($languageConverters, true);
+        $result .= static::buildTable($languages, true);
         $result .= <<<EOT
 
         </div>

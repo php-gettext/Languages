@@ -1,12 +1,12 @@
 <?php
-namespace Cldr2Gettext;
+namespace GettextLanguages;
 
 use Exception;
 
 /**
  * A helper class that handles a single category rules (eg 'zero', 'one', ...) and its formula and examples.
  */
-class CategoryConverter
+class Category
 {
     /**
      * The category identifier (eg 'zero', 'one', ..., 'other').
@@ -14,12 +14,12 @@ class CategoryConverter
      */
     public $id;
     /**
-     * The gettext formula that identifies this category (null if and only if the category is 'other')
+     * The gettext formula that identifies this category (null if and only if the category is 'other').
      * @var string|null
      */
     public $formula;
     /**
-     * The CLDR representation of some exemplar numeric ranges that satisfy this category
+     * The CLDR representation of some exemplar numeric ranges that satisfy this category.
      * @var string|null
      */
     public $examples;
@@ -62,8 +62,8 @@ class CategoryConverter
         }
     }
     /**
-     * Return a list of numbers corresponding to the $examples value
-     * @throws Exception Throws an Exception if we weren't able to expand the examples
+     * Return a list of numbers corresponding to the $examples value.
+     * @throws Exception Throws an Exception if we weren't able to expand the examples.
      * @return int[]
      */
     public function getExampleIntegers()
@@ -71,9 +71,9 @@ class CategoryConverter
         return self::expandExamples($this->examples);
     }
     /**
-     * Expand a list of examples as defined by CLDR
-     * @param string $examples A string like '1, 2, 5...7, …'
-     * @throws Exception Throws an Exception if we weren't able to expand $examples
+     * Expand a list of examples as defined by CLDR.
+     * @param string $examples A string like '1, 2, 5...7, …'.
+     * @throws Exception Throws an Exception if we weren't able to expand $examples.
      * @return int[]
      */
     public static function expandExamples($examples)

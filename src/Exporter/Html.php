@@ -1,20 +1,20 @@
 <?php
-namespace Cldr2Gettext\Generator;
+namespace GettextLanguages\Exporter;
 
-class Html extends Generator
+class Html extends Exporter
 {
     /**
-     * @see Generator::toString
+     * @see Exporter::toStringDo
      */
-    public static function toString($languageConverters)
+    protected static function toStringDo($languages)
     {
-        return self::buildTable($languageConverters, false);
+        return self::buildTable($languages, false);
     }
     protected static function h($str)
     {
         return htmlspecialchars($str, ENT_COMPAT, 'UTF-8');
     }
-    protected static function buildTable($languageConverters, $forDocs)
+    protected static function buildTable($languages, $forDocs)
     {
         $prefix = $forDocs ? '            ' : '';
         $lines = array();
@@ -29,10 +29,9 @@ class Html extends Generator
         $lines[] = $prefix.'        </tr>';
         $lines[] = $prefix.'    </thead>';
         $lines[] = $prefix.'    <tbody>';
-        foreach ($languageConverters as $lc) {
-            /* @var $lc \Cldr2Gettext\LanguageConverter */
+        foreach ($languages as $lc) {
             $lines[] = $prefix.'        <tr>';
-            $lines[] = $prefix.'            <td>'.$lc->languageId.'</td>';
+            $lines[] = $prefix.'            <td>'.$lc->id.'</td>';
             $name = self::h($lc->name);
             if (isset($lc->supersededBy)) {
                 $name .= '<br /><small><span>Superseded by</span> '.$lc->supersededBy.'</small>';

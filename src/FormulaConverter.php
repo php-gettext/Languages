@@ -1,18 +1,18 @@
 <?php
-namespace Cldr2Gettext;
+namespace GettextLanguages;
 
 use Exception;
 
 /**
- * A helper class to convert a CLDR formula to a gettext formula
+ * A helper class to convert a CLDR formula to a gettext formula.
  */
 class FormulaConverter
 {
     /**
-     * Converts a formula from the CLDR representation to the gettext representation
-     * @param string $cldrFormula The CLDR formula to convert
+     * Converts a formula from the CLDR representation to the gettext representation.
+     * @param string $cldrFormula The CLDR formula to convert.
      * @throws Exception
-     * @return bool|string Returns true if the gettext will always evaluate to true, false if gettext will always evaluate to false, return the gettext formula otherwise
+     * @return bool|string Returns true if the gettext will always evaluate to true, false if gettext will always evaluate to false, return the gettext formula otherwise.
      */
     public static function convertFormula($cldrFormula)
     {
@@ -62,10 +62,10 @@ class FormulaConverter
         }
     }
     /**
-     * Converts an atomic part of the CLDR formula to its gettext representation
-     * @param string $cldrAtom The CLDR formula atom to convert
+     * Converts an atomic part of the CLDR formula to its gettext representation.
+     * @param string $cldrAtom The CLDR formula atom to convert.
      * @throws Exception
-     * @return bool|string Returns true if the gettext will always evaluate to true, false if gettext will always evaluate to false, return the gettext formula otherwise
+     * @return bool|string Returns true if the gettext will always evaluate to true, false if gettext will always evaluate to false, return the gettext formula otherwise.
      */
     private static function convertAtom($cldrAtom)
     {
@@ -94,7 +94,7 @@ class FormulaConverter
         throw new Exception("Unable to convert the formula chunk '$cldrAtom' from CLDR to gettext");
     }
     /**
-     * Expands an atom containing a range (for instance: 'n == 1,3..5')
+     * Expands an atom containing a range (for instance: 'n == 1,3..5').
      * @param string $atom
      * @throws Exception
      * @return string

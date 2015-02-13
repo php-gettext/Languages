@@ -6,23 +6,23 @@
 
 1. To build the compressed JSON data
   ```bash
-  php bin/convert.php json
+  php bin/export.php json
   ```
 
 2. To build the uncompressed JSON data
   ```bash
-  php bin/convert.php prettyjson
+  php bin/export.php prettyjson
   ```
 
 3. To build a html table
   ```bash
-  php bin/convert.php html
+  php bin/export.php html
   ```
   [See the result here](http://mlocati.github.io/cldr-to-gettext-plural-rules/)
 
 3. To build a php file that can be included
   ```bash
-  php bin/convert.php php > yourfile.php
+  php bin/export.php php > yourfile.php
   ```
   Then you can use that generated fly in your php scripts:
   ```php

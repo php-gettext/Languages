@@ -1,7 +1,6 @@
 <?php
-use Cldr2Gettext\Generator\Generator;
-use Cldr2Gettext\CldrData;
-use Cldr2Gettext\LanguageConverter;
+use GettextLanguages\Exporter\Exporter;
+use GettextLanguages\Language;
 
 // Let's start by imposing that we don't accept any error or warning.
 // This is a really life-saving approach.
@@ -17,31 +16,11 @@ require_once dirname(__DIR__).'/src/autoloader.php';
 Enviro::initialize();
 
 try {
-    $gettextPlurals = array();
-    foreach (CldrData::getPlurals() as $cldrLanguageId => $cldrLanguageCategories) {
-        if (strtolower(str_replace(array('-', '_'), '', $cldrLanguageId)) === 'ptpt') {
-            $a = 1;
-        }
-        if (strtolower(str_replace(array('-', '_'), '', $cldrLanguageId)) === 'mo') {
-            $a = 1;
-        }
-
-        switch ($cldrLanguageId) {
-            case 'root':
-                break;
-            default:
-                $gettextPlural = new LanguageConverter($cldrLanguageId, $cldrLanguageCategories);
-                if (Enviro::$outputUSAscii) {
-                    $gettextPlural->asciify();
-                }
-                $gettextPlurals[] = $gettextPlural;
-                break;
-        }
-    }
+    $languages = Language::getAll();
     if (isset(Enviro::$outputFilename)) {
-        echo call_user_func(array(Generator::getGeneratorClassName(Enviro::$outputFormat), 'toFile'), $gettextPlurals, Enviro::$outputFilename);
+        echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toFile'), $languages, Enviro::$outputFilename, array('us-ascii' => Enviro::$outputUSAscii));
     } else {
-        echo call_user_func(array(Generator::getGeneratorClassName(Enviro::$outputFormat), 'toString'), $gettextPlurals);
+        echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toString'), $languages, array('us-ascii' => Enviro::$outputUSAscii));
     }
 } catch (Exception $x) {
     Enviro::echoErr($x->getMessage()."\n");
@@ -81,7 +60,7 @@ class Enviro
         self::$outputUSAscii = false;
         self::$outputFormat = null;
         self::$outputFilename = null;
-        $generators = Generator::getGenerators();
+        $exporters = Exporter::getExporters();
         if (isset($argv) && is_array($argv)) {
             foreach ($argv as $argi => $arg) {
                 if ($argi === 0) {
@@ -102,7 +81,7 @@ class Enviro
                                 }
                                 list(, self::$outputFilename) = explode('=', $arg);
                                 self::$outputFilename = trim(self::$outputFilename);
-                            } elseif (isset($generators[$argLC])) {
+                            } elseif (isset($exporters[$argLC])) {
                                 if (isset(self::$outputFormat)) {
                                     self::echoErr("The output format has been specified more than once!\n");
                                     self::showSyntax();
@@ -130,7 +109,7 @@ class Enviro
      */
     public static function showSyntax()
     {
-        self::echoErr("Syntax: php ".basename(__FILE__)." [--us-ascii] [--output=<file name>] <".implode('|', array_keys(Generator::getGenerators())).">\n");
+        self::echoErr("Syntax: php ".basename(__FILE__)." [--us-ascii] [--output=<file name>] <".implode('|', array_keys(Exporter::getExporters())).">\n");
     }
     /**
      * Print a string to stderr.

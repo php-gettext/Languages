@@ -1,18 +1,18 @@
 <?php
-namespace Cldr2Gettext;
+namespace GettextLanguages;
 
 use Exception;
 
 /**
  * Main class to convert the plural rules of a language from CLDR to gettext.
  */
-class LanguageConverter
+class Language
 {
     /**
      * The language ID.
      * @var string
      */
-    public $languageId;
+    public $id;
     /**
      * The language name.
      * @var string
@@ -25,30 +25,33 @@ class LanguageConverter
     public $supersededBy;
     /**
      * The list of categories.
-     * @var CategoryConverter[]
+     * @var Category[]
      */
     public $categories;
     /**
-     * The gettext formula to decide which category should be applied
+     * The gettext formula to decide which category should be applied.
      * @var string
      */
     public $formula;
     /**
-     * Initialize the instance and parse the language code
-     * @param string $cldrLanguageId The CLDR language identifier.
+     * Initialize the instance and parse the language code.
+     * @param string $id The language identifier.
      * @param array $cldrCategories The CLDR categories definition.
      * @throws Exception Throws an Exception if $fullId is not valid.
      */
-    public function __construct($cldrLanguageId, $cldrCategories)
+    private function __construct($id, $cldrCategories)
     {
-        $this->languageId = str_replace('-', '_', $cldrLanguageId);
-        $info = CldrData::getLanguageInfo($cldrLanguageId);
+        $info = CldrData::getLanguageInfo($id);
+        if (!isset($info)) {
+            throw new Exception("Invalid language identifier: $id");
+        }
+        $this->id = str_replace('-', '_', $id);
         $this->name = $info['name'];
         $this->supersededBy = isset($info['supersededBy']) ? str_replace('-', '_', $info['supersededBy']) : null;
         // Let's build the category list
         $this->categories = array();
         foreach ($cldrCategories as $cldrCategoryId => $cldrFormulaAndExamples) {
-            $category = new CategoryConverter($cldrCategoryId, $cldrFormulaAndExamples);
+            $category = new Category($cldrCategoryId, $cldrFormulaAndExamples);
             foreach ($this->categories as $c) {
                 if ($category->id === $c->id) {
                     throw new Exception("The category '{$category->id}' is specified more than once");
@@ -57,21 +60,51 @@ class LanguageConverter
             $this->categories[] = $category;
         }
         if (empty($this->categories)) {
-            throw new Exception("The language '$cldrLanguageId' does not have any plural category");
+            throw new Exception("The language '$id' does not have any plural category");
         }
         // Let's sort the categories from 'zero' to 'other'
-        usort($this->categories, function (CategoryConverter $category1, CategoryConverter $category2) {
+        usort($this->categories, function (Category $category1, Category $category2) {
             return array_search($category1->id, CldrData::$categories) - array_search($category2->id, CldrData::$categories);
         });
         // The 'other' category should always be there
         if ($this->categories[count($this->categories) - 1]->id !== CldrData::OTHER_CATEGORY) {
-            throw new Exception("The language '$cldrLanguageId' does not have the '".CldrData::OTHER_CATEGORY."' plural category");
+            throw new Exception("The language '$id' does not have the '".CldrData::OTHER_CATEGORY."' plural category");
         }
         $this->checkAlwaysTrueCategories();
         $this->checkAlwaysFalseCategories();
         $this->checkAllCategoriesWithExamples();
         $this->formula = $this->buildFormula();
     }
+    /**
+     * Return a list of all languages available.
+     * @throws Exception
+     * @return Language[]
+     */
+    public static function getAll()
+    {
+        $result = array();
+        foreach (CldrData::getPlurals() as $cldrLanguageId => $cldrLanguageCategories) {
+            $result[] = new Language($cldrLanguageId, $cldrLanguageCategories);
+        }
+
+        return $result;
+    }
+    /**
+     * Return a Language instance given the language id
+     * @param string $id
+     * @return Language|null
+     */
+    public static function getById($id)
+    {
+        $result = null;
+        $cldrCategories = CldrData::getCategoriesFor($id);
+        if (isset($cldrCategories) && CldrData::getLanguageInfo($id)) {
+            $result = new Language($id, $cldrCategories);
+        }
+
+        return $result;
+    }
+
     /**
      * Let's look for categories that will always occur.
      * This because with decimals (CLDR) we may have more cases, with integers (gettext) we have just one case.
@@ -81,7 +114,6 @@ class LanguageConverter
     {
         $alwaysTrueCategory = null;
         foreach ($this->categories as $category) {
-            /* @var $category CategoryConverter */
             if ($category->formula === true) {
                 if (!isset($category->examples)) {
                     throw new Exception("The category '{$category->id}' should always occur, but it does not have examples (so for CLDR it will never occur for integers!)");
@@ -110,7 +142,6 @@ class LanguageConverter
     {
         $filtered = array();
         foreach ($this->categories as $category) {
-            /* @var $category CategoryConverter */
             if ($category->formula === false) {
                 if (isset($category->examples)) {
                     throw new Exception("The category '{$category->id}' should never occur, but it has examples (so for CLDR it may occur!)");
@@ -271,14 +302,30 @@ class LanguageConverter
         return isset($map[$formula]) ? $map[$formula] : $formula;
     }
     /**
-     * Take one variable and, if it's a string, we transliterate it to US-ASCII
+     * Take one variable and, if it's a string, we transliterate it to US-ASCII.
      * @param mixed $value The variable to work on.
      * @throws Exception
      */
     private static function asciifier(&$value)
     {
         if (is_string($value) && ($value !== '')) {
-            $transliterated = @iconv('UTF-8', 'US-ASCII//IGNORE//TRANSLIT', $value);
+            // Avoid converting from 'Ÿ' to '"Y', let's prefer 'Y'
+            $transliterated = strtr($value, array(
+                'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A',
+                'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+                'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I',
+                'Ñ' => 'N',
+                'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O',
+                'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U',
+                'Ÿ' => 'Y', 'Ý' => 'Y',
+                'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a',
+                'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e',
+                'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
+                'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ö' => 'o',
+                'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ü' => 'u',
+                'ý' => 'y', 'ÿ' => 'y',
+            ));
+            $transliterated = @iconv('UTF-8', 'US-ASCII//IGNORE//TRANSLIT', $transliterated);
             if (($transliterated === false) || ($transliterated === '')) {
                 throw new Exception("Unable to transliterate '$value'");
             }
@@ -286,14 +333,21 @@ class LanguageConverter
         }
     }
     /**
-     * Converts all the strings to US-ASCII.
+     * Returns a clone of this instance with all the strings to US-ASCII.
+     * @return Language
      */
-    public function asciify()
+    public function getUSAsciiClone()
     {
-        self::asciifier($this->name);
-        self::asciifier($this->formula);
+        $clone = clone $this;
+        self::asciifier($clone->name);
+        self::asciifier($clone->formula);
+        $clone->categories = array();
         foreach ($this->categories as $category) {
-            self::asciifier($category->examples);
+            $categoryClone = clone $category;
+            self::asciifier($categoryClone->examples);
+            $clone->categories[] = $categoryClone;
         }
+
+        return $clone;
     }
 }
