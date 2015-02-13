@@ -1,5 +1,6 @@
-/temp/
 /.settings/
+/temp/
+/vendor/
 /.buildpath
 /.project
 /tests/data.*
