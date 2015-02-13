@@ -20,7 +20,7 @@
   ```
   [See the result here](http://mlocati.github.io/cldr-to-gettext-plural-rules/)
 
-3. To build a php file that can be included
+4. To build a php file that can be included
   ```bash
   php bin/export.php php > yourfile.php
   ```
@@ -31,6 +31,12 @@
   $rules = include 'yourfile.php';
   ...
   ```
+
+5. To export the languages in XML format
+  ```bash
+  php bin/export.php xml
+  ```
+
 
 ## Dynamic usage
 
