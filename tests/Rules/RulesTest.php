@@ -69,7 +69,7 @@ class RulesTest extends PHPUnit_Framework_TestCase
             foreach ($this->readData($format) as $locale => $info) {
                 foreach ($info['cases'] as $case) {
                     $testData[] = array(
-                    		$format,
+                        $format,
                         $locale,
                         $case,
                         $info['examples'],
