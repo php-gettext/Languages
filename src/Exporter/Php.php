@@ -1,10 +1,10 @@
 <?php
-namespace GettextLanguages\Generator;
+namespace GettextLanguages\Exporter;
 
-class Php extends Generator
+class Php extends Exporter
 {
     /**
-     * @see Generator::toString
+     * @see Exporter::toString
      */
     public static function toString($languageConverters)
     {

@@ -1,5 +1,5 @@
 <?php
-use GettextLanguages\Generator\Generator;
+use GettextLanguages\Exporter\Exporter;
 use GettextLanguages\CldrData;
 use GettextLanguages\LanguageConverter;
 
@@ -39,9 +39,9 @@ try {
         }
     }
     if (isset(Enviro::$outputFilename)) {
-        echo call_user_func(array(Generator::getGeneratorClassName(Enviro::$outputFormat), 'toFile'), $gettextPlurals, Enviro::$outputFilename);
+        echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toFile'), $gettextPlurals, Enviro::$outputFilename);
     } else {
-        echo call_user_func(array(Generator::getGeneratorClassName(Enviro::$outputFormat), 'toString'), $gettextPlurals);
+        echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toString'), $gettextPlurals);
     }
 } catch (Exception $x) {
     Enviro::echoErr($x->getMessage()."\n");
@@ -81,7 +81,7 @@ class Enviro
         self::$outputUSAscii = false;
         self::$outputFormat = null;
         self::$outputFilename = null;
-        $generators = Generator::getGenerators();
+        $exporters = Exporter::getExporters();
         if (isset($argv) && is_array($argv)) {
             foreach ($argv as $argi => $arg) {
                 if ($argi === 0) {
@@ -102,7 +102,7 @@ class Enviro
                                 }
                                 list(, self::$outputFilename) = explode('=', $arg);
                                 self::$outputFilename = trim(self::$outputFilename);
-                            } elseif (isset($generators[$argLC])) {
+                            } elseif (isset($exporters[$argLC])) {
                                 if (isset(self::$outputFormat)) {
                                     self::echoErr("The output format has been specified more than once!\n");
                                     self::showSyntax();
@@ -130,7 +130,7 @@ class Enviro
      */
     public static function showSyntax()
     {
-        self::echoErr("Syntax: php ".basename(__FILE__)." [--us-ascii] [--output=<file name>] <".implode('|', array_keys(Generator::getGenerators())).">\n");
+        self::echoErr("Syntax: php ".basename(__FILE__)." [--us-ascii] [--output=<file name>] <".implode('|', array_keys(Exporter::getExporters())).">\n");
     }
     /**
      * Print a string to stderr.

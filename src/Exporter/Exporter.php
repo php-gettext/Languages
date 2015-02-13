@@ -1,46 +1,46 @@
 <?php
-namespace GettextLanguages\Generator;
+namespace GettextLanguages\Exporter;
 
 use Exception;
 
 /**
- * Base class for all the generators
+ * Base class for all the exporters
  */
-abstract class Generator
+abstract class Exporter
 {
     /**
      * @var array
      */
-    private static $generators;
+    private static $exporters;
     /**
-     * Return the list of all the available generators. Keys are the generator handles, values are the generator class names
+     * Return the list of all the available exporters. Keys are the exporter handles, values are the exporter class names
      * @return string[]
      */
-    final public static function getGenerators()
+    final public static function getExporters()
     {
-        if (!isset(self::$generators)) {
-            $generators = array();
+        if (!isset(self::$exporters)) {
+            $exporters = array();
             $m = null;
             foreach (scandir(__DIR__) as $f) {
                 if (preg_match('/^(\w+)\.php$/', $f, $m)) {
                     if ($f !== basename(__FILE__)) {
-                        $generators[strtolower($m[1])] = $m[1];
+                        $exporters[strtolower($m[1])] = $m[1];
                     }
                 }
             }
-            self::$generators = $generators;
+            self::$exporters = $exporters;
         }
 
-        return self::$generators;
+        return self::$exporters;
     }
     /**
-     * Returns the fully qualified class name of a generator given its handle.
-     * @param string $generatorHandle The generator class handle
+     * Returns the fully qualified class name of a exporter given its handle.
+     * @param string $exporterHandle The exporter class handle
      * @return string
      */
-    final public static function getGeneratorClassName($generatorHandle)
+    final public static function getExporterClassName($exporterHandle)
     {
-        return __NAMESPACE__.'\\'.ucfirst(strtolower($generatorHandle));
+        return __NAMESPACE__.'\\'.ucfirst(strtolower($exporterHandle));
     }
     /**
      * Convert a list of LanguageConverter instances to string.

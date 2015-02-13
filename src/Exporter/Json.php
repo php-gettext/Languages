@@ -1,7 +1,7 @@
 <?php
-namespace GettextLanguages\Generator;
+namespace GettextLanguages\Exporter;
 
-class Json extends Generator
+class Json extends Exporter
 {
     /**
      * Return the options for json_encode
@@ -12,7 +12,7 @@ class Json extends Generator
         return 0;
     }
     /**
-     * @see Generator::toString
+     * @see Exporter::toString
      */
     public static function toString($languageConverters)
     {

@@ -1,5 +1,5 @@
 <?php
-namespace GettextLanguages\Generator;
+namespace GettextLanguages\Exporter;
 
 class Prettyjson extends Json
 {
