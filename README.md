@@ -2,7 +2,7 @@
 # gettext plural rules generated from CLDR data
 
 
-## Usage
+## Static usage
 
 1. To build the compressed JSON data
   ```bash
@@ -31,6 +31,21 @@
   $rules = include 'yourfile.php';
   ...
   ```
+
+## Dynamic usage
+
+You can include the files in this project (by loading the `src/autoloader.php` file or using composer).
+That way you can directly use the project classes in your php projects:
+```php
+<?php
+...
+require_once 'path/to/src/autoloader.php';
+...
+$allLanguages = GettextLanguages\Language::getAll();
+...
+$oneLanguage = GettextLanguages\Language::getById('en_US');
+...
+```
 
 
 ## Is this data correct?
