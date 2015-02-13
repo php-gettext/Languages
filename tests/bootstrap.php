@@ -6,3 +6,9 @@ exec('php '.dirname(dirname(__FILE__)).'/bin/convert.php php --output='.dirname(
 if($rc !== 0) {
     throw new Exception(implode("\n", $execOutput));
 }
+exec('php '.dirname(dirname(__FILE__)).'/bin/convert.php json --output='.dirname(__FILE__).'/data.json', $execOutput, $rc);
+if($rc !== 0) {
+    throw new Exception(implode("\n", $execOutput));
+}
+
+require_once dirname(dirname(__FILE__)).'/src/autoloader.php';
