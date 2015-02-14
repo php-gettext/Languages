@@ -18,11 +18,9 @@ class Xml extends Exporter
             if (isset($language->supersededBy)) {
                 $xLanguage->setAttribute('supersededBy', $language->supersededBy);
             }
-            $xFormula = $xml->createElement('formula');
-            $xFormula->appendChild($xml->createTextNode($language->formula));
-            $xLanguage->appendChild($xFormula);
+            $xLanguage->setAttribute('formula', $language->formula);
             foreach ($language->categories as $category) {
-                $xCategory = $xml->createElement('language');
+                $xCategory = $xml->createElement('category');
                 $xCategory->setAttribute('id', $category->id);
                 $xCategory->setAttribute('examples', $category->examples);
                 $xLanguage->appendChild($xCategory);
