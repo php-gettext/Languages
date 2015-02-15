@@ -19,16 +19,24 @@ class GetTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($language, "The language 'it' has not been found");
         $this->assertInstanceOf('Gettext\Languages\Language', $language);
         $this->assertSame('Italian', $language->name);
+        $this->assertNull($language->territory);
 
         $language = Language::getById('it-IT');
         $this->assertNotNull($language, "The language 'it-IT' has not been found");
         $this->assertSame('it_IT', $language->id);
         $this->assertSame('Italian (Italy)', $language->name);
+        $this->assertSame('Italy', $language->territory);
 
         $language = Language::getById('it_IT');
         $this->assertNotNull($language, "The language 'it_IT' has not been found");
         $this->assertSame('it_IT', $language->id);
         $this->assertSame('Italian (Italy)', $language->name);
+
+        $language1 = Language::getById('nl_BE');
+        $this->assertNotNull($language1, "The language 'nl_BE' has not been found");
+        $language2 = Language::getById('nl');
+        $this->assertNotNull($language2, "The language 'nl' has not been found");
+        $this->assertSame($language1->baseLanguage, $language2->name);
     }
 
     public function testPortuguese()
