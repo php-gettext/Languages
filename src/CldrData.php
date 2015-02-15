@@ -188,7 +188,7 @@ class CldrData
             $territoryName = null;
             if (isset($territoryId)) {
                 $territoryNames = self::getTerritoryNames();
-                if (isset($territoryNames, $territoryId)) {
+                if (isset($territoryNames[$territoryId])) {
                     if ($territoryId !== '001') {
                         $territoryName = $territoryNames[$territoryId];
                     }
