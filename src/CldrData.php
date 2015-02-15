@@ -154,7 +154,7 @@ class CldrData
     /**
      * Retrieve the name of a language, as well as if a language code is deprecated in favor of another language code.
      * @param string $id The language identifier.
-     * @return array|null Returns an array with the keys 'id' (normalized), 'name', 'supersededBy' (optional), 'territory' (optional), 'categories'. If $id is not valid returns null.
+     * @return array|null Returns an array with the keys 'id' (normalized), 'name', 'supersededBy' (optional), 'territory' (optional), 'baseLanguage' (optional), 'categories'. If $id is not valid returns null.
      */
     public static function getLanguageInfo($id)
     {
@@ -210,6 +210,12 @@ class CldrData
             if (!isset($languageName)) {
                 $allGood = false;
             }
+            $baseLanguage = null;
+            if (isset($scriptId) || isset($territoryId)) {
+                if (isset($languageNames[$languageId]) && ($languageNames[$languageId] !== $languageName)) {
+                    $baseLanguage = $languageNames[$languageId];
+                }
+            }
             $plural = null;
             $plurals = self::getPlurals();
             foreach ($variants as $variant) {
@@ -238,6 +244,9 @@ class CldrData
                 }
                 if (isset($territoryName)) {
                     $result['territory'] = $territoryName;
+                }
+                if (isset($baseLanguage)) {
+                    $result['baseLanguage'] = $baseLanguage;
                 }
                 $result['categories'] = $plural;
             }

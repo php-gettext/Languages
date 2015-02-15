@@ -25,9 +25,14 @@ class Language
     public $supersededBy;
     /**
      * The territory name.
-     * @var string
+     * @var string|null
      */
     public $territory;
+    /**
+     * The name of the base language
+     * @var string|null
+     */
+    public $baseLanguage;
     /**
      * The list of categories.
      * @var Category[]
@@ -49,6 +54,7 @@ class Language
         $this->name = $info['name'];
         $this->supersededBy = isset($info['supersededBy']) ? $info['supersededBy'] : null;
         $this->territory = isset($info['territory']) ? $info['territory'] : null;
+        $this->baseLanguage = isset($info['baseLanguage']) ? $info['baseLanguage'] : null;
         // Let's build the category list
         $this->categories = array();
         foreach ($info['categories'] as $cldrCategoryId => $cldrFormulaAndExamples) {
