@@ -14,8 +14,17 @@ class Php extends Exporter
         foreach ($languages as $lc) {
             $lines[] = '    \''.$lc->id.'\' => array(';
             $lines[] = '        \'name\' => \''.addslashes($lc->name).'\',';
-            $lines[] = '        \'plurals\' => '.count($lc->categories).',';
+            if (isset($lc->supersededBy)) {
+                $lines[] = '        \'supersededBy\' => \''.$lc->supersededBy.'\',';
+            }
+            if (isset($language->territory)) {
+                $lines[] = '        \'territory\' => \''.addslashes($language->territory).'\',';
+            }
+            if (isset($language->baseLanguage)) {
+                $lines[] = '        \'baseLanguage\' => \''.addslashes($language->baseLanguage).'\',';
+            }
             $lines[] = '        \'formula\' => \''.$lc->formula.'\',';
+            $lines[] = '        \'plurals\' => '.count($lc->categories).',';
             $catNames = array();
             foreach ($lc->categories as $c) {
                 $catNames[] = "'{$c->id}'";
@@ -26,9 +35,6 @@ class Php extends Exporter
                 $lines[] = '            \''.$c->id.'\' => \''.$c->examples.'\',';
             }
             $lines[] = '        ),';
-            if (isset($lc->supersededBy)) {
-                $lines[] = '        \'supersededBy\' => \''.$lc->supersededBy.'\',';
-            }
             $lines[] = '    ),';
         }
         $lines[] = ');';

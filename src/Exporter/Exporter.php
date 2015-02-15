@@ -83,32 +83,4 @@ abstract class Exporter
             throw new Exception("Error writing data to '$filename'");
         }
     }
-    /**
-     * Convert a list of Language instances to a standard php array.
-     * @param Language[] $languages
-     * @return array
-     */
-    final protected static function toArray($languages)
-    {
-        $result = array();
-        foreach ($languages as $language) {
-            $array = array(
-                'name' => $language->name,
-                'plurals' => count($language->categories),
-                'formula' => $language->formula,
-                'cases' => array(),
-                'examples' => array(),
-            );
-            foreach ($language->categories as $category) {
-                $array['cases'][] = $category->id;
-                $array['examples'][$category->id] = $category->examples;
-            }
-            if (isset($language->supersededBy)) {
-                $array['supersededBy'] = $language->supersededBy;
-            }
-            $result[$language->id] = $array;
-        }
-
-        return $result;
-    }
 }
