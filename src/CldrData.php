@@ -1,6 +1,8 @@
 <?php
 namespace GettextLanguages;
 
+use Exception;
+
 /**
  * Holds the CLDR data.
  */
@@ -17,9 +19,89 @@ class CldrData
      */
     public static $categories = array('zero', 'one', 'two', 'few', 'many', self::OTHER_CATEGORY);
     /**
-     * @var string[]
+     * The loaded CLDR data
+     * @var array
      */
-    private static $languageNames;
+    private static $data;
+    /**
+     * Returns the loaded CLDR data.
+     * @param string $key Can be 'languages', 'territories', 'plurals', 'supersededLanguages'
+     */
+    private static function getData($key)
+    {
+        if (!isset(self::$data)) {
+            $fixKeys = function ($list) {
+                $result = array();
+                foreach ($list as $key => $value) {
+                    switch ($key) {
+                        case 'root':
+                            break;
+                        default:
+                            if (!preg_match('/.-alt-(short|variant)$/', $key)) {
+                                $result[str_replace('-', '_', $key)] = $value;
+                            }
+                            break;
+                    }
+                }
+
+                return $result;
+            };
+            $data = array();
+            $json = json_decode(file_get_contents(__DIR__.'/cldr-data/main/en-US/languages.json'), true);
+            $data['languages'] = $fixKeys($json['main']['en-US']['localeDisplayNames']['languages']);
+            $json = json_decode(file_get_contents(__DIR__.'/cldr-data/main/en-US/territories.json'), true);
+            $data['territories'] = $fixKeys($json['main']['en-US']['localeDisplayNames']['territories']);
+            $json = json_decode(file_get_contents(__DIR__.'/cldr-data/supplemental/plurals.json'), true);
+            $data['plurals'] = $fixKeys($json['supplemental']['plurals-type-cardinal']);
+            $data['supersededLanguages'] = array();
+            // Remove the languages for which we don't have plurals
+            foreach (array_keys(array_diff_key($data['languages'], $data['plurals'])) as $missingPlural) {
+                if (preg_match('/^([a-z]{2,3})_/', $missingPlural, $m)) {
+                    if (!isset($data['plurals'][$m[1]])) {
+                        unset($data['languages'][$missingPlural]);
+                    }
+                } else {
+                    unset($data['languages'][$missingPlural]);
+                }
+            }
+            // Fix the languages for which we have plurals
+            $formerCodes = array(
+                'in' => 'id', // former Indonesian
+                'iw' => 'he', // former Hebrew
+                'ji' => 'yi', // former Yiddish
+                'jw' => 'jv', // former Javanese
+                'mo' => 'ro_MD', // former Moldavian
+            );
+            $knownMissingLanguages = array(
+                'bh' => 'Bihari',
+                'guw' => 'Gun',
+                'nah' => 'Nahuatl',
+                'smi' => 'Sami',
+            );
+            foreach (array_keys(array_diff_key($data['plurals'], $data['languages'])) as $missingLanguage) {
+                if (isset($formerCodes[$missingLanguage]) && isset($data['languages'][$formerCodes[$missingLanguage]])) {
+                    $data['languages'][$missingLanguage] = $data['languages'][$formerCodes[$missingLanguage]];
+                    $data['supersededLanguages'][$missingLanguage] = $formerCodes[$missingLanguage];
+                } else {
+                    if (isset($knownMissingLanguages[$missingLanguage])) {
+                        $data['languages'][$missingLanguage] = $knownMissingLanguages[$missingLanguage];
+                    } else {
+                        throw new Exception("We have the plural rule for the language '$missingLanguage' but we don't have its language name");
+                    }
+                }
+            }
+            ksort($data['languages'], SORT_STRING);
+            ksort($data['territories'], SORT_STRING);
+            ksort($data['plurals'], SORT_STRING);
+            ksort($data['supersededLanguages'], SORT_STRING);
+            self::$data = $data;
+        }
+        if (!@isset(self::$data[$key])) {
+            throw new Exception("Invalid CLDR data key: '$key'");
+        }
+
+        return self::$data[$key];
+    }
     /**
      * Returns a dictionary containing the language names.
      * The keys are the language identifiers.
@@ -28,18 +110,8 @@ class CldrData
      */
     public static function getLanguageNames()
     {
-        if (!isset(self::$languageNames)) {
-            $json = json_decode(file_get_contents(__DIR__.'/cldr-data/main/en-US/languages.json'), true);
-            self::$languageNames = $json['main']['en-US']['localeDisplayNames']['languages'];
-            unset(self::$languageNames['root']);
-        }
-
-        return self::$languageNames;
+        return self::getData('languages');
     }
-    /**
-     * @var string[]
-     */
-    private static $territoryNames;
     /**
      * Return a dictionary containing the territory names (in US English).
      * The keys are the territory identifiers.
@@ -48,12 +120,7 @@ class CldrData
      */
     public static function getTerritoryNames()
     {
-        if (!isset(self::$territoryNames)) {
-            $json = json_decode(file_get_contents(__DIR__.'/cldr-data/main/en-US/territories.json'), true);
-            self::$territoryNames = $json['main']['en-US']['localeDisplayNames']['territories'];
-        }
-
-        return self::$territoryNames;
+        return self::getData('territories');
     }
     /**
      * @var array
@@ -74,104 +141,105 @@ class CldrData
      */
     public static function getPlurals()
     {
-        if (!isset(self::$plurals)) {
-            $json = json_decode(file_get_contents(__DIR__.'/cldr-data/supplemental/plurals.json'), true);
-            self::$plurals = $json['supplemental']['plurals-type-cardinal'];
-            unset(self::$plurals['root']);
-        }
-
-        return self::$plurals;
+        return self::getData('plurals');
     }
     /**
-     * Retrieve the CLDR plural categories for a specific language; returns null if $languageId is not valid.
-     * @param string $languageId
-     * @return array|null
+     * Return a list of superseded language codes.
+     * @return array Keys are the former language codes, values are the new language/locale codes.
      */
-    public static function getCategoriesFor($languageId)
+    public static function getSupersededLanguages()
     {
-        $matches = null;
-        if (!preg_match('/^([a-z]{2,3})(?:[_\-]([A-Z][a-z]{3}))?(?:[_\-]([A-Z]{2}|[0-9]{3}))?(?:$|-)/', $languageId, $matches)) {
-            return;
-        }
-        $languageId = $matches[1];
-        // $matches[2] is the script id, we don't use it
-        $territoryId = isset($matches[3]) ? $matches[3] : null;
-        $variants = array();
-        if (isset($territoryId)) {
-            $variants[] = "$languageId-$territoryId";
-        }
-        $variants[] = $languageId;
-        $plurals = self::getPlurals();
-        $result = null;
-        foreach ($variants as $variant) {
-            if (isset($plurals[$variant])) {
-                $result = $plurals[$variant];
-                break;
-            }
-        }
-
-        return $result;
+        return self::getData('supersededLanguages');
     }
     /**
      * Retrieve the name of a language, as well as if a language code is deprecated in favor of another language code.
      * @param string $id The language identifier.
-     * @return array|null Returns an array with the keys 'name' and 'supersededBy'. If $id is not valid returns null.
+     * @return array|null Returns an array with the keys 'id' (normalized), 'name', 'supersededBy' (optional), 'territory' (optional), 'categories'. If $id is not valid returns null.
      */
     public static function getLanguageInfo($id)
     {
         $result = null;
         $matches = array();
-        if (preg_match('/^([a-z]{2,3})(?:[_\-]([A-Z][a-z]{3}))?(?:[_\-]([A-Z]{2}|[0-9]{3}))?(?:$|-)/', $id, $matches)) {
-            $languageId = $matches[1];
-            // $matches[2] is the script id, we don't use it
-            $territoryId = isset($matches[3]) ? $matches[3] : null;
-            $normalizedFullId = isset($territoryId) ? "{$languageId}-{$territoryId}" : $languageId;
-            $languageNames = self::getLanguageNames();
-            if (isset($languageNames[$normalizedFullId])) {
-                $result = array(
-                    'name' => $languageNames[$normalizedFullId],
-                    'supersededBy' => null,
-                );
-            } elseif (isset($languageNames[$languageId])) {
-                $result = array(
-                    'name' => $languageNames[$languageId],
-                    'supersededBy' => null,
-                );
-                if (isset($territoryId)) {
-                    $territoryNames = self::getTerritoryNames();
-                    if (!isset($territoryNames[$territoryId])) {
-                        return;
+        if (preg_match('/^([a-z]{2,3})(?:[_\-]([a-z]{4}))?(?:[_\-]([a-z]{2}|[0-9]{3}))?(?:$|-)/i', $id, $matches)) {
+            $languageId = strtolower($matches[1]);
+            $scriptId = (isset($matches[2]) && ($matches[2] !== '')) ? ucfirst(strtolower($matches[2])) : null;
+            $territoryId = (isset($matches[3]) && ($matches[3] !== '')) ? strtoupper($matches[3]) : null;
+            $normalizedId = $languageId;
+            if (isset($scriptId)) {
+                $normalizedId .= '_'.$scriptId;
+            }
+            if (isset($territoryId)) {
+                $normalizedId .= '_'.$territoryId;
+            }
+            // Structure precedence: see Likely Subtags - http://www.unicode.org/reports/tr35/tr35-31/tr35.html#Likely_Subtags
+            $variants = array();
+            $variantsWithTerritory = array();
+            if (isset($scriptId) && isset($territoryId)) {
+                $variantsWithTerritory[] = $variants[] = "{$languageId}_{$scriptId}_{$territoryId}";
+            }
+            if (isset($scriptId)) {
+                $variants[] = "{$languageId}_{$scriptId}";
+            }
+            if (isset($territoryId)) {
+                $variantsWithTerritory[] = $variants[] = "{$languageId}_{$territoryId}";
+            }
+            $variants[] = $languageId;
+            $allGood = true;
+            $territoryName = null;
+            if (isset($territoryId)) {
+                $territoryNames = self::getTerritoryNames();
+                if (isset($territoryNames, $territoryId)) {
+                    if ($territoryId !== '000') {
+                        $territoryName = $territoryNames[$territoryId];
                     }
-                    $result['name'] .= ' ('.$territoryNames[$territoryId].')';
-                }
-            } else {
-                // The CLDR plural rules contains some language that's not defined in the language names dictionary...
-                $formerCodes = array(
-                    'in' => 'id', // former Indonesian
-                    'iw' => 'he', // former Hebrew
-                    'ji' => 'yi', // former Yiddish
-                    'jw' => 'jv', // former Javanese
-                    'mo' => 'ro-MD', // former Moldavian
-                );
-                if (isset($formerCodes[$normalizedFullId]) && isset($languageNames[$formerCodes[$normalizedFullId]])) {
-                    $result = array(
-                        'name' => $languageNames[$formerCodes[$normalizedFullId]],
-                        'supersededBy' => str_replace('-', '_', $formerCodes[$normalizedFullId]),
-                    );
                 } else {
-                    $byHand = array(
-                        'bh' => 'Bihari',
-                        'guw' => 'Gun',
-                        'nah' => 'Nahuatl',
-                        'smi' => 'Sami',
-                    );
-                    if (isset($byHand[$normalizedFullId])) {
-                        $result = array(
-                            'name' => $byHand[$normalizedFullId],
-                            'supersededBy' => null,
-                        );
-                    }
+                    $allGood = false;
                 }
+            }
+            $languageName = null;
+            $languageNames = self::getLanguageNames();
+            foreach ($variants as $variant) {
+                if (isset($languageNames[$variant])) {
+                    $languageName = $languageNames[$variant];
+                    if (isset($territoryName) && (!in_array($variant, $variantsWithTerritory))) {
+                        $languageName .= ' ('.$territoryNames[$territoryId].')';
+                    }
+                    break;
+                }
+            }
+            if (!isset($languageName)) {
+                $allGood = false;
+            }
+            $plural = null;
+            $plurals = self::getPlurals();
+            foreach ($variants as $variant) {
+                if (isset($plurals[$variant])) {
+                    $plural = $plurals[$variant];
+                    break;
+                }
+            }
+            if (!isset($plural)) {
+                $allGood = false;
+            }
+            $supersededBy = null;
+            $supersededBys = self::getSupersededLanguages();
+            foreach ($variants as $variant) {
+                if (isset($supersededBys[$variant])) {
+                    $supersededBy = $supersededBys[$variant];
+                    break;
+                }
+            }
+            if ($allGood) {
+                $result = array();
+                $result['id'] = $normalizedId;
+                $result['name'] = $languageName;
+                if (isset($supersededBy)) {
+                    $result['supersededBy'] = $supersededBy;
+                }
+                if (isset($territoryName)) {
+                    $result['territory'] = $territoryName;
+                }
+                $result['categories'] = $plural;
             }
         }
 

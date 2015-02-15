@@ -24,6 +24,11 @@ class Language
      */
     public $supersededBy;
     /**
+     * The territory name.
+     * @var string
+     */
+    public $territory;
+    /**
      * The list of categories.
      * @var Category[]
      */
@@ -35,22 +40,18 @@ class Language
     public $formula;
     /**
      * Initialize the instance and parse the language code.
-     * @param string $id The language identifier.
-     * @param array $cldrCategories The CLDR categories definition.
+     * @param array $info The result of CldrData::getLanguageInfo()
      * @throws Exception Throws an Exception if $fullId is not valid.
      */
-    private function __construct($id, $cldrCategories)
+    private function __construct($info)
     {
-        $info = CldrData::getLanguageInfo($id);
-        if (!isset($info)) {
-            throw new Exception("Invalid language identifier: $id");
-        }
-        $this->id = str_replace('-', '_', $id);
+        $this->id = $info['id'];
         $this->name = $info['name'];
-        $this->supersededBy = isset($info['supersededBy']) ? str_replace('-', '_', $info['supersededBy']) : null;
+        $this->supersededBy = isset($info['supersededBy']) ? $info['supersededBy'] : null;
+        $this->territory = isset($info['territory']) ? $info['territory'] : null;
         // Let's build the category list
         $this->categories = array();
-        foreach ($cldrCategories as $cldrCategoryId => $cldrFormulaAndExamples) {
+        foreach ($info['categories'] as $cldrCategoryId => $cldrFormulaAndExamples) {
             $category = new Category($cldrCategoryId, $cldrFormulaAndExamples);
             foreach ($this->categories as $c) {
                 if ($category->id === $c->id) {
@@ -83,8 +84,8 @@ class Language
     public static function getAll()
     {
         $result = array();
-        foreach (CldrData::getPlurals() as $cldrLanguageId => $cldrLanguageCategories) {
-            $result[] = new Language($cldrLanguageId, $cldrLanguageCategories);
+        foreach (array_keys(CldrData::getLanguageNames()) as $cldrLanguageId) {
+            $result[] = new Language(CldrData::getLanguageInfo($cldrLanguageId));
         }
 
         return $result;
@@ -97,9 +98,9 @@ class Language
     public static function getById($id)
     {
         $result = null;
-        $cldrCategories = CldrData::getCategoriesFor($id);
-        if (isset($cldrCategories) && CldrData::getLanguageInfo($id)) {
-            $result = new Language($id, $cldrCategories);
+        $info = CldrData::getLanguageInfo($id);
+        if (isset($info)) {
+            $result = new Language($info);
         }
 
         return $result;
