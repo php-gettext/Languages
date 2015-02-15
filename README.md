@@ -37,6 +37,11 @@
   php bin/export.php xml
   ```
 
+6. To export a language in gettext .po headers format
+  ```bash
+  php bin/export.php po --language=YourLanguageCode
+  ```
+
 
 ## Dynamic usage
 
