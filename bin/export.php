@@ -16,7 +16,18 @@ require_once dirname(__DIR__).'/src/autoloader.php';
 Enviro::initialize();
 
 try {
-    $languages = Language::getAll();
+    if (isset(Enviro::$languages)) {
+        $languages = array();
+        foreach (Enviro::$languages as $languageId) {
+            $language = Language::getById($languageId);
+            if (!isset($language)) {
+                throw new Exception("Unable to find the language with id '$languageId'");
+            }
+            $languages[] = $language;
+        }
+    } else {
+        $languages = Language::getAll();
+    }
     if (isset(Enviro::$outputFilename)) {
         echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toFile'), $languages, Enviro::$outputFilename, array('us-ascii' => Enviro::$outputUSAscii));
     } else {
@@ -52,6 +63,11 @@ class Enviro
      */
     public static $outputFilename;
     /**
+     * List of wanted language IDs; it not set: all languages will be returned.
+     * @var array|null
+     */
+    public static $languages;
+    /**
      * Parse the command line options.
      */
     public static function initialize()
@@ -60,6 +76,7 @@ class Enviro
         self::$outputUSAscii = false;
         self::$outputFormat = null;
         self::$outputFilename = null;
+        self::$languages = null;
         $exporters = Exporter::getExporters();
         if (isset($argv) && is_array($argv)) {
             foreach ($argv as $argi => $arg) {
@@ -79,8 +96,16 @@ class Enviro
                                     self::showSyntax();
                                     die(3);
                                 }
-                                list(, self::$outputFilename) = explode('=', $arg);
+                                list(, self::$outputFilename) = explode('=', $arg, 2);
                                 self::$outputFilename = trim(self::$outputFilename);
+                            } elseif (preg_match('/^--languages?=.+$/', $argLC)) {
+                                list(, $s) = explode('=', $arg, 2);
+                                $list = explode(',', $s);
+                                if (is_array(self::$languages)) {
+                                    self::$languages = array_merge(self::$languages, $list);
+                                } else {
+                                    self::$languages = $list;
+                                }
                             } elseif (isset($exporters[$argLC])) {
                                 if (isset(self::$outputFormat)) {
                                     self::echoErr("The output format has been specified more than once!\n");
@@ -102,6 +127,9 @@ class Enviro
             self::showSyntax();
             die(1);
         }
+        if (isset(self::$languages)) {
+            self::$languages = array_values(array_unique(self::$languages));
+        }
     }
 
     /**
@@ -109,7 +137,7 @@ class Enviro
      */
     public static function showSyntax()
     {
-        self::echoErr("Syntax: php ".basename(__FILE__)." [--us-ascii] [--output=<file name>] <".implode('|', array_keys(Exporter::getExporters())).">\n");
+        self::echoErr("Syntax: php ".basename(__FILE__)." [--us-ascii] [--languages=<LanguageId>[,<LanguageId>,...]] [--output=<file name>] <".implode('|', array_keys(Exporter::getExporters())).">\n");
     }
     /**
      * Print a string to stderr.
