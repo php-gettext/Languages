@@ -1,5 +1,5 @@
 <?php
-namespace GettextLanguages\Exporter;
+namespace Gettext\Languages\Exporter;
 
 class Xml extends Exporter
 {

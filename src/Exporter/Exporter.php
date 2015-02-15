@@ -1,8 +1,8 @@
 <?php
-namespace GettextLanguages\Exporter;
+namespace Gettext\Languages\Exporter;
 
 use Exception;
-use GettextLanguages\Language;
+use Gettext\Languages\Language;
 
 /**
  * Base class for all the exporters.

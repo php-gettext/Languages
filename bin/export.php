@@ -1,6 +1,6 @@
 <?php
-use GettextLanguages\Exporter\Exporter;
-use GettextLanguages\Language;
+use Gettext\Languages\Exporter\Exporter;
+use Gettext\Languages\Language;
 
 // Let's start by imposing that we don't accept any error or warning.
 // This is a really life-saving approach.

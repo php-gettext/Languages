@@ -47,7 +47,7 @@ class RulesTest extends PHPUnit_Framework_TestCase
     public function testRules($format, $locale, $formula, $allCases, $numbers, $expectedCase)
     {
         $expectedCaseIndex = in_array($expectedCase, $allCases);
-        foreach (\GettextLanguages\Category::expandExamples($numbers) as $number) {
+        foreach (\Gettext\Languages\Category::expandExamples($numbers) as $number) {
             $numericFormula = preg_replace('/\bn\b/', strval($number), $formula);
             $extraneousChars = preg_replace('/^[\d %!=<>&\|()?:]+$/', '', $numericFormula);
             $this->assertSame('', $extraneousChars, "The formula '$numericFormula' contains extraneous characters: '$extraneousChars' (format: $format)");

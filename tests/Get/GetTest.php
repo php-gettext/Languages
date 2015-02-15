@@ -1,5 +1,5 @@
 <?php
-use GettextLanguages\Language;
+use Gettext\Languages\Language;
 
 class GetTest extends PHPUnit_Framework_TestCase
 {
@@ -17,7 +17,7 @@ class GetTest extends PHPUnit_Framework_TestCase
 
         $language = Language::getById('it');
         $this->assertNotNull($language, "The language 'it' has not been found");
-        $this->assertInstanceOf('GettextLanguages\Language', $language);
+        $this->assertInstanceOf('Gettext\Languages\Language', $language);
         $this->assertSame('Italian', $language->name);
 
         $language = Language::getById('it-IT');

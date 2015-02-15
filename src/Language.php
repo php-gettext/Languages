@@ -1,5 +1,5 @@
 <?php
-namespace GettextLanguages;
+namespace Gettext\Languages;
 
 use Exception;
 
