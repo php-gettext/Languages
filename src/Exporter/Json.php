@@ -23,6 +23,9 @@ class Json extends Exporter
             if (isset($language->supersededBy)) {
                 $item['supersededBy'] = $language->supersededBy;
             }
+            if (isset($language->script)) {
+                $item['script'] = $language->script;
+            }
             if (isset($language->territory)) {
                 $item['territory'] = $language->territory;
             }

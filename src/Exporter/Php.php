@@ -17,11 +17,14 @@ class Php extends Exporter
             if (isset($lc->supersededBy)) {
                 $lines[] = '        \'supersededBy\' => \''.$lc->supersededBy.'\',';
             }
-            if (isset($language->territory)) {
-                $lines[] = '        \'territory\' => \''.addslashes($language->territory).'\',';
+            if (isset($lc->script)) {
+                $lines[] = '        \'script\' => \''.addslashes($lc->script).'\',';
             }
-            if (isset($language->baseLanguage)) {
-                $lines[] = '        \'baseLanguage\' => \''.addslashes($language->baseLanguage).'\',';
+            if (isset($lc->territory)) {
+                $lines[] = '        \'territory\' => \''.addslashes($lc->territory).'\',';
+            }
+            if (isset($lc->baseLanguage)) {
+                $lines[] = '        \'baseLanguage\' => \''.addslashes($lc->baseLanguage).'\',';
             }
             $lines[] = '        \'formula\' => \''.$lc->formula.'\',';
             $lines[] = '        \'plurals\' => '.count($lc->categories).',';
