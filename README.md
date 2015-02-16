@@ -1,5 +1,5 @@
 [![Build Status](https://api.travis-ci.org/mlocati/cldr-to-gettext-plural-rules.svg?branch=master)](https://travis-ci.org/mlocati/cldr-to-gettext-plural-rules)
-# gettext plural rules generated from CLDR data
+# gettext language list automatically generated from CLDR data
 
 
 ## Static usage
@@ -97,7 +97,7 @@ The main properties of the `Gettext\Languages\Language` instances are:
 
 ## Is this data correct?
 
-Yes - as far as you trust the CLDR Project.
+Yes - as far as you trust the [Unicode CLDR](http://cldr.unicode.org) project.
 
 The conversion from CLDR to gettext includes also [a lot of tests](https://travis-ci.org/mlocati/cldr-to-gettext-plural-rules) to check the results.
 And all passes :wink:.
