@@ -34,8 +34,5 @@
     },
     "require": {
         "php": ">=5.3"
-    },
-    "suggest": {
-        "php>=5.4": "In order to export with prettyjson you need at least PHP 5.4+"
-	}
+    }
 }

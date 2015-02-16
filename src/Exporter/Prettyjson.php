@@ -1,6 +1,8 @@
 <?php
 namespace Gettext\Languages\Exporter;
 
+use Exception;
+
 class Prettyjson extends Json
 {
     /**
@@ -8,13 +10,16 @@ class Prettyjson extends Json
      */
     protected static function getEncodeOptions()
     {
-        return JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+        if (!(defined('\JSON_PRETTY_PRINT') && defined('\JSON_UNESCAPED_SLASHES') && defined('\JSON_UNESCAPED_UNICODE')) {
+            throw new Exception('PHP 5.4 or later is required to export uncompressed JSON');
+        }
+        return \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE;
     }
     /**
      * @see Exporter::getDescription
      */
     public static function getDescription()
     {
-        return 'Build an uncompressed JSON-encoded file';
+        return 'Build an uncompressed JSON-encoded file (PHP 5.4 or later is needed)';
     }
 }
