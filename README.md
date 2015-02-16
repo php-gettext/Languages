@@ -45,7 +45,7 @@ To use the languages data generated from this tool you can use the `bin/export.p
   ```bash
   php bin/export.php php > yourfile.php
   ```
-  Then you can use that generated fly in your php scripts:
+  Then you can use that generated file in your php scripts:
   ```php
   $languages = include 'yourfile.php';
   ```
