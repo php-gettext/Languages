@@ -10,4 +10,11 @@ class Prettyjson extends Json
     {
         return JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
     }
+    /**
+     * @see Exporter::getDescription
+     */
+    public static function getDescription()
+    {
+        return 'Build an uncompressed JSON-encoded file';
+    }
 }

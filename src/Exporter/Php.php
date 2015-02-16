@@ -45,4 +45,11 @@ class Php extends Exporter
 
         return implode("\n", $lines);
     }
+    /**
+     * @see Exporter::getDescription
+     */
+    public static function getDescription()
+    {
+        return 'Build a PHP array';
+    }
 }

@@ -11,7 +11,7 @@ class Po extends Exporter
     protected static function toStringDo($languages)
     {
         if (count($languages) !== 1) {
-            throw new Exception('The '.get_class().' can only export one language');
+            throw new Exception('The '.get_called_class().' exporter can only export one language');
         }
         $language = $languages[0];
         $lines = array();
@@ -20,5 +20,12 @@ class Po extends Exporter
         $lines[] = '';
 
         return implode("\n", $lines);
+    }
+    /**
+     * @see Exporter::getDescription
+     */
+    public static function getDescription()
+    {
+        return 'Build a string to be used for gettext .po files';
     }
 }

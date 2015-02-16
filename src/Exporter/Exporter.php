@@ -15,9 +15,10 @@ abstract class Exporter
     private static $exporters;
     /**
      * Return the list of all the available exporters. Keys are the exporter handles, values are the exporter class names.
+     * @param bool $onlyForPublicUse If true, internal exporters will be omitted.
      * @return string[]
      */
-    final public static function getExporters()
+    final public static function getExporters($onlyForPublicUse = false)
     {
         if (!isset(self::$exporters)) {
             $exporters = array();
@@ -31,8 +32,33 @@ abstract class Exporter
             }
             self::$exporters = $exporters;
         }
+        if ($onlyForPublicUse) {
+            $result = array();
+            foreach (self::$exporters as $handle => $class) {
+                if (call_user_func(self::getExporterClassName($handle).'::isForPublicUse') === true) {
+                    $result[$handle] = $class;
+                }
+            }
+        } else {
+            $result = self::$exporters;
+        }
 
-        return self::$exporters;
+        return $result;
+    }
+    /**
+     * Return the description of a specific exporter.
+     * @param string $exporterHandle The handle of the exporter.
+     * @throws Exception Throws an Exception if $exporterHandle is not valid.
+     * @return string
+     */
+    final public static function getExporterDescription($exporterHandle)
+    {
+        $exporters = self::getExporters();
+        if (!isset($exporters[$exporterHandle])) {
+            throw new Exception("Invalid exporter handle: '$exporterHandle'");
+        }
+
+        return call_user_func(self::getExporterClassName($exporterHandle).'::getDescription');
     }
     /**
      * Returns the fully qualified class name of a exporter given its handle.
@@ -50,7 +76,7 @@ abstract class Exporter
      */
     protected static function toStringDo($languages)
     {
-        throw new Exception(get_class().' does not implement the method '.__FUNCTION__);
+        throw new Exception(get_called_class().' does not implement the method '.__FUNCTION__);
     }
     /**
      * Convert a list of Language instances to string.
@@ -82,5 +108,21 @@ abstract class Exporter
         if (@file_put_contents($filename, $data) === false) {
             throw new Exception("Error writing data to '$filename'");
         }
+    }
+    /**
+     * Is this exporter for public use?
+     * @return bool
+     */
+    public static function isForPublicUse()
+    {
+        return true;
+    }
+    /**
+     * Return a short description of the exporter.
+     * @return string
+     */
+    public static function getDescription()
+    {
+        throw new Exception(get_called_class().' does not implement the method '.__FUNCTION__);
     }
 }

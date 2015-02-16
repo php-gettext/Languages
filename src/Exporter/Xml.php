@@ -44,4 +44,11 @@ class Xml extends Exporter
 
         return $xml->saveXML();
     }
+    /**
+     * @see Exporter::getDescription
+     */
+    public static function getDescription()
+    {
+        return 'Build an XML file - schema available at http://mlocati.github.io/cldr-to-gettext-plural-rules/GettextLanguages.xsd';
+    }
 }

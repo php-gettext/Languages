@@ -45,4 +45,11 @@ class Json extends Exporter
 
         return json_encode($list, static::getEncodeOptions());
     }
+    /**
+     * @see Exporter::getDescription
+     */
+    public static function getDescription()
+    {
+        return 'Build a compressed JSON-encoded file';
+    }
 }

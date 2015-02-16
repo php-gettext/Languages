@@ -38,4 +38,18 @@ EOT;
 
         return $result;
     }
+    /**
+     * @see Exporter::isForPublicUse
+     */
+    public static function isForPublicUse()
+    {
+        return false;
+    }
+    /**
+     * @see Exporter::getDescription
+     */
+    public static function getDescription()
+    {
+        return 'Build the page http://mlocati.github.io/cldr-to-gettext-plural-rules';
+    }
 }
