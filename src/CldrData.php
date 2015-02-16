@@ -34,7 +34,10 @@ class CldrData
                 $result = array();
                 foreach ($list as $key => $value) {
                     switch ($key) {
-                        case 'root':
+                        case 'root': // Root
+                        case 'und': // Unknown Language
+                        case 'zxx': // No linguistic content
+                        case 'ZZ': // Unknown Region
                             break;
                         default:
                             if (!preg_match('/.-alt-(short|variant)$/', $key)) {
