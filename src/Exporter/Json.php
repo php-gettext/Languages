@@ -9,7 +9,15 @@ class Json extends Exporter
      */
     protected static function getEncodeOptions()
     {
-        return 0;
+        $result = 0;
+        if (defined('\JSON_UNESCAPED_SLASHES')) {
+            $result |= \JSON_UNESCAPED_SLASHES;
+        }
+        if (defined('\JSON_UNESCAPED_UNICODE')) {
+            $result |= \JSON_UNESCAPED_UNICODE;
+        }
+
+        return $result;
     }
     /**
      * @see Exporter::toStringDo
