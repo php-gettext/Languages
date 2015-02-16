@@ -22,6 +22,9 @@ class Xml extends Exporter
             if (isset($language->supersededBy)) {
                 $xLanguage->setAttribute('supersededBy', $language->supersededBy);
             }
+            if (isset($language->script)) {
+                $xLanguage->setAttribute('script', $language->script);
+            }
             if (isset($language->territory)) {
                 $xLanguage->setAttribute('territory', $language->territory);
             }

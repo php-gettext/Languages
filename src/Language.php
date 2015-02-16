@@ -24,6 +24,11 @@ class Language
      */
     public $supersededBy;
     /**
+     * The script name.
+     * @var string|null
+     */
+    public $script;
+    /**
      * The territory name.
      * @var string|null
      */
@@ -53,6 +58,7 @@ class Language
         $this->id = $info['id'];
         $this->name = $info['name'];
         $this->supersededBy = isset($info['supersededBy']) ? $info['supersededBy'] : null;
+        $this->script = isset($info['script']) ? $info['script'] : null;
         $this->territory = isset($info['territory']) ? $info['territory'] : null;
         $this->baseLanguage = isset($info['baseLanguage']) ? $info['baseLanguage'] : null;
         // Let's build the category list

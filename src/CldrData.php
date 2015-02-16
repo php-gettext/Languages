@@ -25,23 +25,46 @@ class CldrData
     private static $data;
     /**
      * Returns the loaded CLDR data.
-     * @param string $key Can be 'languages', 'territories', 'plurals', 'supersededLanguages'
+     * @param string $key Can be 'languages', 'territories', 'plurals', 'supersededLanguages', 'scripts', 'standAloneScripts'
      */
     private static function getData($key)
     {
         if (!isset(self::$data)) {
-            $fixKeys = function ($list) {
+            $fixKeys = function ($list, &$standAlone = null) {
                 $result = array();
+                $standAlone = array();
+                $match = null;
                 foreach ($list as $key => $value) {
+                    $variant = '';
+                    if (preg_match('/^(.+)-alt-(short|variant|stand-alone)$/', $key, $match)) {
+                        $key = $match[1];
+                        $variant = $match[2];
+                    }
+                    $key = str_replace('-', '_', $key);
                     switch ($key) {
-                        case 'root': // Root
-                        case 'und': // Unknown Language
-                        case 'zxx': // No linguistic content
-                        case 'ZZ': // Unknown Region
+                        case 'root': // Language: Root
+                        case 'und': // Language: Unknown Language
+                        case 'zxx': // Language: No linguistic content
+                        case 'ZZ': // Territory: Unknown Region
+                        case 'Zinh': // Script: Inherited
+                        case 'Zmth': // Script: Mathematical Notation
+                        case 'Zsym': // Script: Symbols
+                        case 'Zxxx': // Script: Unwritten
+                        case 'Zyyy': // Script: Common
+                        case 'Zzzz': // Script: Unknown Script
                             break;
                         default:
-                            if (!preg_match('/.-alt-(short|variant)$/', $key)) {
-                                $result[str_replace('-', '_', $key)] = $value;
+                            if (
+                                ((strlen($key) !== 4) || ($key < 'Qaaa') || ($key > 'Qabx')) // Script: Reserved for private use
+                            ) {
+                                switch ($variant) {
+                                    case 'stand-alone':
+                                        $standAlone[$key] = $value;
+                                        break;
+                                    case '':
+                                        $result[$key] = $value;
+                                        break;
+                                }
                             }
                             break;
                     }
@@ -56,8 +79,13 @@ class CldrData
             $data['territories'] = $fixKeys($json['main']['en-US']['localeDisplayNames']['territories']);
             $json = json_decode(file_get_contents(__DIR__.'/cldr-data/supplemental/plurals.json'), true);
             $data['plurals'] = $fixKeys($json['supplemental']['plurals-type-cardinal']);
+            $json = json_decode(file_get_contents(__DIR__.'/cldr-data/main/en-US/scripts.json'), true);
+            $data['scripts'] = $fixKeys($json['main']['en-US']['localeDisplayNames']['scripts'], $data['standAloneScripts']);
+            $data['standAloneScripts'] = array_merge($data['scripts'], $data['standAloneScripts']);
+            $data['scripts'] = array_merge($data['standAloneScripts'], $data['scripts']);
             $data['supersededLanguages'] = array();
             // Remove the languages for which we don't have plurals
+            $m = null;
             foreach (array_keys(array_diff_key($data['languages'], $data['plurals'])) as $missingPlural) {
                 if (preg_match('/^([a-z]{2,3})_/', $missingPlural, $m)) {
                     if (!isset($data['plurals'][$m[1]])) {
@@ -96,6 +124,8 @@ class CldrData
             ksort($data['languages'], SORT_STRING);
             ksort($data['territories'], SORT_STRING);
             ksort($data['plurals'], SORT_STRING);
+            ksort($data['scripts'], SORT_STRING);
+            ksort($data['standAloneScripts'], SORT_STRING);
             ksort($data['supersededLanguages'], SORT_STRING);
             self::$data = $data;
         }
@@ -124,6 +154,17 @@ class CldrData
     public static function getTerritoryNames()
     {
         return self::getData('territories');
+    }
+    /**
+     * Return a dictionary containing the script names (in US English).
+     * The keys are the script identifiers.
+     * The values are the script names in US English.
+     * @param bool $standAlone Set to true to retrieve the stand-alone script names, false otherwise.
+     * @return string[]
+     */
+    public static function getScriptNames($standAlone)
+    {
+        return self::getData($standAlone ? 'standAloneScripts' : 'scripts');
     }
     /**
      * @var array
@@ -157,7 +198,7 @@ class CldrData
     /**
      * Retrieve the name of a language, as well as if a language code is deprecated in favor of another language code.
      * @param string $id The language identifier.
-     * @return array|null Returns an array with the keys 'id' (normalized), 'name', 'supersededBy' (optional), 'territory' (optional), 'baseLanguage' (optional), 'categories'. If $id is not valid returns null.
+     * @return array|null Returns an array with the keys 'id' (normalized), 'name', 'supersededBy' (optional), 'territory' (optional), 'script' (optional), 'baseLanguage' (optional), 'categories'. If $id is not valid returns null.
      */
     public static function getLanguageInfo($id)
     {
@@ -176,18 +217,31 @@ class CldrData
             }
             // Structure precedence: see Likely Subtags - http://www.unicode.org/reports/tr35/tr35-31/tr35.html#Likely_Subtags
             $variants = array();
+            $variantsWithScript = array();
             $variantsWithTerritory = array();
             if (isset($scriptId) && isset($territoryId)) {
-                $variantsWithTerritory[] = $variants[] = "{$languageId}_{$scriptId}_{$territoryId}";
+                $variantsWithTerritory[] = $variantsWithScript[] = $variants[] = "{$languageId}_{$scriptId}_{$territoryId}";
             }
             if (isset($scriptId)) {
-                $variants[] = "{$languageId}_{$scriptId}";
+                $variantsWithScript[] = $variants[] = "{$languageId}_{$scriptId}";
             }
             if (isset($territoryId)) {
                 $variantsWithTerritory[] = $variants[] = "{$languageId}_{$territoryId}";
             }
             $variants[] = $languageId;
             $allGood = true;
+            $scriptName = null;
+            $scriptStandAloneName = null;
+            if (isset($scriptId)) {
+                $scriptNames = self::getScriptNames(false);
+                if (isset($scriptNames[$scriptId])) {
+                    $scriptName = $scriptNames[$scriptId];
+                    $scriptStandAloneNames = self::getScriptNames(true);
+                    $scriptStandAloneName = $scriptStandAloneNames[$scriptId];
+                } else {
+                    $allGood = false;
+                }
+            }
             $territoryName = null;
             if (isset($territoryId)) {
                 $territoryNames = self::getTerritoryNames();
@@ -204,6 +258,9 @@ class CldrData
             foreach ($variants as $variant) {
                 if (isset($languageNames[$variant])) {
                     $languageName = $languageNames[$variant];
+                    if (isset($scriptName) && (!in_array($variant, $variantsWithScript))) {
+                        $languageName = $scriptName.' '.$languageName;
+                    }
                     if (isset($territoryName) && (!in_array($variant, $variantsWithTerritory))) {
                         $languageName .= ' ('.$territoryNames[$territoryId].')';
                     }
@@ -244,6 +301,9 @@ class CldrData
                 $result['name'] = $languageName;
                 if (isset($supersededBy)) {
                     $result['supersededBy'] = $supersededBy;
+                }
+                if (isset($scriptStandAloneName)) {
+                    $result['script'] = $scriptStandAloneName;
                 }
                 if (isset($territoryName)) {
                     $result['territory'] = $territoryName;
