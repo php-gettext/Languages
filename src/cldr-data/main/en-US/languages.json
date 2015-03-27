@@ -3,7 +3,7 @@
     "en-US": {
       "identity": {
         "version": {
-          "_cldrVersion": "26",
+          "_cldrVersion": "27",
           "_number": "$Revision: 10669 $"
         },
         "generation": {
@@ -114,7 +114,7 @@
           "chp": "Chipewyan",
           "chr": "Cherokee",
           "chy": "Cheyenne",
-          "ckb": "Sorani Kurdish",
+          "ckb": "Central Kurdish",
           "co": "Corsican",
           "cop": "Coptic",
           "cps": "Capiznon",
@@ -159,9 +159,9 @@
           "en-AU": "Australian English",
           "en-CA": "Canadian English",
           "en-GB": "British English",
-          "en-GB-alt-short": "U.K. English",
+          "en-GB-alt-short": "UK English",
           "en-US": "American English",
-          "en-US-alt-short": "U.S. English",
+          "en-US-alt-short": "US English",
           "enm": "Middle English",
           "eo": "Esperanto",
           "es": "Spanish",
@@ -601,6 +601,7 @@
           "wal": "Wolaytta",
           "war": "Waray",
           "was": "Washo",
+          "wbp": "Warlpiri",
           "wo": "Wolof",
           "wuu": "Wu Chinese",
           "xal": "Kalmyk",

@@ -3,7 +3,7 @@
     "en-US": {
       "identity": {
         "version": {
-          "_cldrVersion": "26",
+          "_cldrVersion": "27",
           "_number": "$Revision: 10669 $"
         },
         "generation": {
@@ -132,7 +132,7 @@
           "FR": "France",
           "GA": "Gabon",
           "GB": "United Kingdom",
-          "GB-alt-short": "U.K.",
+          "GB-alt-short": "UK",
           "GD": "Grenada",
           "GE": "Georgia",
           "GF": "French Guiana",
@@ -298,7 +298,7 @@
           "UG": "Uganda",
           "UM": "U.S. Outlying Islands",
           "US": "United States",
-          "US-alt-short": "U.S.",
+          "US-alt-short": "US",
           "UY": "Uruguay",
           "UZ": "Uzbekistan",
           "VA": "Vatican City",
