@@ -54,17 +54,13 @@ class CldrData
                         case 'Zzzz': // Script: Unknown Script
                             break;
                         default:
-                            if (
-                                ((strlen($key) !== 4) || ($key < 'Qaaa') || ($key > 'Qabx')) // Script: Reserved for private use
-                            ) {
-                                switch ($variant) {
-                                    case 'stand-alone':
-                                        $standAlone[$key] = $value;
-                                        break;
-                                    case '':
-                                        $result[$key] = $value;
-                                        break;
-                                }
+                            switch ($variant) {
+                                case 'stand-alone':
+                                    $standAlone[$key] = $value;
+                                    break;
+                                case '':
+                                    $result[$key] = $value;
+                                    break;
                             }
                             break;
                     }
