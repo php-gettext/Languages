@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 use Gettext\Languages\Exporter\Exporter;
 use Gettext\Languages\Language;
