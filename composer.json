@@ -32,6 +32,9 @@
             "Gettext\\Languages\\": "src/"
         }
     },
+    "bin": [
+        "bin/export.php"
+    ],
     "require": {
         "php": ">=5.3"
     }
