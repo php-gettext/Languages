@@ -4,10 +4,10 @@
 
 ## Static usage
 
-To use the languages data generated from this tool you can use the `bin/export.php` command (or the wrappers `bin/export.sh` for *nix / `bin\export.cmd` for Windows).
+To use the languages data generated from this tool you can use the `bin/export-plural-rules` command.
 
 #### Export command line options
-`export` supports the following options:
+`export-plural-rules` supports the following options:
 - `--us-ascii`
   If specified, the output will contain only US-ASCII characters.
   If not specified, the output charset is UTF-8.
@@ -24,26 +24,26 @@ To use the languages data generated from this tool you can use the `bin/export.p
   If specified, the output will be saved to <file name>. If not specified we'll output to standard output.
 
 #### Export formats
-`export` can generate data in the following formats:
+`export-plural-rules` can generate data in the following formats:
 
 - `json`: compressed JSON data
   ```bash
-  php bin/export.php json
+  export-plural-rules json
   ```
 
 - `prettyjson`: uncompressed JSON data
   ```bash
-  php bin/export.php prettyjson
+  export-plural-rules prettyjson
   ```
 
 - `html`: html table ([see the result](http://mlocati.github.io/cldr-to-gettext-plural-rules/))
   ```bash
-  php bin/export.php html
+  export-plural-rules html
   ```
 
 - `php`: build a php file that can be included
   ```bash
-  php bin/export.php php > yourfile.php
+  export-plural-rules php > yourfile.php
   ```
   Then you can use that generated file in your php scripts:
   ```php
@@ -52,12 +52,12 @@ To use the languages data generated from this tool you can use the `bin/export.p
 
 - `xml`: generate an XML document ([here you can find the xsd XML schema](http://mlocati.github.io/cldr-to-gettext-plural-rules/GettextLanguages.xsd))
   ```bash
-  php bin/export.php xml
+  export-plural-rules xml
   ```
 
 - `po`: generate the gettext .po headers for a single language
   ```bash
-  php bin/export.php po --language=YourLanguageCode
+  export-plural-rules po --language=YourLanguageCode
   ```
 
 
