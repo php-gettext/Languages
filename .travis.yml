@@ -16,6 +16,12 @@ matrix:
   allow_failures:
     - php: nightly
 
+before_script:
+  - composer self-update
+  - composer install --no-interaction
+  - composer --version
+  - phpunit --version
+
 script:
   - phpunit
 
