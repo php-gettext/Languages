@@ -46,31 +46,4 @@ class GetTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($language);
         $this->assertNotNull($language->script);
     }
-
-    public function testPortuguese()
-    {
-        $pt = Language::getById('pt');
-        $this->assertSame('Portuguese', $pt->name);
-        $this->assertSame(2, count($pt->categories));
-        $this->assertSame('one', $pt->categories[0]->id);
-
-        $ptPT = Language::getById('pt-PT');
-        $this->assertSame('European Portuguese', $ptPT->name);
-        $this->assertSame(2, count($ptPT->categories));
-        $this->assertSame('one', $ptPT->categories[0]->id);
-
-        $ptBR = Language::getById('pt-BR');
-        $this->assertSame('Brazilian Portuguese', $ptBR->name);
-        $this->assertSame(2, count($ptBR->categories));
-        $this->assertSame('one', $ptBR->categories[0]->id);
-
-        $ptCV = Language::getById('pt-CV');
-        $this->assertSame('Portuguese (Cape Verde)', $ptCV->name);
-        $this->assertSame(2, count($ptCV->categories));
-        $this->assertSame('one', $ptCV->categories[0]->id);
-
-        $this->assertSame($pt->formula, $ptBR->formula);
-        $this->assertNotSame($pt->formula, $ptPT->formula);
-        $this->assertSame($ptBR->formula, $ptCV->formula);
-    }
 }
