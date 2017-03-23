@@ -33,6 +33,12 @@
 	"require" : {
 		"php" : ">=5.3"
 	},
+	"require-dev": {
+		"phpunit/phpunit": "^4"
+	},
+	"scripts": {
+		"test": "phpunit"
+	},
 	"bin" : [
 		"bin/export-plural-rules",
 		"bin/export-plural-rules.php"

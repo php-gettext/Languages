@@ -19,11 +19,9 @@ matrix:
 before_script:
   - composer self-update
   - composer install --no-interaction
-  - composer --version
-  - phpunit --version
 
 script:
-  - phpunit
+  - composer test
 
 notifications:
   email: false
