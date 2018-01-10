@@ -1,13 +1,12 @@
 {
   "main": {
-    "en-US": {
+    "en": {
       "identity": {
         "version": {
-          "_number": "$Revision: 13133 $",
-          "_cldrVersion": "31"
+          "_number": "$Revision: 13744 $",
+          "_cldrVersion": "32.0.1"
         },
-        "language": "en",
-        "territory": "US"
+        "language": "en"
       },
       "localeDisplayNames": {
         "languages": {
@@ -99,6 +98,7 @@
           "car": "Carib",
           "cay": "Cayuga",
           "cch": "Atsam",
+          "ccp": "Chakma",
           "ce": "Chechen",
           "ceb": "Cebuano",
           "cgg": "Chiga",
@@ -334,6 +334,7 @@
           "ln": "Lingala",
           "lo": "Lao",
           "lol": "Mongo",
+          "lou": "Louisiana Creole",
           "loz": "Lozi",
           "lrc": "Northern Luri",
           "lt": "Lithuanian",
