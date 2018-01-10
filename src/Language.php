@@ -246,7 +246,7 @@ class Language
      * Build the formula starting from the currently defined categories.
      * @return string
      */
-    private function buildFormula()
+    public function buildFormula($parenthesis=true)
     {
         $numCategories = count($this->categories);
         switch ($numCategories) {
@@ -259,11 +259,11 @@ class Language
                 $formula = strval($numCategories - 1);
                 for ($i = $numCategories - 2; $i >= 0; $i--) {
                     $f = self::reduceFormula($this->categories[$i]->formula);
-                    if (!preg_match('/^\([^()]+\)$/', $f)) {
+                    if ($parenthesis && !preg_match('/^\([^()]+\)$/', $f)) {
                         $f = "($f)";
                     }
                     $formula = "$f ? $i : $formula";
-                    if ($i > 0) {
+                    if ($parenthesis && $i > 0) {
                         $formula = "($formula)";
                     }
                 }

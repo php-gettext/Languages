@@ -31,6 +31,11 @@ try {
     if (Enviro::$reduce) {
         $languages = Enviro::reduce($languages);
     }
+    if (! Enviro::$parenthesis) {
+        foreach ($languages as $language) {
+            $language->formula = $language->buildFormula(false);
+        }
+    }
     if (isset(Enviro::$outputFilename)) {
         echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toFile'), $languages, Enviro::$outputFilename, array('us-ascii' => Enviro::$outputUSAscii));
     } else {
@@ -76,6 +81,11 @@ class Enviro
      */
     public static $reduce;
     /**
+     * Use parenthesis inside ternary operator
+     * @var bool
+     */
+    public static $parenthesis;
+    /**
      * Parse the command line options.
      */
     public static function initialize()
@@ -86,6 +96,7 @@ class Enviro
         self::$outputFilename = null;
         self::$languages = null;
         self::$reduce = null;
+        self::$parenthesis = true;
         $exporters = Exporter::getExporters();
         if (isset($argv) && is_array($argv)) {
             foreach ($argv as $argi => $arg) {
@@ -103,6 +114,12 @@ class Enviro
                             break;
                         case '--reduce=no':
                             self::$reduce = false;
+                            break;
+                        case '--parenthesis=yes':
+                            self::$parenthesis = true;
+                            break;
+                        case '--parenthesis=no':
+                            self::$parenthesis = false;
                             break;
                         default:
                             if (preg_match('/^--output=.+$/', $argLC)) {
@@ -156,7 +173,7 @@ class Enviro
     public static function showSyntax()
     {
         $exporters = array_keys(Exporter::getExporters(true));
-        self::echoErr("Syntax: php ".basename(__FILE__)." [--us-ascii] [--languages=<LanguageId>[,<LanguageId>,...]] [--reduce=yes|no] [--output=<file name>] <".implode('|', $exporters).">\n");
+        self::echoErr("Syntax: php ".basename(__FILE__)." [--us-ascii] [--languages=<LanguageId>[,<LanguageId>,...]] [--reduce=yes|no] [--parenthesis=yes|no] [--output=<file name>] <".implode('|', $exporters).">\n");
         self::echoErr("Where:\n");
         self::echoErr("--us-ascii : if specified, the output will contain only US-ASCII characters.\n");
         self::echoErr("--languages: (or --language) export only the specified language codes.\n");
@@ -168,6 +185,9 @@ class Enviro
         self::echoErr("             base language and rules.\n For instance nl_BE ('Flemish') will be\n");
         self::echoErr("             omitted because it's the same as nl ('Dutch').\n");
         self::echoErr("             Defaults to 'no' --languages is specified, to 'yes' otherwise.\n");
+        self::echoErr("--parenthesis : if set to no the output will not contain parenthesis around\n");
+        self::echoErr("             ternary oprerator.\n");
+        self::echoErr("             Defaults to 'yes'.\n");
         self::echoErr("--output   : if specified, the output will be saved to <file name>. If not\n");
         self::echoErr("             specified we'll output to standard output.\n");
         self::echoErr("Output formats\n");
