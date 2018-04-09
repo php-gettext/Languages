@@ -5,4 +5,12 @@
 				<directory>./tests/Get/</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+            <exclude>
+                <directory suffix="autoloader.php">src</directory>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>

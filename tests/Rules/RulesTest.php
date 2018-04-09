@@ -1,5 +1,7 @@
 <?php
-class RulesTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class RulesTest extends TestCase
 {
     private function readData($format)
     {
@@ -41,6 +43,7 @@ class RulesTest extends PHPUnit_Framework_TestCase
 
         return $testData;
     }
+
     /**
      * @dataProvider providerTestRules
      */
@@ -80,6 +83,7 @@ class RulesTest extends PHPUnit_Framework_TestCase
 
         return $testData;
     }
+
     /**
      * @dataProvider providerTestExamplesExist
      */
