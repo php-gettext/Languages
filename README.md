@@ -145,4 +145,4 @@ For instance, let's assume we have this formula:
 So, in order to avoid problems, instead of a simple
 `a ? 0 : b ? 1 : 2`
 the resulting formulas will be in this format:
-`'a ? 0 : (b ? 1 : 2)`
+`a ? 0 : (b ? 1 : 2)`
