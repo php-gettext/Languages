@@ -1,7 +1,11 @@
 <?php
-use Gettext\Languages\Language;
 
-class GetTest extends PHPUnit_Framework_TestCase
+namespace Gettext\Languages\Test\Get;
+
+use Gettext\Languages\Language;
+use Gettext\Languages\Test\TestCase;
+
+class GetTest extends TestCase
 {
     public function testGetAll()
     {

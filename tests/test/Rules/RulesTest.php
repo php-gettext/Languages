@@ -1,11 +1,18 @@
 <?php
-class RulesTest extends PHPUnit_Framework_TestCase
+
+namespace Gettext\Languages\Test\Get;
+
+use Exception;
+use Gettext\Languages\Category;
+use Gettext\Languages\Test\TestCase;
+
+class RulesTest extends TestCase
 {
     private function readData($format)
     {
         static $data = array();
         if (!isset($data[$format])) {
-            $filename = dirname(dirname(__FILE__)).'/data.'.$format;
+            $filename = GETTEXT_LANGUAGES_TESTDIR.'/data.'.$format;
             switch ($format) {
                 case 'php':
                     $data[$format] = require $filename;
@@ -47,13 +54,14 @@ class RulesTest extends PHPUnit_Framework_TestCase
     public function testRules($format, $locale, $formula, $allCases, $numbers, $expectedCase)
     {
         $expectedCaseIndex = in_array($expectedCase, $allCases);
-        foreach (\Gettext\Languages\Category::expandExamples($numbers) as $number) {
+        foreach (Category::expandExamples($numbers) as $number) {
             $numericFormula = preg_replace('/\bn\b/', strval($number), $formula);
             $extraneousChars = preg_replace('/^[\d %!=<>&\|()?:]+$/', '', $numericFormula);
             $this->assertSame('', $extraneousChars, "The formula '$numericFormula' contains extraneous characters: '$extraneousChars' (format: $format)");
 
             $caseIndex = @eval("return (($numericFormula) === true) ? 1 : ((($numericFormula) === false) ? 0 : ($numericFormula));");
-            $this->assertInternalType('integer', $caseIndex, "Error evaluating the numeric formula '$numericFormula' (format: $format)");
+            $caseIndexType = gettype($caseIndex);
+            $this->assertSame('integer', $caseIndexType, "Error evaluating the numeric formula '$numericFormula' (format: $format)");
 
             $this->assertArrayHasKey($caseIndex, $allCases, "The formula '$formula' evaluated for $number gave an out-of-range case index ($caseIndex) (format: $format)");
 

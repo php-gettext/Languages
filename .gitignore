@@ -1,6 +1,5 @@
-/.settings/
 /temp/
 /vendor/
-/.buildpath
-/.project
+/.phpunit.result.cache
+/composer.lock
 /tests/data.*
