@@ -17,7 +17,7 @@
 		"plurals",
 		"plural rules"
 	],
-	"homepage" : "https://github.com/mlocati/cldr-to-gettext-plural-rules",
+	"homepage" : "https://github.com/php-gettext/Languages",
 	"license" : "MIT",
 	"authors" : [{
 			"name" : "Michele Locati",
