@@ -40,7 +40,6 @@
 		"test": "phpunit"
 	},
 	"bin" : [
-		"bin/export-plural-rules",
-		"bin/export-plural-rules.php"
+		"bin/export-plural-rules"
 	]
 }
