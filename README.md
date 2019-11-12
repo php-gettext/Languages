@@ -1,4 +1,4 @@
-[![Build Status](https://api.travis-ci.org/mlocati/cldr-to-gettext-plural-rules.svg?branch=master)](https://travis-ci.org/mlocati/cldr-to-gettext-plural-rules)
+[![Build Status](https://api.travis-ci.org/php-gettext/Languages.svg?branch=master)](https://travis-ci.org/php-gettext/Languages)
 # gettext language list automatically generated from CLDR data
 
 
@@ -36,7 +36,7 @@ To use the languages data generated from this tool you can use the `bin/export-p
   export-plural-rules prettyjson
   ```
 
-- `html`: html table ([see the result](http://mlocati.github.io/cldr-to-gettext-plural-rules/))
+- `html`: html table ([see the result](https://php-gettext.github.io/Languages/))
   ```bash
   export-plural-rules html
   ```
@@ -50,7 +50,7 @@ To use the languages data generated from this tool you can use the `bin/export-p
   $languages = include 'yourfile.php';
   ```
 
-- `xml`: generate an XML document ([here you can find the xsd XML schema](http://mlocati.github.io/cldr-to-gettext-plural-rules/GettextLanguages.xsd))
+- `xml`: generate an XML document ([here you can find the xsd XML schema](https://php-gettext.github.io/Languages/GettextLanguages.xsd))
   ```bash
   export-plural-rules xml
   ```
@@ -90,7 +90,7 @@ The main properties of the `Gettext\Languages\Language` instances are:
 - `script`: the script name (for instance, for `zh_Hans` - `Simplified Chinese` - the script is `Simplified Han`)
 - `territory`: the name of the territory (for instance `United States` for `en_US`)
 - `baseLanguage`: the name of the base language  (for instance `English` for `en_US`)
-- `formula`: the [gettext formula](http://www.gnu.org/savannah-checkouts/gnu/gettext/manual/html_node/Plural-forms.html) to distinguish between different plural rules. For instance `n != 1` 
+- `formula`: the [gettext formula](https://www.gnu.org/savannah-checkouts/gnu/gettext/manual/html_node/Plural-forms.html) to distinguish between different plural rules. For instance `n != 1` 
 - `categories`: the plural cases applicable for this language. It's an array of `Gettext\Languages\Category` instances. Each instance has these properties:
   - `id`: can be (in this order) one of `zero`, `one`, `two`, `few`, `many` or `other`. The `other` case is always present.
   - `examples`: a representation of some values for which this plural case is valid (examples are simple numbers like `1` or complex ranges like `0, 2~16, 100, 1000, 10000, 100000, 1000000, …`)  
@@ -99,7 +99,7 @@ The main properties of the `Gettext\Languages\Language` instances are:
 
 Yes - as far as you trust the [Unicode CLDR](http://cldr.unicode.org) project.
 
-The conversion from CLDR to gettext includes also [a lot of tests](https://travis-ci.org/mlocati/cldr-to-gettext-plural-rules) to check the results.
+The conversion from CLDR to gettext includes also [a lot of tests](https://travis-ci.org/php-gettext/Languages) to check the results.
 And all passes :wink:.
 
 
@@ -108,7 +108,7 @@ And all passes :wink:.
 
 #### CLDR
 
-The [CLDR specifications](http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules) define the following variables to be used in the CLDR plural formulas:
+The [CLDR specifications](https://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules) define the following variables to be used in the CLDR plural formulas:
 - `n`: absolute value of the source number (integer and decimals) (eg: `9.870` => `9.87`)
 - `i`: integer digits of n (eg: `9.870` => `9`)
 - `v`: number of visible fraction digits in n, with trailing zeros (eg: `9.870` => `3`)
@@ -117,7 +117,7 @@ The [CLDR specifications](http://unicode.org/reports/tr35/tr35-numbers.html#Lang
 - `t`: visible fractional digits in n, without trailing zeros (eg: `9.870` => `87`)
 
 #### gettext
-The [gettext specifications](http://www.gnu.org/savannah-checkouts/gnu/gettext/manual/html_node/Plural-forms.html) define the following variables to be used in the gettext plural formulas:
+The [gettext specifications](https://www.gnu.org/savannah-checkouts/gnu/gettext/manual/html_node/Plural-forms.html) define the following variables to be used in the gettext plural formulas:
 - `n`: unsigned long int
 
 ### Conversion CLDR > gettext
@@ -139,8 +139,8 @@ For instance, let's assume we have this formula:
 `(0 == 0) ? 0 : (0 == 1) ? 1 : 2`
 - [in C it evaluates to `0`](http://codepad.org/Epw5WkmJ) since is the same as `(0 == 0) ? 0 : ((0 == 1) ? 1 : 2)`
 - [in Java it evaluates to `0`](https://ideone.com/vbRHjW) since is the same as `(0 == 0) ? 0 : ((0 == 1) ? 1 : 2)`
-- [in JavaScript it evaluates to `0`](http://jsfiddle.net/7fnxa599/) since is the same as `(0 == 0) ? 0 : ((0 == 1) ? 1 : 2)`
-- [in PHP it evaluates to `2`](http://3v4l.org/QAAnA) since is the same as `((0 == 0) ? 0 : (0 == 1)) ? 1 : 2`
+- [in JavaScript it evaluates to `0`](https://jsfiddle.net/7fnxa599/) since is the same as `(0 == 0) ? 0 : ((0 == 1) ? 1 : 2)`
+- [in PHP it evaluates to `2`](https://3v4l.org/QAAnA) since is the same as `((0 == 0) ? 0 : (0 == 1)) ? 1 : 2`
 
 So, in order to avoid problems, instead of a simple
 `a ? 0 : b ? 1 : 2`
