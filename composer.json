@@ -30,11 +30,16 @@
 			"Gettext\\Languages\\" : "src/"
 		}
 	},
+    "autoload-dev" : {
+        "psr-4" : {
+            "Gettext\\Languages\\Test\\" : "tests/test/"
+        }
+    },
 	"require" : {
 		"php" : ">=5.3"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^4"
+		"phpunit/phpunit": "^4.8 || ^5.7 || ^6.5 || ^7.5 || ^8.4"
 	},
 	"scripts": {
 		"test": "phpunit"
