@@ -1,9 +1,8 @@
 <?php
 
-namespace Gettext\Languages\Test\Get;
+namespace Gettext\Languages\Test;
 
 use Gettext\Languages\Language;
-use Gettext\Languages\Test\TestCase;
 
 class GetTest extends TestCase
 {
