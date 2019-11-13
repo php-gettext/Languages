@@ -8,13 +8,13 @@ class FormulaConverterTest extends TestCase
 {
     public function testConvertFormulaWithInvalidFormula()
     {
-        $this->setExpectedException('\Exception');
+        $this->isGoingToThrowException('\Exception');
         FormulaConverter::convertFormula('()');
     }
 
     public function testConvertAtomWithInvalidFormulaChunk()
     {
-        $this->setExpectedException('\Exception');
+        $this->isGoingToThrowException('\Exception');
         FormulaConverter::convertFormula('f ==== empty');
     }
 }
