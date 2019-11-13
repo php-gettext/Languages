@@ -1,10 +1,9 @@
 <?php
 
-namespace Gettext\Languages\Test\Get;
+namespace Gettext\Languages\Test;
 
 use Exception;
 use Gettext\Languages\Category;
-use Gettext\Languages\Test\TestCase;
 
 class RulesTest extends TestCase
 {
