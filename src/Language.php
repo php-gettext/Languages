@@ -164,6 +164,39 @@ class Language
     }
 
     /**
+     * Build the formula starting from the currently defined categories.
+     *
+     * @param bool $withoutParenthesis TRUE to build a formula in standard gettext format, FALSE (default) to build a PHP-compatible formula
+     *
+     * @return string
+     */
+    public function buildFormula($withoutParenthesis = false)
+    {
+        $numCategories = count($this->categories);
+        switch ($numCategories) {
+            case 1:
+                // Just one category
+                return '0';
+            case 2:
+                return self::reduceFormula(self::reverseFormula($this->categories[0]->formula));
+            default:
+                $formula = (string) ($numCategories - 1);
+                for ($i = $numCategories - 2; $i >= 0; $i--) {
+                    $f = self::reduceFormula($this->categories[$i]->formula);
+                    if (!$withoutParenthesis && !preg_match('/^\([^()]+\)$/', $f)) {
+                        $f = "(${f})";
+                    }
+                    $formula = "${f} ? ${i} : ${formula}";
+                    if (!$withoutParenthesis && $i > 0) {
+                        $formula = "(${formula})";
+                    }
+                }
+
+                return $formula;
+        }
+    }
+
+    /**
      * Let's look for categories that will always occur.
      * This because with decimals (CLDR) we may have more cases, with integers (gettext) we have just one case.
      * If we found that (single) category we reduce the categories to that one only.
@@ -293,37 +326,6 @@ class Language
             $lastGood->formula = null;
         }
         $this->categories = $goodCategories;
-    }
-
-    /**
-     * Build the formula starting from the currently defined categories.
-     *
-     * @return string
-     */
-    private function buildFormula()
-    {
-        $numCategories = count($this->categories);
-        switch ($numCategories) {
-            case 1:
-                // Just one category
-                return '0';
-            case 2:
-                return self::reduceFormula(self::reverseFormula($this->categories[0]->formula));
-            default:
-                $formula = (string) ($numCategories - 1);
-                for ($i = $numCategories - 2; $i >= 0; $i--) {
-                    $f = self::reduceFormula($this->categories[$i]->formula);
-                    if (!preg_match('/^\([^()]+\)$/', $f)) {
-                        $f = "(${f})";
-                    }
-                    $formula = "${f} ? ${i} : ${formula}";
-                    if ($i > 0) {
-                        $formula = "(${formula})";
-                    }
-                }
-
-                return $formula;
-        }
     }
 
     /**

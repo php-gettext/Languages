@@ -267,6 +267,7 @@ return PhpCsFixer\Config::create()
         'ordered_class_elements' => true,
     ])
     ->setFinder(PhpCsFixer\Finder::create()
+        ->name('export-plural-rules')
         ->exclude('vendor')
         ->in(__DIR__)
     )
