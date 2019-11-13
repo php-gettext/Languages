@@ -16,11 +16,21 @@ matrix:
   - name: Test with PHP Nightly
   include:
 
+  - name: Test coding style
+    php: '7.3'
+    before_script:
+    - phpenv config-rm xdebug.ini || true
+    - composer --no-interaction remove --dev --no-update phpunit/phpunit
+    - travis_retry composer --no-interaction install --classmap-authoritative
+    script:
+    - composer --no-interaction run-script cs-test -- --using-cache=no .
+
   - name: Test with PHP 5.3
     dist: precise
     php: '5.3'
     before_script:
     - phpenv config-rm xdebug.ini || true
+    - composer --no-interaction remove --dev --no-update friendsofphp/php-cs-fixer
     - travis_retry composer --no-interaction install --classmap-authoritative
     script:
     - composer --no-interaction run-script test
@@ -30,6 +40,7 @@ matrix:
     php: '5.4'
     before_script:
     - phpenv config-rm xdebug.ini || true
+    - composer --no-interaction remove --dev --no-update friendsofphp/php-cs-fixer
     - travis_retry composer --no-interaction install --classmap-authoritative
     script:
     - composer --no-interaction run-script test
@@ -39,6 +50,7 @@ matrix:
     php: '5.5'
     before_script:
     - phpenv config-rm xdebug.ini || true
+    - composer --no-interaction remove --dev --no-update friendsofphp/php-cs-fixer
     - travis_retry composer --no-interaction install --classmap-authoritative
     script:
     - composer --no-interaction run-script test
@@ -47,6 +59,7 @@ matrix:
     php: '5.6'
     before_script:
     - phpenv config-rm xdebug.ini || true
+    - composer --no-interaction remove --dev --no-update friendsofphp/php-cs-fixer
     - travis_retry composer --no-interaction install --classmap-authoritative
     script:
     - composer --no-interaction run-script test
@@ -55,6 +68,7 @@ matrix:
     php: '7.0'
     before_script:
     - phpenv config-rm xdebug.ini || true
+    - composer --no-interaction remove --dev --no-update friendsofphp/php-cs-fixer
     - travis_retry composer --no-interaction install --classmap-authoritative
     script:
     - composer --no-interaction run-script test
@@ -63,6 +77,7 @@ matrix:
     php: '7.1'
     before_script:
     - phpenv config-rm xdebug.ini || true
+    - composer --no-interaction remove --dev --no-update friendsofphp/php-cs-fixer
     - travis_retry composer --no-interaction install --classmap-authoritative
     script:
     - composer --no-interaction run-script test
@@ -71,6 +86,7 @@ matrix:
     php: '7.2'
     before_script:
     - phpenv config-rm xdebug.ini || true
+    - composer --no-interaction remove --dev --no-update friendsofphp/php-cs-fixer
     - travis_retry composer --no-interaction install --classmap-authoritative
     script:
     - composer --no-interaction run-script test
@@ -79,6 +95,7 @@ matrix:
     php: '7.3'
     before_script:
     - phpenv config-rm xdebug.ini || true
+    - composer --no-interaction remove --dev --no-update friendsofphp/php-cs-fixer
     - travis_retry composer --no-interaction install --classmap-authoritative
     script:
     - composer --no-interaction run-script test
@@ -87,6 +104,7 @@ matrix:
     php: '7.4snapshot'
     before_script:
     - phpenv config-rm xdebug.ini || true
+    - composer --no-interaction remove --dev --no-update friendsofphp/php-cs-fixer
     - travis_retry composer --no-interaction install --classmap-authoritative
     script:
     - composer --no-interaction run-script test
@@ -96,6 +114,7 @@ matrix:
     before_script:
     - phpenv config-rm xdebug.ini || true
     - composer --no-interaction config platform.php 7.4.0
+    - composer --no-interaction remove --dev --no-update friendsofphp/php-cs-fixer
     - travis_retry composer --no-interaction install --classmap-authoritative
     script:
     - composer --no-interaction run-script test
