@@ -36,7 +36,7 @@ class CldrData
                 $match = null;
                 foreach ($list as $key => $value) {
                     $variant = '';
-                    if (preg_match('/^(.+)-alt-(short|variant|stand-alone|long)$/', $key, $match)) {
+                    if (preg_match('/^(.+)-alt-(short|variant|stand-alone|long|menu)$/', $key, $match)) {
                         $key = $match[1];
                         $variant = $match[2];
                     }
@@ -100,7 +100,6 @@ class CldrData
                 'mo' => 'ro_MD', // former Moldavian
             );
             $knownMissingLanguages = array(
-                'bh' => 'Bihari',
                 'guw' => 'Gun',
                 'nah' => 'Nahuatl',
                 'smi' => 'Sami',
