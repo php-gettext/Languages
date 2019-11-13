@@ -144,6 +144,26 @@ class Language
     }
 
     /**
+     * Returns a clone of this instance with all the strings to US-ASCII.
+     *
+     * @return Language
+     */
+    public function getUSAsciiClone()
+    {
+        $clone = clone $this;
+        self::asciifier($clone->name);
+        self::asciifier($clone->formula);
+        $clone->categories = array();
+        foreach ($this->categories as $category) {
+            $categoryClone = clone $category;
+            self::asciifier($categoryClone->examples);
+            $clone->categories[] = $categoryClone;
+        }
+
+        return $clone;
+    }
+
+    /**
      * Let's look for categories that will always occur.
      * This because with decimals (CLDR) we may have more cases, with integers (gettext) we have just one case.
      * If we found that (single) category we reduce the categories to that one only.
@@ -384,25 +404,5 @@ class Language
             }
             $value = $transliterated;
         }
-    }
-
-    /**
-     * Returns a clone of this instance with all the strings to US-ASCII.
-     *
-     * @return Language
-     */
-    public function getUSAsciiClone()
-    {
-        $clone = clone $this;
-        self::asciifier($clone->name);
-        self::asciifier($clone->formula);
-        $clone->categories = array();
-        foreach ($this->categories as $category) {
-            $categoryClone = clone $category;
-            self::asciifier($categoryClone->examples);
-            $clone->categories[] = $categoryClone;
-        }
-
-        return $clone;
     }
 }

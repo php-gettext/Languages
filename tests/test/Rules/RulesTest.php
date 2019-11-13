@@ -8,26 +8,6 @@ use Gettext\Languages\Test\TestCase;
 
 class RulesTest extends TestCase
 {
-    private function readData($format)
-    {
-        static $data = array();
-        if (!isset($data[$format])) {
-            $filename = GETTEXT_LANGUAGES_TESTDIR . '/data.' . $format;
-            switch ($format) {
-                case 'php':
-                    $data[$format] = require $filename;
-                    break;
-                case 'json':
-                    $data[$format] = json_decode(file_get_contents($filename), true);
-                    break;
-                default:
-                    throw new Exception("Unhandled format: ${format}");
-            }
-        }
-
-        return $data[$format];
-    }
-
     public function providerTestRules()
     {
         $testData = array();
@@ -96,5 +76,25 @@ class RulesTest extends TestCase
     public function testExamplesExist($format, $locale, $case, $examples)
     {
         $this->assertArrayHasKey($case, $examples, "The language '${locale}' does not have tests for the case '${case}' (format: ${format})");
+    }
+
+    private function readData($format)
+    {
+        static $data = array();
+        if (!isset($data[$format])) {
+            $filename = GETTEXT_LANGUAGES_TESTDIR . '/data.' . $format;
+            switch ($format) {
+                case 'php':
+                    $data[$format] = require $filename;
+                    break;
+                case 'json':
+                    $data[$format] = json_decode(file_get_contents($filename), true);
+                    break;
+                default:
+                    throw new Exception("Unhandled format: ${format}");
+            }
+        }
+
+        return $data[$format];
     }
 }

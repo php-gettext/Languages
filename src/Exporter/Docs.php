@@ -5,6 +5,22 @@ namespace Gettext\Languages\Exporter;
 class Docs extends Html
 {
     /**
+     * @see Exporter::isForPublicUse
+     */
+    public static function isForPublicUse()
+    {
+        return false;
+    }
+
+    /**
+     * @see Exporter::getDescription
+     */
+    public static function getDescription()
+    {
+        return 'Build the page http://mlocati.github.io/cldr-to-gettext-plural-rules';
+    }
+
+    /**
      * @see Exporter::toStringDo
      */
     protected static function toStringDo($languages)
@@ -38,21 +54,5 @@ EOT;
 EOT;
 
         return $result;
-    }
-
-    /**
-     * @see Exporter::isForPublicUse
-     */
-    public static function isForPublicUse()
-    {
-        return false;
-    }
-
-    /**
-     * @see Exporter::getDescription
-     */
-    public static function getDescription()
-    {
-        return 'Build the page http://mlocati.github.io/cldr-to-gettext-plural-rules';
     }
 }

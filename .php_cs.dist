@@ -263,6 +263,8 @@ return PhpCsFixer\Config::create()
         'phpdoc_no_empty_return' => true,
         // Annotations in PHPDoc should be ordered so that `@param` annotations come first, then `@throws` annotations, then `@return` annotations.
         'phpdoc_order' => true,
+        // Orders the elements of classes/interfaces/traits.
+        'ordered_class_elements' => true,
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->exclude('vendor')

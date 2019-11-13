@@ -5,6 +5,14 @@ namespace Gettext\Languages\Exporter;
 class Php extends Exporter
 {
     /**
+     * @see Exporter::getDescription
+     */
+    public static function getDescription()
+    {
+        return 'Build a PHP array';
+    }
+
+    /**
      * @see Exporter::toStringDo
      */
     protected static function toStringDo($languages)
@@ -45,13 +53,5 @@ class Php extends Exporter
         $lines[] = '';
 
         return implode("\n", $lines);
-    }
-
-    /**
-     * @see Exporter::getDescription
-     */
-    public static function getDescription()
-    {
-        return 'Build a PHP array';
     }
 }

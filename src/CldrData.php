@@ -31,113 +31,9 @@ class CldrData
     private static $data;
 
     /**
-     * Returns the loaded CLDR data.
-     *
-     * @param string $key Can be 'languages', 'territories', 'plurals', 'supersededLanguages', 'scripts', 'standAloneScripts'
+     * @var array
      */
-    private static function getData($key)
-    {
-        if (!isset(self::$data)) {
-            $fixKeys = function ($list, &$standAlone = null) {
-                $result = array();
-                $standAlone = array();
-                $match = null;
-                foreach ($list as $key => $value) {
-                    $variant = '';
-                    if (preg_match('/^(.+)-alt-(short|variant|stand-alone|long|menu)$/', $key, $match)) {
-                        $key = $match[1];
-                        $variant = $match[2];
-                    }
-                    $key = str_replace('-', '_', $key);
-                    switch ($key) {
-                        case 'root': // Language: Root
-                        case 'und': // Language: Unknown Language
-                        case 'zxx': // Language: No linguistic content
-                        case 'ZZ': // Territory: Unknown Region
-                        case 'Zinh': // Script: Inherited
-                        case 'Zmth': // Script: Mathematical Notation
-                        case 'Zsym': // Script: Symbols
-                        case 'Zxxx': // Script: Unwritten
-                        case 'Zyyy': // Script: Common
-                        case 'Zzzz': // Script: Unknown Script
-                            break;
-                        default:
-                            switch ($variant) {
-                                case 'stand-alone':
-                                    $standAlone[$key] = $value;
-                                    break;
-                                case '':
-                                    $result[$key] = $value;
-                                    break;
-                            }
-                            break;
-                    }
-                }
-
-                return $result;
-            };
-            $data = array();
-            $json = json_decode(file_get_contents(__DIR__ . '/cldr-data/main/en-US/languages.json'), true);
-            $data['languages'] = $fixKeys($json['main']['en-US']['localeDisplayNames']['languages']);
-            $json = json_decode(file_get_contents(__DIR__ . '/cldr-data/main/en-US/territories.json'), true);
-            $data['territories'] = $fixKeys($json['main']['en-US']['localeDisplayNames']['territories']);
-            $json = json_decode(file_get_contents(__DIR__ . '/cldr-data/supplemental/plurals.json'), true);
-            $data['plurals'] = $fixKeys($json['supplemental']['plurals-type-cardinal']);
-            $json = json_decode(file_get_contents(__DIR__ . '/cldr-data/main/en-US/scripts.json'), true);
-            $data['scripts'] = $fixKeys($json['main']['en-US']['localeDisplayNames']['scripts'], $data['standAloneScripts']);
-            $data['standAloneScripts'] = array_merge($data['scripts'], $data['standAloneScripts']);
-            $data['scripts'] = array_merge($data['standAloneScripts'], $data['scripts']);
-            $data['supersededLanguages'] = array();
-            // Remove the languages for which we don't have plurals
-            $m = null;
-            foreach (array_keys(array_diff_key($data['languages'], $data['plurals'])) as $missingPlural) {
-                if (preg_match('/^([a-z]{2,3})_/', $missingPlural, $m)) {
-                    if (!isset($data['plurals'][$m[1]])) {
-                        unset($data['languages'][$missingPlural]);
-                    }
-                } else {
-                    unset($data['languages'][$missingPlural]);
-                }
-            }
-            // Fix the languages for which we have plurals
-            $formerCodes = array(
-                'in' => 'id', // former Indonesian
-                'iw' => 'he', // former Hebrew
-                'ji' => 'yi', // former Yiddish
-                'jw' => 'jv', // former Javanese
-                'mo' => 'ro_MD', // former Moldavian
-            );
-            $knownMissingLanguages = array(
-                'guw' => 'Gun',
-                'nah' => 'Nahuatl',
-                'smi' => 'Sami',
-            );
-            foreach (array_keys(array_diff_key($data['plurals'], $data['languages'])) as $missingLanguage) {
-                if (isset($formerCodes[$missingLanguage]) && isset($data['languages'][$formerCodes[$missingLanguage]])) {
-                    $data['languages'][$missingLanguage] = $data['languages'][$formerCodes[$missingLanguage]];
-                    $data['supersededLanguages'][$missingLanguage] = $formerCodes[$missingLanguage];
-                } else {
-                    if (isset($knownMissingLanguages[$missingLanguage])) {
-                        $data['languages'][$missingLanguage] = $knownMissingLanguages[$missingLanguage];
-                    } else {
-                        throw new Exception("We have the plural rule for the language '${missingLanguage}' but we don't have its language name");
-                    }
-                }
-            }
-            ksort($data['languages'], SORT_STRING);
-            ksort($data['territories'], SORT_STRING);
-            ksort($data['plurals'], SORT_STRING);
-            ksort($data['scripts'], SORT_STRING);
-            ksort($data['standAloneScripts'], SORT_STRING);
-            ksort($data['supersededLanguages'], SORT_STRING);
-            self::$data = $data;
-        }
-        if (!@isset(self::$data[$key])) {
-            throw new Exception("Invalid CLDR data key: '${key}'");
-        }
-
-        return self::$data[$key];
-    }
+    private static $plurals;
 
     /**
      * Returns a dictionary containing the language names.
@@ -176,11 +72,6 @@ class CldrData
     {
         return self::getData($standAlone ? 'standAloneScripts' : 'scripts');
     }
-
-    /**
-     * @var array
-     */
-    private static $plurals;
 
     /**
      * A dictionary containing the plural rules.
@@ -335,5 +226,114 @@ class CldrData
         }
 
         return $result;
+    }
+
+    /**
+     * Returns the loaded CLDR data.
+     *
+     * @param string $key Can be 'languages', 'territories', 'plurals', 'supersededLanguages', 'scripts', 'standAloneScripts'
+     */
+    private static function getData($key)
+    {
+        if (!isset(self::$data)) {
+            $fixKeys = function ($list, &$standAlone = null) {
+                $result = array();
+                $standAlone = array();
+                $match = null;
+                foreach ($list as $key => $value) {
+                    $variant = '';
+                    if (preg_match('/^(.+)-alt-(short|variant|stand-alone|long|menu)$/', $key, $match)) {
+                        $key = $match[1];
+                        $variant = $match[2];
+                    }
+                    $key = str_replace('-', '_', $key);
+                    switch ($key) {
+                        case 'root': // Language: Root
+                        case 'und': // Language: Unknown Language
+                        case 'zxx': // Language: No linguistic content
+                        case 'ZZ': // Territory: Unknown Region
+                        case 'Zinh': // Script: Inherited
+                        case 'Zmth': // Script: Mathematical Notation
+                        case 'Zsym': // Script: Symbols
+                        case 'Zxxx': // Script: Unwritten
+                        case 'Zyyy': // Script: Common
+                        case 'Zzzz': // Script: Unknown Script
+                            break;
+                        default:
+                            switch ($variant) {
+                                case 'stand-alone':
+                                    $standAlone[$key] = $value;
+                                    break;
+                                case '':
+                                    $result[$key] = $value;
+                                    break;
+                            }
+                            break;
+                    }
+                }
+
+                return $result;
+            };
+            $data = array();
+            $json = json_decode(file_get_contents(__DIR__ . '/cldr-data/main/en-US/languages.json'), true);
+            $data['languages'] = $fixKeys($json['main']['en-US']['localeDisplayNames']['languages']);
+            $json = json_decode(file_get_contents(__DIR__ . '/cldr-data/main/en-US/territories.json'), true);
+            $data['territories'] = $fixKeys($json['main']['en-US']['localeDisplayNames']['territories']);
+            $json = json_decode(file_get_contents(__DIR__ . '/cldr-data/supplemental/plurals.json'), true);
+            $data['plurals'] = $fixKeys($json['supplemental']['plurals-type-cardinal']);
+            $json = json_decode(file_get_contents(__DIR__ . '/cldr-data/main/en-US/scripts.json'), true);
+            $data['scripts'] = $fixKeys($json['main']['en-US']['localeDisplayNames']['scripts'], $data['standAloneScripts']);
+            $data['standAloneScripts'] = array_merge($data['scripts'], $data['standAloneScripts']);
+            $data['scripts'] = array_merge($data['standAloneScripts'], $data['scripts']);
+            $data['supersededLanguages'] = array();
+            // Remove the languages for which we don't have plurals
+            $m = null;
+            foreach (array_keys(array_diff_key($data['languages'], $data['plurals'])) as $missingPlural) {
+                if (preg_match('/^([a-z]{2,3})_/', $missingPlural, $m)) {
+                    if (!isset($data['plurals'][$m[1]])) {
+                        unset($data['languages'][$missingPlural]);
+                    }
+                } else {
+                    unset($data['languages'][$missingPlural]);
+                }
+            }
+            // Fix the languages for which we have plurals
+            $formerCodes = array(
+                'in' => 'id', // former Indonesian
+                'iw' => 'he', // former Hebrew
+                'ji' => 'yi', // former Yiddish
+                'jw' => 'jv', // former Javanese
+                'mo' => 'ro_MD', // former Moldavian
+            );
+            $knownMissingLanguages = array(
+                'guw' => 'Gun',
+                'nah' => 'Nahuatl',
+                'smi' => 'Sami',
+            );
+            foreach (array_keys(array_diff_key($data['plurals'], $data['languages'])) as $missingLanguage) {
+                if (isset($formerCodes[$missingLanguage]) && isset($data['languages'][$formerCodes[$missingLanguage]])) {
+                    $data['languages'][$missingLanguage] = $data['languages'][$formerCodes[$missingLanguage]];
+                    $data['supersededLanguages'][$missingLanguage] = $formerCodes[$missingLanguage];
+                } else {
+                    if (isset($knownMissingLanguages[$missingLanguage])) {
+                        $data['languages'][$missingLanguage] = $knownMissingLanguages[$missingLanguage];
+                    } else {
+                        throw new Exception("We have the plural rule for the language '${missingLanguage}' but we don't have its language name");
+                    }
+                }
+            }
+            ksort($data['languages'], SORT_STRING);
+            ksort($data['territories'], SORT_STRING);
+            ksort($data['plurals'], SORT_STRING);
+            ksort($data['scripts'], SORT_STRING);
+            ksort($data['standAloneScripts'], SORT_STRING);
+            ksort($data['supersededLanguages'], SORT_STRING);
+            self::$data = $data;
+        }
+        if (!@isset(self::$data[$key])) {
+            throw new Exception("Invalid CLDR data key: '${key}'");
+        }
+
+        return self::$data[$key];
     }
 }

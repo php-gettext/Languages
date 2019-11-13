@@ -88,18 +88,6 @@ abstract class Exporter
      *
      * @return string
      */
-    protected static function toStringDo($languages)
-    {
-        throw new Exception(get_called_class() . ' does not implement the method ' . __FUNCTION__);
-    }
-
-    /**
-     * Convert a list of Language instances to string.
-     *
-     * @param Language[] $languages the Language instances to convert
-     *
-     * @return string
-     */
     final public static function toString($languages, $options = null)
     {
         if (isset($options) && is_array($options)) {
@@ -146,6 +134,18 @@ abstract class Exporter
      * @return string
      */
     public static function getDescription()
+    {
+        throw new Exception(get_called_class() . ' does not implement the method ' . __FUNCTION__);
+    }
+
+    /**
+     * Convert a list of Language instances to string.
+     *
+     * @param Language[] $languages the Language instances to convert
+     *
+     * @return string
+     */
+    protected static function toStringDo($languages)
     {
         throw new Exception(get_called_class() . ' does not implement the method ' . __FUNCTION__);
     }

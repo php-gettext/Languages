@@ -5,6 +5,14 @@ namespace Gettext\Languages\Exporter;
 class Json extends Exporter
 {
     /**
+     * @see Exporter::getDescription
+     */
+    public static function getDescription()
+    {
+        return 'Build a compressed JSON-encoded file';
+    }
+
+    /**
      * Return the options for json_encode.
      *
      * @return int
@@ -55,13 +63,5 @@ class Json extends Exporter
         }
 
         return json_encode($list, static::getEncodeOptions());
-    }
-
-    /**
-     * @see Exporter::getDescription
-     */
-    public static function getDescription()
-    {
-        return 'Build a compressed JSON-encoded file';
     }
 }

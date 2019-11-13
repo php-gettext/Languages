@@ -7,6 +7,14 @@ use Exception;
 class Po extends Exporter
 {
     /**
+     * @see Exporter::getDescription
+     */
+    public static function getDescription()
+    {
+        return 'Build a string to be used for gettext .po files';
+    }
+
+    /**
      * @see Exporter::toStringDo
      */
     protected static function toStringDo($languages)
@@ -21,13 +29,5 @@ class Po extends Exporter
         $lines[] = '';
 
         return implode("\n", $lines);
-    }
-
-    /**
-     * @see Exporter::getDescription
-     */
-    public static function getDescription()
-    {
-        return 'Build a string to be used for gettext .po files';
     }
 }

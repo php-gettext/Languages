@@ -5,6 +5,14 @@ namespace Gettext\Languages\Exporter;
 class Html extends Exporter
 {
     /**
+     * @see Exporter::getDescription
+     */
+    public static function getDescription()
+    {
+        return 'Build a HTML table';
+    }
+
+    /**
      * @see Exporter::toStringDo
      */
     protected static function toStringDo($languages)
@@ -53,13 +61,5 @@ class Html extends Exporter
         $lines[] = $prefix . '</table>';
 
         return implode("\n", $lines);
-    }
-
-    /**
-     * @see Exporter::getDescription
-     */
-    public static function getDescription()
-    {
-        return 'Build a HTML table';
     }
 }
