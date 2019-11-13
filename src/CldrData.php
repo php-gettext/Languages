@@ -86,7 +86,7 @@ class CldrData
      * }
      * </pre></code>
      *
-     * @var array
+     * @return array
      */
     public static function getPlurals()
     {
@@ -232,6 +232,8 @@ class CldrData
      * Returns the loaded CLDR data.
      *
      * @param string $key Can be 'languages', 'territories', 'plurals', 'supersededLanguages', 'scripts', 'standAloneScripts'
+     *
+     * @return array
      */
     private static function getData($key)
     {
@@ -330,7 +332,7 @@ class CldrData
             ksort($data['supersededLanguages'], SORT_STRING);
             self::$data = $data;
         }
-        if (!@isset(self::$data[$key])) {
+        if (!isset(self::$data[$key])) {
             throw new Exception("Invalid CLDR data key: '${key}'");
         }
 

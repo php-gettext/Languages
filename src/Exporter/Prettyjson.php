@@ -7,7 +7,9 @@ use Exception;
 class Prettyjson extends Json
 {
     /**
-     * @see Exporter::getDescription
+     * {@inheritdoc}
+     *
+     * @see \Gettext\Languages\Exporter\Exporter::getDescription()
      */
     public static function getDescription()
     {
@@ -15,7 +17,9 @@ class Prettyjson extends Json
     }
 
     /**
-     * @see Json::getEncodeOptions
+     * {@inheritdoc}
+     *
+     * @see \Gettext\Languages\Exporter\Json::getEncodeOptions()
      */
     protected static function getEncodeOptions()
     {

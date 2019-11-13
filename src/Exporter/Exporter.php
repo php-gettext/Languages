@@ -3,7 +3,6 @@
 namespace Gettext\Languages\Exporter;
 
 use Exception;
-use Gettext\Languages\Language;
 
 /**
  * Base class for all the exporters.
@@ -55,7 +54,7 @@ abstract class Exporter
      *
      * @param string $exporterHandle the handle of the exporter
      *
-     * @throws Exception throws an Exception if $exporterHandle is not valid
+     * @throws \Exception throws an Exception if $exporterHandle is not valid
      *
      * @return string
      */
@@ -84,7 +83,7 @@ abstract class Exporter
     /**
      * Convert a list of Language instances to string.
      *
-     * @param Language[] $languages the Language instances to convert
+     * @param \Gettext\Languages\Language[] $languages the Language instances to convert
      *
      * @return string
      */
@@ -106,9 +105,9 @@ abstract class Exporter
     /**
      * Save the Language instances to a file.
      *
-     * @param Language[] $languages the Language instances to convert
+     * @param \Gettext\Languages\Language[] $languages the Language instances to convert
      *
-     * @throws Exception
+     * @throws \Exception
      */
     final public static function toFile($languages, $filename, $options = null)
     {
@@ -141,7 +140,7 @@ abstract class Exporter
     /**
      * Convert a list of Language instances to string.
      *
-     * @param Language[] $languages the Language instances to convert
+     * @param \Gettext\Languages\Language[] $languages the Language instances to convert
      *
      * @return string
      */

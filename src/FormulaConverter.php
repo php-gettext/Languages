@@ -14,7 +14,7 @@ class FormulaConverter
      *
      * @param string $cldrFormula the CLDR formula to convert
      *
-     * @throws Exception
+     * @throws \Exception
      *
      * @return bool|string returns true if the gettext will always evaluate to true, false if gettext will always evaluate to false, return the gettext formula otherwise
      */
@@ -73,7 +73,7 @@ class FormulaConverter
      *
      * @param string $cldrAtom the CLDR formula atom to convert
      *
-     * @throws Exception
+     * @throws \Exception
      *
      * @return bool|string returns true if the gettext will always evaluate to true, false if gettext will always evaluate to false, return the gettext formula otherwise
      */
@@ -109,7 +109,7 @@ class FormulaConverter
      *
      * @param string $atom
      *
-     * @throws Exception
+     * @throws \Exception
      *
      * @return string
      */

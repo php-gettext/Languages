@@ -5,7 +5,9 @@ namespace Gettext\Languages\Exporter;
 class Docs extends Html
 {
     /**
-     * @see Exporter::isForPublicUse
+     * {@inheritdoc}
+     *
+     * @see \Gettext\Languages\Exporter\Exporter::isForPublicUse()
      */
     public static function isForPublicUse()
     {
@@ -13,7 +15,9 @@ class Docs extends Html
     }
 
     /**
-     * @see Exporter::getDescription
+     * {@inheritdoc}
+     *
+     * @see \Gettext\Languages\Exporter\Exporter::getDescription()
      */
     public static function getDescription()
     {
@@ -21,7 +25,9 @@ class Docs extends Html
     }
 
     /**
-     * @see Exporter::toStringDo
+     * {@inheritdoc}
+     *
+     * @see \Gettext\Languages\Exporter\Exporter::toStringDo()
      */
     protected static function toStringDo($languages)
     {

@@ -54,7 +54,7 @@ class Language
     /**
      * The list of categories.
      *
-     * @var Category[]
+     * @var \Gettext\Languages\Category[]
      */
     public $categories;
 
@@ -70,7 +70,7 @@ class Language
      *
      * @param array $info The result of CldrData::getLanguageInfo()
      *
-     * @throws Exception throws an Exception if $fullId is not valid
+     * @throws \Exception throws an Exception if $fullId is not valid
      */
     private function __construct($info)
     {
@@ -111,9 +111,9 @@ class Language
     /**
      * Return a list of all languages available.
      *
-     * @throws Exception
+     * @throws \Exception
      *
-     * @return Language[]
+     * @return \Gettext\Languages\Language[]
      */
     public static function getAll()
     {
@@ -130,7 +130,7 @@ class Language
      *
      * @param string $id
      *
-     * @return Language|null
+     * @return \Gettext\Languages\Language|null
      */
     public static function getById($id)
     {
@@ -146,7 +146,7 @@ class Language
     /**
      * Returns a clone of this instance with all the strings to US-ASCII.
      *
-     * @return Language
+     * @return \Gettext\Languages\Language
      */
     public function getUSAsciiClone()
     {
@@ -167,6 +167,8 @@ class Language
      * Let's look for categories that will always occur.
      * This because with decimals (CLDR) we may have more cases, with integers (gettext) we have just one case.
      * If we found that (single) category we reduce the categories to that one only.
+     *
+     * @throws \Exception
      */
     private function checkAlwaysTrueCategories()
     {
@@ -196,6 +198,8 @@ class Language
      * Let's look for categories that will never occur.
      * This because with decimals (CLDR) we may have more cases, with integers (gettext) we have some less cases.
      * If we found those categories we strip them out.
+     *
+     * @throws \Exception
      */
     private function checkAlwaysFalseCategories()
     {
@@ -217,7 +221,7 @@ class Language
      * This because with decimals (CLDR) we may have more cases, with integers (gettext) we have some less cases.
      * If we found those categories, we check that they never occur and we strip them out.
      *
-     * @throws Exception
+     * @throws \Exception
      */
     private function checkAllCategoriesWithExamples()
     {
@@ -327,7 +331,7 @@ class Language
      *
      * @param string $formula
      *
-     * @throws Exception
+     * @throws \Exception
      *
      * @return string
      */
@@ -377,11 +381,11 @@ class Language
      *
      * @param mixed $value the variable to work on
      *
-     * @throws Exception
+     * @throws \Exception
      */
     private static function asciifier(&$value)
     {
-        if (is_string($value) && ($value !== '')) {
+        if (is_string($value) && $value !== '') {
             // Avoid converting from 'Ÿ' to '"Y', let's prefer 'Y'
             $transliterated = strtr($value, array(
                 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A',
@@ -399,7 +403,7 @@ class Language
                 'ý' => 'y', 'ÿ' => 'y',
             ));
             $transliterated = @iconv('UTF-8', 'US-ASCII//IGNORE//TRANSLIT', $transliterated);
-            if (($transliterated === false) || ($transliterated === '')) {
+            if ($transliterated === false || $transliterated === '') {
                 throw new Exception("Unable to transliterate '${value}'");
             }
             $value = $transliterated;

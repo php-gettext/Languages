@@ -7,7 +7,9 @@ use Exception;
 class Po extends Exporter
 {
     /**
-     * @see Exporter::getDescription
+     * {@inheritdoc}
+     *
+     * @see \Gettext\Languages\Exporter\Exporter::getDescription()
      */
     public static function getDescription()
     {
@@ -15,7 +17,9 @@ class Po extends Exporter
     }
 
     /**
-     * @see Exporter::toStringDo
+     * {@inheritdoc}
+     *
+     * @see \Gettext\Languages\Exporter\Exporter::toStringDo()
      */
     protected static function toStringDo($languages)
     {

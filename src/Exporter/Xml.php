@@ -5,7 +5,9 @@ namespace Gettext\Languages\Exporter;
 class Xml extends Exporter
 {
     /**
-     * @see Exporter::getDescription
+     * {@inheritdoc}
+     *
+     * @see \Gettext\Languages\Exporter\Exporter::getDescription()
      */
     public static function getDescription()
     {
@@ -13,7 +15,9 @@ class Xml extends Exporter
     }
 
     /**
-     * @see Exporter::toStringDo
+     * {@inheritdoc}
+     *
+     * @see \Gettext\Languages\Exporter\Exporter::toStringDo()
      */
     protected static function toStringDo($languages)
     {

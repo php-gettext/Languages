@@ -36,7 +36,7 @@ class Category
      * @param string $cldrCategoryId the CLDR category identifier (eg 'pluralRule-count-one')
      * @param string $cldrFormulaAndExamples the CLDR formula and examples (eg 'i = 1 and v = 0 @integer 1')
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function __construct($cldrCategoryId, $cldrFormulaAndExamples)
     {
@@ -74,7 +74,7 @@ class Category
     /**
      * Return a list of numbers corresponding to the $examples value.
      *
-     * @throws Exception throws an Exception if we weren't able to expand the examples
+     * @throws \Exception throws an Exception if we weren't able to expand the examples
      *
      * @return int[]
      */
@@ -88,7 +88,7 @@ class Category
      *
      * @param string $examples A string like '1, 2, 5...7, …'.
      *
-     * @throws Exception throws an Exception if we weren't able to expand $examples
+     * @throws \Exception throws an Exception if we weren't able to expand $examples
      *
      * @return int[]
      */
