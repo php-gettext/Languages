@@ -1,4 +1,5 @@
 <?php
+
 namespace Gettext\Languages\Exporter;
 
 class Xml extends Exporter
@@ -44,6 +45,7 @@ class Xml extends Exporter
 
         return $xml->saveXML();
     }
+
     /**
      * @see Exporter::getDescription
      */

@@ -1,4 +1,5 @@
 <?php
+
 namespace Gettext\Languages\Exporter;
 
 class Docs extends Html
@@ -38,6 +39,7 @@ EOT;
 
         return $result;
     }
+
     /**
      * @see Exporter::isForPublicUse
      */
@@ -45,6 +47,7 @@ EOT;
     {
         return false;
     }
+
     /**
      * @see Exporter::getDescription
      */

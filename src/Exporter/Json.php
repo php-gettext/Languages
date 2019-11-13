@@ -1,10 +1,12 @@
 <?php
+
 namespace Gettext\Languages\Exporter;
 
 class Json extends Exporter
 {
     /**
      * Return the options for json_encode.
+     *
      * @return int
      */
     protected static function getEncodeOptions()
@@ -19,6 +21,7 @@ class Json extends Exporter
 
         return $result;
     }
+
     /**
      * @see Exporter::toStringDo
      */
@@ -53,6 +56,7 @@ class Json extends Exporter
 
         return json_encode($list, static::getEncodeOptions());
     }
+
     /**
      * @see Exporter::getDescription
      */
