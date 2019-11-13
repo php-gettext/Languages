@@ -8,20 +8,24 @@ To use the languages data generated from this tool you can use the `bin/export-p
 
 #### Export command line options
 `export-plural-rules` supports the following options:
-- `--us-ascii`
+- `--us-ascii`  
   If specified, the output will contain only US-ASCII characters.
   If not specified, the output charset is UTF-8.
-- `--languages=<LanguageId>[,<LanguageId>,...]]`
-  `--language=<LanguageId>[,<LanguageId>,...]]`
+- `--languages=<LanguageId>[,<LanguageId>,...]]`  
+  `--language=<LanguageId>[,<LanguageId>,...]]`  
   Export only the specified language codes.
   Separate languages with commas; you can also use this argument more than once; it's case insensitive and accepts both '_' and '-' as locale chunks separator (eg we accept `it_IT` as well as `it-it`).
   If this option is not specified, the result will contain all the available languages.
-- `--reduce=yes|no`
+- `--reduce=yes|no`  
   If set to yes the output won't contain languages with the same base language and rules.
   For instance `nl_BE` (`Flemish`) will be omitted because it's the same as `nl` (`Dutch`).
   Defaults to `no` if `--languages` is specified, to `yes` otherwise.
-- `--output=<file name>`
-  If specified, the output will be saved to <file name>. If not specified we'll output to standard output.
+- `--parenthesis=yes|no`  
+  If set to no, extra parenthesis will be omitted in generated plural rules formulas.
+  Those extra parenthesis are needed to create a PHP-compatible formula.
+  Defaults to `yes`
+- `--output=<file name>`  
+  If specified, the output will be saved to `<file name>`. If not specified we'll output to standard output.
 
 #### Export formats
 `export-plural-rules` can generate data in the following formats:

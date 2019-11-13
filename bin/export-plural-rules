@@ -221,7 +221,7 @@ Where:
         same as nl ('Dutch').
         Defaults to 'no' if --languages is specified, to 'yes' otherwise.
     --parenthesis
-        if set to yes, extra parenthesis will be omitted in in generated
+        if set to no, extra parenthesis will be omitted in generated
         plural rules formulas.
         Those extra parenthesis are needed to create a PHP-compatible
         formula.
