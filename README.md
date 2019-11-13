@@ -99,6 +99,7 @@ The main properties of the `Gettext\Languages\Language` instances are:
   - `id`: can be (in this order) one of `zero`, `one`, `two`, `few`, `many` or `other`. The `other` case is always present.
   - `examples`: a representation of some values for which this plural case is valid (examples are simple numbers like `1` or complex ranges like `0, 2~16, 100, 1000, 10000, 100000, 1000000, …`)  
 
+
 ## Is this data correct?
 
 Yes - as far as you trust the [Unicode CLDR](http://cldr.unicode.org) project.
@@ -121,6 +122,7 @@ The [CLDR specifications](https://unicode.org/reports/tr35/tr35-numbers.html#Lan
 - `t`: visible fractional digits in n, without trailing zeros (eg: `9.870` => `87`)
 
 #### gettext
+
 The [gettext specifications](https://www.gnu.org/savannah-checkouts/gnu/gettext/manual/html_node/Plural-forms.html) define the following variables to be used in the gettext plural formulas:
 - `n`: unsigned long int
 
@@ -134,6 +136,7 @@ The [gettext specifications](https://www.gnu.org/savannah-checkouts/gnu/gettext/
 | `w`           | `0`                |
 | `f`           | *empty*            |
 | `t`           | *empty*            |
+
 
 
 ## Parenthesis in ternary operators
@@ -150,3 +153,8 @@ So, in order to avoid problems, instead of a simple
 `a ? 0 : b ? 1 : 2`
 the resulting formulas will be in this format:
 `a ? 0 : (b ? 1 : 2)`
+
+
+## Support this project
+
+You can offer me a [monthy coffee](https://github.com/sponsors/mlocati) or a [one-time coffee](https://paypal.me/mlocati) :wink:
