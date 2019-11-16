@@ -54,22 +54,22 @@ class GetTest extends TestCase
     {
         $pt = Language::getById('pt');
         $this->assertSame('Portuguese', $pt->name);
-        $this->assertSame(2, count($pt->categories));
+        $this->assertCount(2, $pt->categories);
         $this->assertSame('one', $pt->categories[0]->id);
 
         $ptPT = Language::getById('pt-PT');
         $this->assertSame('European Portuguese', $ptPT->name);
-        $this->assertSame(2, count($ptPT->categories));
+        $this->assertCount(2, $ptPT->categories);
         $this->assertSame('one', $ptPT->categories[0]->id);
 
         $ptBR = Language::getById('pt-BR');
         $this->assertSame('Brazilian Portuguese', $ptBR->name);
-        $this->assertSame(2, count($ptBR->categories));
+        $this->assertCount(2, $ptBR->categories);
         $this->assertSame('one', $ptBR->categories[0]->id);
 
         $ptCV = Language::getById('pt-CV');
         $this->assertSame('Portuguese (Cape Verde)', $ptCV->name);
-        $this->assertSame(2, count($ptCV->categories));
+        $this->assertCount(2, $ptCV->categories);
         $this->assertSame('one', $ptCV->categories[0]->id);
 
         $this->assertSame($pt->formula, $ptBR->formula);
