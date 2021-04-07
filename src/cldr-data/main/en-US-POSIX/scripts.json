@@ -1,13 +1,13 @@
 {
   "main": {
-    "en-US": {
+    "en-US-POSIX": {
       "identity": {
         "version": {
-          "_number": "$Revision$",
-          "_cldrVersion": "36"
+          "_cldrVersion": "38"
         },
         "language": "en",
-        "territory": "US"
+        "territory": "US",
+        "variant": "POSIX"
       },
       "localeDisplayNames": {
         "scripts": {
@@ -17,6 +17,7 @@
           "Ahom": "Ahom",
           "Arab": "Arabic",
           "Arab-alt-variant": "Perso-Arabic",
+          "Aran": "Nastaliq",
           "Armi": "Imperial Aramaic",
           "Armn": "Armenian",
           "Avst": "Avestan",
@@ -38,12 +39,14 @@
           "Cari": "Carian",
           "Cham": "Cham",
           "Cher": "Cherokee",
+          "Chrs": "Chorasmian",
           "Cirt": "Cirth",
           "Copt": "Coptic",
           "Cprt": "Cypriot",
           "Cyrl": "Cyrillic",
           "Cyrs": "Old Church Slavonic Cyrillic",
           "Deva": "Devanagari",
+          "Diak": "Dives Akuru",
           "Dogr": "Dogra",
           "Dsrt": "Deseret",
           "Dupl": "Duployan shorthand",
@@ -90,6 +93,7 @@
           "Khar": "Kharoshthi",
           "Khmr": "Khmer",
           "Khoj": "Khojki",
+          "Kits": "Khitan small script",
           "Knda": "Kannada",
           "Kore": "Korean",
           "Kpel": "Kpelle",
@@ -197,6 +201,7 @@
           "Xpeo": "Old Persian",
           "Xsux": "Sumero-Akkadian Cuneiform",
           "Xsux-alt-short": "S-A Cuneiform",
+          "Yezi": "Yezidi",
           "Yiii": "Yi",
           "Zanb": "Zanabazar Square",
           "Zinh": "Inherited",

@@ -100,7 +100,7 @@ class Category
             $examples = substr($examples, 0, strlen($examples) - strlen(', …'));
         }
         foreach (explode(',', str_replace(' ', '', $examples)) as $range) {
-            if (preg_match('/^\d+$/', $range)) {
+            if (preg_match('/^\d+((c|e)\d+)?$/', $range)) {
                 $result[] = (int) $range;
             } elseif (preg_match('/^(\d+)~(\d+)$/', $range, $m)) {
                 $from = (int) $m[1];

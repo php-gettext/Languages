@@ -1,13 +1,13 @@
 {
   "main": {
-    "en-US": {
+    "en-US-POSIX": {
       "identity": {
         "version": {
-          "_number": "$Revision$",
-          "_cldrVersion": "36"
+          "_cldrVersion": "38"
         },
         "language": "en",
-        "territory": "US"
+        "territory": "US",
+        "variant": "POSIX"
       },
       "localeDisplayNames": {
         "languages": {
@@ -41,6 +41,7 @@
           "arp": "Arapaho",
           "arq": "Algerian Arabic",
           "ars": "Najdi Arabic",
+          "ars-alt-menu": "Arabic, Najdi",
           "arw": "Arawak",
           "ary": "Moroccan Arabic",
           "arz": "Egyptian Arabic",
@@ -115,6 +116,8 @@
           "chy": "Cheyenne",
           "cic": "Chickasaw",
           "ckb": "Central Kurdish",
+          "ckb-alt-menu": "Kurdish, Central",
+          "ckb-alt-variant": "Kurdish, Sorani",
           "co": "Corsican",
           "cop": "Coptic",
           "cps": "Capiznon",

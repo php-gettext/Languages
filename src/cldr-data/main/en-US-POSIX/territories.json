@@ -1,16 +1,25 @@
 {
   "main": {
-    "en-US": {
+    "en-US-POSIX": {
       "identity": {
         "version": {
-          "_number": "$Revision$",
-          "_cldrVersion": "36"
+          "_cldrVersion": "38"
         },
         "language": "en",
-        "territory": "US"
+        "territory": "US",
+        "variant": "POSIX"
       },
       "localeDisplayNames": {
         "territories": {
+          "142": "Asia",
+          "143": "Central Asia",
+          "145": "Western Asia",
+          "150": "Europe",
+          "151": "Eastern Europe",
+          "154": "Northern Europe",
+          "155": "Western Europe",
+          "202": "Sub-Saharan Africa",
+          "419": "Latin America",
           "001": "World",
           "002": "Africa",
           "003": "North America",
@@ -33,15 +42,6 @@
           "054": "Melanesia",
           "057": "Micronesian Region",
           "061": "Polynesia",
-          "142": "Asia",
-          "143": "Central Asia",
-          "145": "Western Asia",
-          "150": "Europe",
-          "151": "Eastern Europe",
-          "154": "Northern Europe",
-          "155": "Western Europe",
-          "202": "Sub-Saharan Africa",
-          "419": "Latin America",
           "AC": "Ascension Island",
           "AD": "Andorra",
           "AE": "United Arab Emirates",
@@ -100,6 +100,7 @@
           "CR": "Costa Rica",
           "CU": "Cuba",
           "CV": "Cape Verde",
+          "CV-alt-variant": "Cabo Verde",
           "CW": "Curaçao",
           "CX": "Christmas Island",
           "CY": "Cyprus",
@@ -201,7 +202,6 @@
           "MG": "Madagascar",
           "MH": "Marshall Islands",
           "MK": "North Macedonia",
-          "MK-alt-variant": "MK",
           "ML": "Mali",
           "MM": "Myanmar (Burma)",
           "MM-alt-short": "Myanmar",
