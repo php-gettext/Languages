@@ -1,0 +1,68 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  php-coding-style:
+    name: Check PHP coding style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.2"
+          extensions: mbstring, zip
+          tools: composer:v2
+          coverage: none
+      - name: Install PHP-CS-Fixer
+        run: |
+          curl -sSLf -o /usr/local/bin/php-cs-fixer https://cs.symfony.com/download/php-cs-fixer-v3.phar
+          chmod +x /usr/local/bin/php-cs-fixer
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check PHP coding style
+        run: |
+          php-cs-fixer fix --path-mode=intersection --config=./.php-cs-fixer.dist.php --dry-run --using-cache=no --diff --show-progress=dots --verbose --no-interaction --ansi  .
+  phpunit:
+    name: Run PHPUnit tests
+    needs: php-coding-style
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+        php-version:
+          - "5.3"
+          - "5.4"
+          - "5.5"
+          - "5.6"
+          - "7.0"
+          - "7.1"
+          - "7.2"
+          - "7.3"
+          - "7.4"
+          - '8.0'
+        include:
+          - os: windows-latest
+            php-version: "5.5"
+          - os: windows-latest
+            php-version: "7.4"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer:v2
+          coverage: none
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Composer dependencies
+        run: composer update --no-progress --no-suggest --optimize-autoloader --no-ansi --no-interaction
+      - name: Run PHPUnit
+        run: composer --no-interaction run-script test
