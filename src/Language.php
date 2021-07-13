@@ -184,11 +184,11 @@ class Language
                 for ($i = $numCategories - 2; $i >= 0; $i--) {
                     $f = self::reduceFormula($this->categories[$i]->formula);
                     if (!$withoutParenthesis && !preg_match('/^\([^()]+\)$/', $f)) {
-                        $f = "(${f})";
+                        $f = "({$f})";
                     }
-                    $formula = "${f} ? ${i} : ${formula}";
+                    $formula = "{$f} ? {$i} : {$formula}";
                     if (!$withoutParenthesis && $i > 0) {
-                        $formula = "(${formula})";
+                        $formula = "({$formula})";
                     }
                 }
 
@@ -358,7 +358,7 @@ class Language
             case '(n == 0 || n == 1) || n >= 11 && n <= 99':
                 return 'n >= 2 && (n < 11 || n > 99)';
         }
-        throw new Exception("Unable to reverse the formula '${formula}'");
+        throw new Exception("Unable to reverse the formula '{$formula}'");
     }
 
     /**
@@ -406,7 +406,7 @@ class Language
             ));
             $transliterated = @iconv('UTF-8', 'US-ASCII//IGNORE//TRANSLIT', $transliterated);
             if ($transliterated === false || $transliterated === '') {
-                throw new Exception("Unable to transliterate '${value}'");
+                throw new Exception("Unable to transliterate '{$value}'");
             }
             $value = $transliterated;
         }

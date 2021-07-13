@@ -7,8 +7,8 @@ use Gettext\Languages\Language;
 // This is a really life-saving approach.
 error_reporting(E_ALL);
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-    fprintf(STDERR, "${errstr}\nFile: ${errfile}\nLine: ${errline}\nCode: ${errno}\n");
-    die(5);
+    fprintf(STDERR, "{$errstr}\nFile: {$errfile}\nLine: {$errline}\nCode: {$errno}\n");
+    exit(5);
 });
 
 require_once dirname(__DIR__) . '/src/autoloader.php';
@@ -22,7 +22,7 @@ try {
         foreach (Enviro::$languages as $languageId) {
             $language = Language::getById($languageId);
             if (!isset($language)) {
-                throw new Exception("Unable to find the language with id '${languageId}'");
+                throw new Exception("Unable to find the language with id '{$languageId}'");
             }
             $languages[] = $language;
         }
@@ -51,10 +51,10 @@ try {
     fprintf(STDERR, $x->getMessage() . "\n");
     fprintf(STDERR, "Trace:\n");
     fprintf(STDERR, $x->getTraceAsString() . "\n");
-    die(4);
+    exit(4);
 }
 
-die(0);
+exit(0);
 
 /**
  * Helper class to handle command line options.
@@ -127,7 +127,7 @@ class Enviro
                         case '-h':
                         case '--help':
                             self::showSyntax();
-                            die(0);
+                            exit(0);
                         case '--us-ascii':
                             self::$outputUSAscii = true;
                             break;
@@ -148,7 +148,7 @@ class Enviro
                                 if (isset(self::$outputFilename)) {
                                     fprintf(STDERR, "The output file name has been specified more than once!\n");
                                     self::showSyntax();
-                                    die(3);
+                                    exit(3);
                                 }
                                 list(, self::$outputFilename) = explode('=', $arg, 2);
                                 self::$outputFilename = trim(self::$outputFilename);
@@ -164,13 +164,13 @@ class Enviro
                                 if (isset(self::$outputFormat)) {
                                     fprintf(STDERR, "The output format has been specified more than once!\n");
                                     self::showSyntax();
-                                    die(3);
+                                    exit(3);
                                 }
                                 self::$outputFormat = $argLC;
                             } else {
-                                fprintf(STDERR, "Unknown option: ${arg}\n");
+                                fprintf(STDERR, "Unknown option: {$arg}\n");
                                 self::showSyntax();
-                                die(2);
+                                exit(2);
                             }
                             break;
                     }
@@ -179,7 +179,7 @@ class Enviro
         }
         if (!isset(self::$outputFormat)) {
             self::showSyntax();
-            die(1);
+            exit(1);
         }
         if (isset(self::$languages)) {
             self::$languages = array_values(array_unique(self::$languages));
@@ -197,9 +197,11 @@ class Enviro
         $basename = basename(__FILE__);
         $exporters = array_keys(Exporter::getExporters(true));
         $exporterList = implode('|', $exporters);
-        fprintf(STDERR, <<<EOT
+        fprintf(
+            STDERR,
+            <<<EOT
 Syntax:
-    ${basename} [-h|--help] [--us-ascii] [--languages=<LanguageId>[,<LanguageId>,...]] [--reduce=yes|no] [--parenthesis=yes|no] [--output=<file name>] <${exporterList}>
+    {$basename} [-h|--help] [--us-ascii] [--languages=<LanguageId>[,<LanguageId>,...]] [--reduce=yes|no] [--parenthesis=yes|no] [--output=<file name>] <{$exporterList}>
 
 Where:
     --help
@@ -255,7 +257,7 @@ EOT
             foreach ($languages as $language) {
                 $chunks = explode('_', $language->id);
                 $compatibleFound = false;
-                if (count($chunks) === $numChunks) {
+                if ($numChunks === count($chunks)) {
                     $categoriesHash = serialize($language->categories);
                     $otherIds = array();
                     $otherIds[] = $chunks[0];
@@ -265,7 +267,7 @@ EOT
 
                     foreach ($languages as $check) {
                         foreach ($otherIds as $otherId) {
-                            if (($check->id === $otherId) && ($check->formula === $language->formula) && (serialize($check->categories) === $categoriesHash)) {
+                            if ($check->id === $otherId && $check->formula === $language->formula && $categoriesHash === serialize($check->categories)) {
                                 $compatibleFound = true;
                                 break;
                             }

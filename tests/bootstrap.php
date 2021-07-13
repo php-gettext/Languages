@@ -2,10 +2,10 @@
 
 error_reporting(E_ALL);
 
-define('GETTEXT_LANGUAGES_TESTDIR', str_replace(DIRECTORY_SEPARATOR, '/', dirname(__FILE__)));
+define('GETTEXT_LANGUAGES_TESTDIR', str_replace(DIRECTORY_SEPARATOR, '/', __DIR__));
 
 $cmd = escapeshellarg(defined('PHP_BINARY') ? PHP_BINARY : 'php');
-$cmd .= ' ' . escapeshellarg(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'export-plural-rules');
+$cmd .= ' ' . escapeshellarg(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'export-plural-rules');
 
 $execOutput = array();
 $rc = -1;
@@ -19,4 +19,4 @@ if ($rc !== 0) {
     throw new Exception(implode("\n", $execOutput));
 }
 
-require_once dirname(dirname(__FILE__)) . '/src/autoloader.php';
+require_once dirname(__DIR__) . '/src/autoloader.php';
