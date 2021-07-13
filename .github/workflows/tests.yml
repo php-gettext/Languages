@@ -63,6 +63,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Composer dependencies
-        run: composer update --no-progress --no-suggest --optimize-autoloader --no-ansi --no-interaction
+        run: composer update --no-progress --no-suggest --optimize-autoloader --ansi --no-interaction
       - name: Run PHPUnit
         run: composer --no-interaction run-script test
