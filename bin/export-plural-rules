@@ -14,49 +14,6 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 
 require_once dirname(__DIR__) . '/src/autoloader.php';
 
-// Parse the command line options
-Enviro::initialize();
-
-try {
-    if (isset(Enviro::$languages)) {
-        $languages = array();
-        foreach (Enviro::$languages as $languageId) {
-            $language = Language::getById($languageId);
-            if (!isset($language)) {
-                throw new Exception("Unable to find the language with id '{$languageId}'");
-            }
-            $languages[] = $language;
-        }
-    } else {
-        $languages = Language::getAll();
-    }
-    if (Enviro::$reduce) {
-        $languages = Enviro::reduce($languages);
-    }
-    if (Enviro::$noExtraParenthesis) {
-        $languages = array_map(
-            function (Language $language) {
-                $language->formula = $language->buildFormula(true);
-
-                return $language;
-            },
-            $languages
-        );
-    }
-    if (isset(Enviro::$outputFilename)) {
-        echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toFile'), $languages, Enviro::$outputFilename, array('us-ascii' => Enviro::$outputUSAscii));
-    } else {
-        echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toString'), $languages, array('us-ascii' => Enviro::$outputUSAscii));
-    }
-} catch (Exception $x) {
-    fprintf(STDERR, $x->getMessage() . "\n");
-    fprintf(STDERR, "Trace:\n");
-    fprintf(STDERR, $x->getTraceAsString() . "\n");
-    exit(4);
-}
-
-exit(0);
-
 /**
  * Helper class to handle command line options.
  */
@@ -288,3 +245,46 @@ EOT
         return $languages;
     }
 }
+
+// Parse the command line options
+Enviro::initialize();
+
+try {
+    if (isset(Enviro::$languages)) {
+        $languages = array();
+        foreach (Enviro::$languages as $languageId) {
+            $language = Language::getById($languageId);
+            if (!isset($language)) {
+                throw new Exception("Unable to find the language with id '{$languageId}'");
+            }
+            $languages[] = $language;
+        }
+    } else {
+        $languages = Language::getAll();
+    }
+    if (Enviro::$reduce) {
+        $languages = Enviro::reduce($languages);
+    }
+    if (Enviro::$noExtraParenthesis) {
+        $languages = array_map(
+            function (Language $language) {
+                $language->formula = $language->buildFormula(true);
+
+                return $language;
+            },
+            $languages
+        );
+    }
+    if (isset(Enviro::$outputFilename)) {
+        echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toFile'), $languages, Enviro::$outputFilename, array('us-ascii' => Enviro::$outputUSAscii));
+    } else {
+        echo call_user_func(array(Exporter::getExporterClassName(Enviro::$outputFormat), 'toString'), $languages, array('us-ascii' => Enviro::$outputUSAscii));
+    }
+} catch (Exception $x) {
+    fprintf(STDERR, $x->getMessage() . "\n");
+    fprintf(STDERR, "Trace:\n");
+    fprintf(STDERR, $x->getTraceAsString() . "\n");
+    exit(4);
+}
+
+exit(0);
