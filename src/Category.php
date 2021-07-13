@@ -100,8 +100,8 @@ class Category
             $examples = substr($examples, 0, strlen($examples) - strlen(', …'));
         }
         foreach (explode(',', str_replace(' ', '', $examples)) as $range) {
-            if (preg_match('/^\d+((c|e)\d+)?$/', $range)) {
-                $result[] = (int) $range;
+            if (preg_match('/^(?<num>\d+)((c|e)(?<exp>\d+))?$/', $range, $m)) {
+                $result[] = (int) (isset($m['exp']) ? ($m['num'] . str_repeat('0', (int) $m['exp'])) : $range);
             } elseif (preg_match('/^(\d+)~(\d+)$/', $range, $m)) {
                 $from = (int) $m[1];
                 $to = (int) $m[2];
