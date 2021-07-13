@@ -95,10 +95,10 @@ class FormulaConverter
         if (preg_match('/^(?:v|w)(?: % 10+)? != (\d+)(?:\.\.\d+)?$/', $gettextAtom, $m)) { // For gettext: v == 0, w == 0
             return (int) $m[1] === 0 ? false : true;
         }
-        if (preg_match('/^(?:f|t)(?: % 10+)? == (\d+)(?:\.\.\d+)?$/', $gettextAtom, $m)) { // f == empty, t == empty
+        if (preg_match('/^(?:f|t|c|e)(?: % 10+)? == (\d+)(?:\.\.\d+)?$/', $gettextAtom, $m)) { // f == empty, t == empty, c == empty, e == empty
             return (int) $m[1] === 0 ? true : false;
         }
-        if (preg_match('/^(?:f|t)(?: % 10+)? != (\d+)(?:\.\.\d+)?$/', $gettextAtom, $m)) { // f == empty, t == empty
+        if (preg_match('/^(?:f|t|c|e)(?: % 10+)? != (\d+)(?:\.\.\d+)?$/', $gettextAtom, $m)) { // f == empty, t == empty, c == empty, e == empty
             return (int) $m[1] === 0 ? false : true;
         }
         throw new Exception("Unable to convert the formula chunk '{$cldrAtom}' from CLDR to gettext");

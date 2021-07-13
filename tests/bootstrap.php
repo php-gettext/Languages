@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 
 define('GETTEXT_LANGUAGES_TESTDIR', str_replace(DIRECTORY_SEPARATOR, '/', __DIR__));
 
-$cmd = escapeshellarg(defined('PHP_BINARY') ? PHP_BINARY : 'php');
+$cmd = defined('PHP_BINARY') && PHP_BINARY ? escapeshellarg(PHP_BINARY) : 'php';
 $cmd .= ' ' . escapeshellarg(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'export-plural-rules');
 
 $execOutput = array();
