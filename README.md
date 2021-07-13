@@ -1,4 +1,4 @@
-[![Build Status](https://api.travis-ci.org/php-gettext/Languages.svg?branch=master)](https://travis-ci.org/php-gettext/Languages)
+[![Tests](https://github.com/php-gettext/Languages/actions/workflows/tests.yml/badge.svg)](https://github.com/php-gettext/Languages/actions/workflows/tests.yml)
 # gettext language list automatically generated from CLDR data
 
 
