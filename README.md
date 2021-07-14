@@ -54,6 +54,16 @@ To use the languages data generated from this tool you can use the `bin/export-p
   $languages = include 'yourfile.php';
   ```
 
+- `ruby`: build a ruby file that can be included
+  ```bash
+  export-plural-rules ruby > yourfile.rb
+  ```
+  Then you can use that generated file in your ruby scripts:
+  ```ruby
+  require './yourfile.rb'
+  PLURAL_RULES['en']
+  ```
+
 - `xml`: generate an XML document ([here you can find the xsd XML schema](https://php-gettext.github.io/Languages/GettextLanguages.xsd))
   ```bash
   export-plural-rules xml
