@@ -2,6 +2,7 @@
 
 error_reporting(E_ALL);
 
+define('GETTEXT_LANGUAGES_TESTROOTDIR', str_replace(DIRECTORY_SEPARATOR, '/', dirname(__DIR__)));
 define('GETTEXT_LANGUAGES_TESTDIR', str_replace(DIRECTORY_SEPARATOR, '/', __DIR__));
 
 $cmd = defined('PHP_BINARY') && PHP_BINARY ? escapeshellarg(PHP_BINARY) : 'php';
