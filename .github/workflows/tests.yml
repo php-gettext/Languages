@@ -18,12 +18,8 @@ jobs:
         with:
           php-version: "7.2"
           extensions: mbstring, zip
-          tools: composer:v2
+          tools: composer:2, php-cs-fixer:3
           coverage: none
-      - name: Install PHP-CS-Fixer
-        run: |
-          curl -sSLf -o /usr/local/bin/php-cs-fixer https://cs.symfony.com/download/php-cs-fixer-v3.phar
-          chmod +x /usr/local/bin/php-cs-fixer
       - name: Checkout
         uses: actions/checkout@v2
       - name: Check PHP coding style
