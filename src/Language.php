@@ -389,26 +389,23 @@ class Language
     {
         if (is_string($value) && $value !== '') {
             // Avoid converting from 'Ÿ' to '"Y', let's prefer 'Y'
-            $transliterated = strtr($value, array(
-                'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A',
+            $value = strtr($value, array(
+                'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A',
                 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
                 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I',
                 'Ñ' => 'N',
                 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O',
                 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U',
                 'Ÿ' => 'Y', 'Ý' => 'Y',
-                'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a',
+                'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a',
                 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e',
                 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
                 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ö' => 'o',
                 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ü' => 'u',
                 'ý' => 'y', 'ÿ' => 'y',
+                '…' => '...',
+                'ʼ' => "'", '’' => "'",
             ));
-            $transliterated = @iconv('UTF-8', 'US-ASCII//IGNORE//TRANSLIT', $transliterated);
-            if ($transliterated === false || $transliterated === '') {
-                throw new Exception("Unable to transliterate '{$value}'");
-            }
-            $value = $transliterated;
         }
     }
 }
