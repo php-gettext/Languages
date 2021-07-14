@@ -47,7 +47,7 @@ To use the languages data generated from this tool you can use the `bin/export-p
 
 - `php`: build a php file that can be included
   ```bash
-  export-plural-rules php > yourfile.php
+  export-plural-rules --output=yourfile.php php
   ```
   Then you can use that generated file in your php scripts:
   ```php
@@ -56,7 +56,7 @@ To use the languages data generated from this tool you can use the `bin/export-p
 
 - `ruby`: build a ruby file that can be included
   ```bash
-  export-plural-rules ruby > yourfile.rb
+  export-plural-rules --output=yourfile.rb ruby
   ```
   Then you can use that generated file in your ruby scripts:
   ```ruby
