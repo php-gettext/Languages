@@ -181,9 +181,9 @@
                     <tr>
                         <td>ca</td>
                         <td>Catalan</td>
-                        <td>2</td>
-                        <td>n != 1</td>
-                        <td><ol class="cases" start="0"><li><span>one</span><code>1</code></li><li><span>other</span><code>0, 2~16, 100, 1000, 10000, 100000, 1000000, …</code></li></ol></td>
+                        <td>3</td>
+                        <td>n == 1 ? 0 : n != 0 &amp;&amp; n % 1000000 == 0 ? 1 : 2</td>
+                        <td><ol class="cases" start="0"><li><span>one</span><code>1</code></li><li><span>many</span><code>1000000, 1c6, 2c6, 3c6, 4c6, 5c6, 6c6, …</code></li><li><span>other</span><code>0, 2~16, 100, 1000, 10000, 100000, 1c3, 2c3, 3c3, 4c3, 5c3, 6c3, …</code></li></ol></td>
                     </tr>
                     <tr>
                         <td>ce</td>
@@ -334,7 +334,7 @@
                     </tr>
                     <tr>
                         <td>ff</td>
-                        <td>Fulah</td>
+                        <td>Fula</td>
                         <td>2</td>
                         <td>n &gt; 1</td>
                         <td><ol class="cases" start="0"><li><span>one</span><code>0, 1</code></li><li><span>other</span><code>2~17, 100, 1000, 10000, 100000, 1000000, …</code></li></ol></td>
@@ -447,9 +447,9 @@
                     <tr>
                         <td>he</td>
                         <td>Hebrew</td>
-                        <td>4</td>
-                        <td>n == 1 ? 0 : n == 2 ? 1 : n &gt; 10 &amp;&amp; n % 10 == 0 ? 2 : 3</td>
-                        <td><ol class="cases" start="0"><li><span>one</span><code>1</code></li><li><span>two</span><code>2</code></li><li><span>many</span><code>20, 30, 40, 50, 60, 70, 80, 90, 100, 1000, 10000, 100000, 1000000, …</code></li><li><span>other</span><code>0, 3~17, 101, 1001, …</code></li></ol></td>
+                        <td>3</td>
+                        <td>n == 1 ? 0 : n == 2 ? 1 : 2</td>
+                        <td><ol class="cases" start="0"><li><span>one</span><code>1</code></li><li><span>two</span><code>2</code></li><li><span>other</span><code>0, 3~17, 100, 1000, 10000, 100000, 1000000, …</code></li></ol></td>
                     </tr>
                     <tr>
                         <td>hi</td>
@@ -460,7 +460,7 @@
                     </tr>
                     <tr>
                         <td>hnj</td>
-                        <td>Mong Njua</td>
+                        <td>Hmong Njua</td>
                         <td>1</td>
                         <td>0</td>
                         <td><ol class="cases" start="0"><li><span>other</span><code>0~15, 100, 1000, 10000, 100000, 1000000, …</code></li></ol></td>
@@ -826,8 +826,8 @@
                         <td>mo</td>
                         <td>Moldavian<br /><small><span>Superseded by</span> ro_MD</small></td>
                         <td>3</td>
-                        <td>n == 1 ? 0 : n == 0 || n % 100 &gt;= 2 &amp;&amp; n % 100 &lt;= 19 ? 1 : 2</td>
-                        <td><ol class="cases" start="0"><li><span>one</span><code>1</code></li><li><span>few</span><code>0, 2~16, 102, 1002, …</code></li><li><span>other</span><code>20~35, 100, 1000, 10000, 100000, 1000000, …</code></li></ol></td>
+                        <td>n == 1 ? 0 : n == 0 || n != 1 &amp;&amp; n % 100 &gt;= 1 &amp;&amp; n % 100 &lt;= 19 ? 1 : 2</td>
+                        <td><ol class="cases" start="0"><li><span>one</span><code>1</code></li><li><span>few</span><code>0, 2~16, 101, 1001, …</code></li><li><span>other</span><code>20~35, 100, 1000, 10000, 100000, 1000000, …</code></li></ol></td>
                     </tr>
                     <tr>
                         <td>mr</td>
@@ -846,9 +846,9 @@
                     <tr>
                         <td>mt</td>
                         <td>Maltese</td>
-                        <td>4</td>
-                        <td>n == 1 ? 0 : n == 0 || n % 100 &gt;= 2 &amp;&amp; n % 100 &lt;= 10 ? 1 : n % 100 &gt;= 11 &amp;&amp; n % 100 &lt;= 19 ? 2 : 3</td>
-                        <td><ol class="cases" start="0"><li><span>one</span><code>1</code></li><li><span>few</span><code>0, 2~10, 102~107, 1002, …</code></li><li><span>many</span><code>11~19, 111~117, 1011, …</code></li><li><span>other</span><code>20~35, 100, 1000, 10000, 100000, 1000000, …</code></li></ol></td>
+                        <td>5</td>
+                        <td>n == 1 ? 0 : n == 2 ? 1 : n == 0 || n % 100 &gt;= 3 &amp;&amp; n % 100 &lt;= 10 ? 2 : n % 100 &gt;= 11 &amp;&amp; n % 100 &lt;= 19 ? 3 : 4</td>
+                        <td><ol class="cases" start="0"><li><span>one</span><code>1</code></li><li><span>two</span><code>2</code></li><li><span>few</span><code>0, 3~10, 103~109, 1003, …</code></li><li><span>many</span><code>11~19, 111~117, 1011, …</code></li><li><span>other</span><code>20~35, 100, 1000, 10000, 100000, 1000000, …</code></li></ol></td>
                     </tr>
                     <tr>
                         <td>my</td>
@@ -1050,8 +1050,8 @@
                         <td>ro</td>
                         <td>Romanian</td>
                         <td>3</td>
-                        <td>n == 1 ? 0 : n == 0 || n % 100 &gt;= 2 &amp;&amp; n % 100 &lt;= 19 ? 1 : 2</td>
-                        <td><ol class="cases" start="0"><li><span>one</span><code>1</code></li><li><span>few</span><code>0, 2~16, 102, 1002, …</code></li><li><span>other</span><code>20~35, 100, 1000, 10000, 100000, 1000000, …</code></li></ol></td>
+                        <td>n == 1 ? 0 : n == 0 || n != 1 &amp;&amp; n % 100 &gt;= 1 &amp;&amp; n % 100 &lt;= 19 ? 1 : 2</td>
+                        <td><ol class="cases" start="0"><li><span>one</span><code>1</code></li><li><span>few</span><code>0, 2~16, 101, 1001, …</code></li><li><span>other</span><code>20~35, 100, 1000, 10000, 100000, 1000000, …</code></li></ol></td>
                     </tr>
                     <tr>
                         <td>rof</td>
@@ -1076,7 +1076,7 @@
                     </tr>
                     <tr>
                         <td>sah</td>
-                        <td>Sakha</td>
+                        <td>Yakut</td>
                         <td>1</td>
                         <td>0</td>
                         <td><ol class="cases" start="0"><li><span>other</span><code>0~15, 100, 1000, 10000, 100000, 1000000, …</code></li></ol></td>
@@ -1430,6 +1430,13 @@
                         <td>2</td>
                         <td>n != 1</td>
                         <td><ol class="cases" start="0"><li><span>one</span><code>1</code></li><li><span>other</span><code>0, 2~16, 100, 1000, 10000, 100000, 1000000, …</code></li></ol></td>
+                    </tr>
+                    <tr>
+                        <td>vec</td>
+                        <td>Venetian</td>
+                        <td>3</td>
+                        <td>n == 1 ? 0 : n != 0 &amp;&amp; n % 1000000 == 0 ? 1 : 2</td>
+                        <td><ol class="cases" start="0"><li><span>one</span><code>1</code></li><li><span>many</span><code>1000000, 1c6, 2c6, 3c6, 4c6, 5c6, 6c6, …</code></li><li><span>other</span><code>0, 2~16, 100, 1000, 10000, 100000, 1c3, 2c3, 3c3, 4c3, 5c3, 6c3, …</code></li></ol></td>
                     </tr>
                     <tr>
                         <td>vi</td>
