@@ -172,63 +172,7 @@ the resulting formulas will be in this format:
 
 ### Generating the CLDR data
 This repository uses the CLDR data, including American English (`en_US`) json files.
-In order to generate this data, you can use Docker.
-Start a new Docker container by running
-
-```sh
-docker run --rm -it -v path/to/src/cldr-data:/output alpine:3.13 sh
-```
-
-Then run the following script, setting the values of the variables accordingly to your needs:
-
-```sh
-# The value of the CLDR version (eg 39, 38.1, ...)
-CLDR_VERSION=39
-# Your GitHub username (required since CLDR 38) - see http://cldr.unicode.org/development/maven#TOC-Introduction
-GITHUB_USERNAME=
-# Your GitHub personal access token (required since CLDR 38) - see http://cldr.unicode.org/development/maven#TOC-Introduction
-GITHUB_TOKEN=
-
-if ! test -d /output; then
-    echo 'Missing output directory' >&2
-    return 1
-fi
-apk -U upgrade
-apk add --no-cache git git-lfs openjdk8 apache-ant maven
-CLDR_MAJORVERSION="$(printf '%s' "$CLDR_VERSION" | sed -E 's/^([0-9]+).*/\1/')"
-SOURCE_DIR="$(mktemp -d)"
-DESTINATION_DIR="$(mktemp -d)"
-git clone --single-branch --depth=1 "--branch=release-$(printf '%s' "$CLDR_VERSION" | tr '.' '-')" https://github.com/unicode-org/cldr.git "$SOURCE_DIR"
-if test $CLDR_MAJORVERSION -lt 38; then
-    git -C "$SOURCE_DIR" lfs pull --include tools/java || true
-    ant -f "$SOURCE_DIR/tools/java/build.xml" jar
-    JARFILE="$SOURCE_DIR/tools/java/cldr.jar"
-    DESTINATION_DIR_LOCALE="$DESTINATION_DIR/en_US"
-    DESTINATION_FILE_PLURALS="$DESTINATION_DIR/supplemental/plurals.json"
-else
-    if test -z "${GITHUB_USERNAME:-}"; then
-        echo 'GITHUB_USERNAME is missing' >&2
-        return 1
-    fi
-    if test -z "${GITHUB_TOKEN:-}"; then
-        echo 'GITHUB_TOKEN is missing' >&2
-        return 1
-    fi
-    printf '<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"><servers><server><id>githubicu</id><username>%s</username><password>%s</password></server></servers></settings>' "$GITHUB_USERNAME" "$GITHUB_TOKEN" > "$SOURCE_DIR/mvn-settings.xml"
-    mvn --settings "$SOURCE_DIR/mvn-settings.xml" package -DskipTests=true --file "$SOURCE_DIR/tools/cldr-code/pom.xml"
-    JARFILE="$SOURCE_DIR//tools/cldr-code/target/cldr-code.jar"
-    DESTINATION_DIR_LOCALE="$DESTINATION_DIR"
-    DESTINATION_FILE_PLURALS="$DESTINATION_DIR/supplemental/plurals/plurals.json"
-fi
-java -Duser.language=en -Duser.country=US "-DCLDR_DIR=$SOURCE_DIR" "-DCLDR_GEN_DIR=$DESTINATION_DIR_LOCALE" -jar "$JARFILE" ldml2json -t main -r true -s contributed -m en_US
-java -Duser.language=en -Duser.country=US "-DCLDR_DIR=$SOURCE_DIR" "-DCLDR_GEN_DIR=$DESTINATION_DIR/supplemental" -jar "$JARFILE" ldml2json -s contributed -o true -t supplemental
-mkdir -p /output/main/en-US
-cp $DESTINATION_DIR/en_US/languages.json /output/main/en-US/
-cp $DESTINATION_DIR/en_US/scripts.json /output/main/en-US/
-cp $DESTINATION_DIR/en_US/territories.json /output/main/en-US/
-mkdir -p /output/supplemental
-cp "$DESTINATION_FILE_PLURALS" /output/supplemental/
-```
+In order to generate this data, you can use the `bin/import-cldr-data` CLI command.
 
 
 ## Support this project

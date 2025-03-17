@@ -11,6 +11,7 @@ class ExecutableFilesTest extends TestCase
         }
         $expected = array(
             'bin/export-plural-rules',
+            'bin/import-cldr-data',
         );
         $actual = $this->listExecutableFiles();
         $this->assertSame($expected, $actual);
