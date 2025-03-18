@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "lint:check": "prettier --check .",
+    "lint:fix": "prettier --write .",
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
