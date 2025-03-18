@@ -11,4 +11,8 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    emptyOutDir: true,
+  },
+  base: './',
 });
