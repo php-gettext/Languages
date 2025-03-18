@@ -9,6 +9,9 @@ on:
       - main
     tags-ignore:
       - "**"
+    paths-ignore:
+      - .github/workflows/gh-pages.yml
+      - "gh-pages/**"
   pull_request:
     branches:
       - main
