@@ -26,6 +26,7 @@ return (new PhpCsFixer\Config())
         ])
         ->append([
             __DIR__ . '/bin/export-plural-rules',
+            __DIR__ . '/bin/import-cldr-data',
         ])
         ->in(__DIR__)
     )
@@ -245,8 +246,6 @@ return (new PhpCsFixer\Config())
         'phpdoc_no_access' => true,
         // No alias PHPDoc tags should be used.
         'phpdoc_no_alias_tag' => true,
-        // `@return void` and `@return null` annotations should be omitted from PHPDoc.
-        'phpdoc_no_empty_return' => true,
         // `@package` and `@subpackage` annotations should be omitted from PHPDoc.
         'phpdoc_no_package' => true,
         // Classy that does not inherit must not have `@inheritdoc` tags.
