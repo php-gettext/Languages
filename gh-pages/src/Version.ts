@@ -1,13 +1,22 @@
 type PluralCases = 'zero' | 'one' | 'two' | 'few' | 'many' | 'other';
 
-export interface LanguageData {
+interface RawLanguage {
   name: string;
   formula: string;
   plurals: number;
   cases: PluralCases[];
   examples: Record<PluralCases, string>;
 }
-export type Version = Record<string, LanguageData> & {_version: string};
+
+type RawVersion = Record<string, RawLanguage>;
+
+export interface Language extends RawLanguage {
+  id: string;
+}
+export interface Version {
+  version: string;
+  languages: Language[];
+}
 
 let availableVersions: string[] | undefined;
 
@@ -27,8 +36,14 @@ export async function getVersion(version: string): Promise<Version> {
     return loadedVersions[version];
   }
   const response = await fetch(`data/versions/${version}.min.json`);
-  const data = <Version>await response.json();
-  data._version = version;
-  loadedVersions[version] = data;
-  return (loadedVersions[version] = data);
+  const rawVersion = <RawVersion>await response.json();
+  const parsedVersion: Version = {
+    version,
+    languages: Object.entries(rawVersion).map(([id, rawLanguage]) => ({
+      id,
+      ...rawLanguage,
+    })),
+  };
+  loadedVersions[version] = parsedVersion;
+  return parsedVersion;
 }
