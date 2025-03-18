@@ -1,0 +1,52 @@
+name: Build GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    tags-ignore:
+      - "**"
+  workflow_dispatch:
+    inputs:
+      recreate-json:
+        description: 'Re-create JSON files'
+        type: boolean
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  publish:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Delete existing JSON files
+        if: github.event.inputs.recreate-json
+        run: rm -rf gh-pages/public/data/versions
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: gh-pages/package-lock.json
+      - name: Install dependencies
+        working-directory: gh-pages
+        run: npm ci
+      - name: Check coding style
+        working-directory: gh-pages
+        run: npm run lint:check
+      - name: Build
+        run: npm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: gh-pages/dist
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

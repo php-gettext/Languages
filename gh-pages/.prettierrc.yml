@@ -1,0 +1,15 @@
+# See https://prettier.io/docs/options
+printWidth: 80
+tabWidth: 2
+useTabs: false
+semi: true
+singleQuote: true
+quoteProps: as-needed
+jsxSingleQuote: false
+trailingComma: all
+bracketSpacing: false
+bracketSameLine: false
+arrowParens: always
+vueIndentScriptAndStyle: false
+endOfLine: lf
+singleAttributePerLine: false
