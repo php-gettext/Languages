@@ -6,7 +6,8 @@
   "scripts": {
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
-    "dev": "vite",
+    "predev": "node ./bin/create-cldr-data.js",
+    "prebuild": "node ./bin/create-cldr-data.js",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
   },
