@@ -17,9 +17,9 @@ class Xml extends Exporter
     /**
      * {@inheritdoc}
      *
-     * @see \Gettext\Languages\Exporter\Exporter::toStringDo()
+     * @see \Gettext\Languages\Exporter\Exporter::toStringDoWithOptions()
      */
-    protected static function toStringDo($languages)
+    protected static function toStringDoWithOptions($languages, array $options)
     {
         $xml = new \DOMDocument('1.0', 'UTF-8');
         $xml->loadXML('<languages
