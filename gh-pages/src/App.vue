@@ -26,6 +26,11 @@ onMounted(async () => {
     initialVersion && availableVersions.value.includes(initialVersion)
       ? initialVersion
       : availableVersions.value![0];
+  UrlService.onVersionChanged((v) => {
+    if (v && availableVersions.value?.includes(v)) {
+      wantedVersion.value = v;
+    }
+  });
 });
 
 async function loadVersion(v: string): Promise<void> {
@@ -101,6 +106,14 @@ const displayLanguages = computed<Language[]>(() => {
           >
             Compare
           </button>
+          <a
+            class="btn btn-outline-secondary ms-2 link-to-sourcecode"
+            href="https://github.com/php-gettext/Languages"
+            target="_blank"
+            title="Source code on GitHub"
+          >
+            <img src="./assets/github.svg" alt="GitHub" style="height: 1.5em" />
+          </a>
         </div>
       </div>
     </div>
@@ -175,3 +188,11 @@ const displayLanguages = computed<Language[]>(() => {
   </div>
   <DifferModal ref="differModal" />
 </template>
+<style lang="css">
+.link-to-sourcecode img {
+  opacity: 0.3;
+}
+.link-to-sourcecode:hover img {
+  opacity: 1;
+}
+</style>
