@@ -14,6 +14,7 @@ type SortBys = 'id' | 'name';
 const busy = ref<boolean>(true);
 const availableVersions = ref<string[] | null>(null);
 const wantedVersion = ref<string>('');
+const searchText = ref<string>('');
 const version = ref<Version | null>(null);
 const sortBy = ref<SortBys>('id');
 const differModal = ref<InstanceType<typeof DifferModal> | null>(null);
@@ -51,11 +52,19 @@ watch(wantedVersion, (v) => {
 
 const comparer = new Intl.Collator('en', {sensitivity: 'base'});
 
-const languages = computed<Language[]>(() => {
+const displayLanguages = computed<Language[]>(() => {
   if (!version.value) {
     return [];
   }
-  const result = [...version.value.languages];
+  let result = [...version.value.languages];
+  if (searchText.value !== '') {
+    const lowerCaseSearchText = searchText.value.toLowerCase();
+    result = result.filter(
+      (l) =>
+        l.id.toLowerCase().includes(lowerCaseSearchText) ||
+        l.name.toLowerCase().includes(lowerCaseSearchText),
+    );
+  }
   result.sort((a, b) => comparer.compare(a[sortBy.value], b[sortBy.value]));
   return result;
 });
@@ -64,7 +73,7 @@ const languages = computed<Language[]>(() => {
 <template>
   <div class="container" v-if="availableVersions !== null">
     <div class="row justify-content-center mb-3">
-      <div class="col-12" style="max-width: 300px">
+      <div class="col-12" style="max-width: 400px">
         <div class="input-group input-group-sm">
           <label for="wanted-version" class="input-group-text">Version</label>
           <select
@@ -72,11 +81,18 @@ const languages = computed<Language[]>(() => {
             v-model="wantedVersion"
             :disabled="busy"
             class="form-control"
+            style="max-width: 80px"
           >
             <option v-for="v in availableVersions" :value="v" :key="v">
               {{ v }}
             </option>
           </select>
+          <input
+            type="search"
+            class="form-control"
+            placeholder="Search"
+            v-model="searchText"
+          />
           <button
             v-if="version !== null"
             type="button"
@@ -125,7 +141,7 @@ const languages = computed<Language[]>(() => {
       </thead>
       <tbody>
         <tr
-          v-for="language in languages"
+          v-for="language in displayLanguages"
           :key="`${language.id}@${version.version}`"
         >
           <td>
