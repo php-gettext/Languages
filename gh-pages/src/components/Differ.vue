@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import {computed, onMounted, ref, useId, watch} from 'vue';
-import {getAvailableVersions, getVersion, type Version} from '../Version';
+import {
+  getAvailableVersions,
+  getVersion,
+  type Formulas,
+  type Version,
+} from '../Version';
 import {computeDiffs, type Diffs} from '../Differ';
 
 const props = defineProps<{
   initialVersion?: string;
+  displayFormula?: Formulas;
 }>();
 
 const idPrefix = `cpr-differ-${useId()}-`;
@@ -69,7 +75,11 @@ function updateDiffs() {
     toVersion.value &&
     fromVersionTexts.value.includes(fromVersion.value?.version || '')
   ) {
-    diffs.value = computeDiffs(fromVersion.value!, toVersion.value);
+    diffs.value = computeDiffs(
+      fromVersion.value!,
+      toVersion.value,
+      props.displayFormula || 'standard',
+    );
   } else {
     diffs.value = null;
   }

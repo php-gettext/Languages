@@ -1,4 +1,4 @@
-import type {Language, Version} from './Version';
+import type {Formulas, Language, Version} from './Version';
 
 interface Diff {
   fromLanguage: Language;
@@ -14,20 +14,30 @@ export interface Diffs {
   changed: Diff[];
 }
 
-function diffLanguages(fromVersion: Version, toVersion: Version): Diff[] {
+function diffLanguages(
+  fromVersion: Version,
+  toVersion: Version,
+  whichFormula: Formulas,
+): Diff[] {
   let result: Diff[] = [];
   toVersion.languages.forEach((toLanguage) => {
     const fromLanguage = fromVersion.languages.find(
       (fromLanguage) => fromLanguage.id === toLanguage.id,
     );
     if (fromLanguage) {
-      result = result.concat(diffLanguage(fromLanguage, toLanguage));
+      result = result.concat(
+        diffLanguage(fromLanguage, toLanguage, whichFormula),
+      );
     }
   });
   return result;
 }
 
-function diffLanguage(fromLanguage: Language, toLanguage: Language): Diff[] {
+function diffLanguage(
+  fromLanguage: Language,
+  toLanguage: Language,
+  whichFormula: Formulas,
+): Diff[] {
   let result: Diff[] = [];
   if (fromLanguage.name !== toLanguage.name) {
     result.push({
@@ -42,17 +52,23 @@ function diffLanguage(fromLanguage: Language, toLanguage: Language): Diff[] {
       toLanguage,
       change: `Plurals changed from ${fromLanguage.plurals} to ${toLanguage.plurals}`,
     });
-  } else if (fromLanguage.formula !== toLanguage.formula) {
+  } else if (
+    fromLanguage.formulas[whichFormula] !== toLanguage.formulas[whichFormula]
+  ) {
     result.push({
       fromLanguage,
       toLanguage,
-      change: `Formula changed from\n${fromLanguage.formula}\nto\n${toLanguage.formula}`,
+      change: `Formula changed from\n${fromLanguage.formulas[whichFormula]}\nto\n${toLanguage.formulas[whichFormula]}`,
     });
   }
   return result;
 }
 
-export function computeDiffs(fromVersion: Version, toVersion: Version): Diffs {
+export function computeDiffs(
+  fromVersion: Version,
+  toVersion: Version,
+  whichFormula: Formulas,
+): Diffs {
   return {
     fromVersion,
     toVersion,
@@ -68,6 +84,6 @@ export function computeDiffs(fromVersion: Version, toVersion: Version): Diffs {
           (toLanguage) => toLanguage.id === fromLanguage.id,
         ),
     ),
-    changed: diffLanguages(fromVersion, toVersion),
+    changed: diffLanguages(fromVersion, toVersion, whichFormula),
   };
 }

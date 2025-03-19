@@ -1,8 +1,13 @@
 type PluralCases = 'zero' | 'one' | 'two' | 'few' | 'many' | 'other';
 
+export type Formulas = 'standard' | 'php';
+
 interface RawLanguage {
   name: string;
-  formula: string;
+  formulas: {
+    standard: string;
+    php: string;
+  };
   plurals: number;
   cases: PluralCases[];
   examples: Record<PluralCases, string>;

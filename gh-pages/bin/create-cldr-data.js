@@ -61,6 +61,7 @@ for (let version of VERSIONS) {
       'php',
       [
         `${PROJECT_ROOT}/bin/export-plural-rules`,
+        '--parenthesis=both',
         `--output=${outputFile}`,
         compressed ? 'json' : 'prettyjson',
       ],

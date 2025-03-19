@@ -1,7 +1,10 @@
 {
     "af": {
         "name": "Afrikaans",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -14,7 +17,10 @@
     },
     "ak": {
         "name": "Akan",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -27,7 +33,10 @@
     },
     "am": {
         "name": "Amharic",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -40,7 +49,10 @@
     },
     "an": {
         "name": "Aragonese",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -53,7 +65,10 @@
     },
     "ar": {
         "name": "Arabic",
-        "formula": "(n == 0) ? 0 : ((n == 1) ? 1 : ((n == 2) ? 2 : ((n % 100 >= 3 && n % 100 <= 10) ? 3 : ((n % 100 >= 11 && n % 100 <= 99) ? 4 : 5))))",
+        "formulas": {
+            "standard": "n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : n % 100 >= 3 && n % 100 <= 10 ? 3 : n % 100 >= 11 && n % 100 <= 99 ? 4 : 5",
+            "php": "(n == 0) ? 0 : ((n == 1) ? 1 : ((n == 2) ? 2 : ((n % 100 >= 3 && n % 100 <= 10) ? 3 : ((n % 100 >= 11 && n % 100 <= 99) ? 4 : 5))))"
+        },
         "plurals": 6,
         "cases": [
             "zero",
@@ -74,7 +89,10 @@
     },
     "ars": {
         "name": "Najdi Arabic",
-        "formula": "(n == 0) ? 0 : ((n == 1) ? 1 : ((n == 2) ? 2 : ((n % 100 >= 3 && n % 100 <= 10) ? 3 : ((n % 100 >= 11 && n % 100 <= 99) ? 4 : 5))))",
+        "formulas": {
+            "standard": "n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : n % 100 >= 3 && n % 100 <= 10 ? 3 : n % 100 >= 11 && n % 100 <= 99 ? 4 : 5",
+            "php": "(n == 0) ? 0 : ((n == 1) ? 1 : ((n == 2) ? 2 : ((n % 100 >= 3 && n % 100 <= 10) ? 3 : ((n % 100 >= 11 && n % 100 <= 99) ? 4 : 5))))"
+        },
         "plurals": 6,
         "cases": [
             "zero",
@@ -95,7 +113,10 @@
     },
     "as": {
         "name": "Assamese",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -108,7 +129,10 @@
     },
     "asa": {
         "name": "Asu",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -121,7 +145,10 @@
     },
     "ast": {
         "name": "Asturian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -134,7 +161,10 @@
     },
     "az": {
         "name": "Azerbaijani",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -147,7 +177,10 @@
     },
     "bal": {
         "name": "Baluchi",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -160,7 +193,10 @@
     },
     "be": {
         "name": "Belarusian",
-        "formula": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)",
+        "formulas": {
+            "standard": "n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : 2",
+            "php": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -175,7 +211,10 @@
     },
     "bem": {
         "name": "Bemba",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -188,7 +227,10 @@
     },
     "bez": {
         "name": "Bena",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -201,7 +243,10 @@
     },
     "bg": {
         "name": "Bulgarian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -214,7 +259,10 @@
     },
     "bho": {
         "name": "Bhojpuri",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -227,7 +275,10 @@
     },
     "blo": {
         "name": "Anii",
-        "formula": "(n == 0) ? 0 : ((n == 1) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 0 ? 0 : n == 1 ? 1 : 2",
+            "php": "(n == 0) ? 0 : ((n == 1) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "zero",
@@ -242,7 +293,10 @@
     },
     "bm": {
         "name": "Bambara",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -253,7 +307,10 @@
     },
     "bn": {
         "name": "Bangla",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -266,7 +323,10 @@
     },
     "bo": {
         "name": "Tibetan",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -277,7 +337,10 @@
     },
     "br": {
         "name": "Breton",
-        "formula": "(n % 10 == 1 && n % 100 != 11 && n % 100 != 71 && n % 100 != 91) ? 0 : ((n % 10 == 2 && n % 100 != 12 && n % 100 != 72 && n % 100 != 92) ? 1 : ((((n % 10 == 3 || n % 10 == 4) || n % 10 == 9) && (n % 100 < 10 || n % 100 > 19) && (n % 100 < 70 || n % 100 > 79) && (n % 100 < 90 || n % 100 > 99)) ? 2 : ((n != 0 && n % 1000000 == 0) ? 3 : 4)))",
+        "formulas": {
+            "standard": "n % 10 == 1 && n % 100 != 11 && n % 100 != 71 && n % 100 != 91 ? 0 : n % 10 == 2 && n % 100 != 12 && n % 100 != 72 && n % 100 != 92 ? 1 : ((n % 10 == 3 || n % 10 == 4) || n % 10 == 9) && (n % 100 < 10 || n % 100 > 19) && (n % 100 < 70 || n % 100 > 79) && (n % 100 < 90 || n % 100 > 99) ? 2 : n != 0 && n % 1000000 == 0 ? 3 : 4",
+            "php": "(n % 10 == 1 && n % 100 != 11 && n % 100 != 71 && n % 100 != 91) ? 0 : ((n % 10 == 2 && n % 100 != 12 && n % 100 != 72 && n % 100 != 92) ? 1 : ((((n % 10 == 3 || n % 10 == 4) || n % 10 == 9) && (n % 100 < 10 || n % 100 > 19) && (n % 100 < 70 || n % 100 > 79) && (n % 100 < 90 || n % 100 > 99)) ? 2 : ((n != 0 && n % 1000000 == 0) ? 3 : 4)))"
+        },
         "plurals": 5,
         "cases": [
             "one",
@@ -296,7 +359,10 @@
     },
     "brx": {
         "name": "Bodo",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -309,7 +375,10 @@
     },
     "bs": {
         "name": "Bosnian",
-        "formula": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)",
+        "formulas": {
+            "standard": "n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : 2",
+            "php": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -324,7 +393,10 @@
     },
     "ca": {
         "name": "Catalan",
-        "formula": "(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -339,7 +411,10 @@
     },
     "ce": {
         "name": "Chechen",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -352,7 +427,10 @@
     },
     "ceb": {
         "name": "Cebuano",
-        "formula": "n != 1 && n != 2 && n != 3 && (n % 10 == 4 || n % 10 == 6 || n % 10 == 9)",
+        "formulas": {
+            "standard": "n != 1 && n != 2 && n != 3 && (n % 10 == 4 || n % 10 == 6 || n % 10 == 9)",
+            "php": "n != 1 && n != 2 && n != 3 && (n % 10 == 4 || n % 10 == 6 || n % 10 == 9)"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -365,7 +443,10 @@
     },
     "cgg": {
         "name": "Chiga",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -378,7 +459,10 @@
     },
     "chr": {
         "name": "Cherokee",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -391,7 +475,10 @@
     },
     "ckb": {
         "name": "Central Kurdish",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -404,7 +491,10 @@
     },
     "cs": {
         "name": "Czech",
-        "formula": "(n == 1) ? 0 : ((n >= 2 && n <= 4) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n >= 2 && n <= 4 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n >= 2 && n <= 4) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -419,7 +509,10 @@
     },
     "cy": {
         "name": "Welsh",
-        "formula": "(n == 0) ? 0 : ((n == 1) ? 1 : ((n == 2) ? 2 : ((n == 3) ? 3 : ((n == 6) ? 4 : 5))))",
+        "formulas": {
+            "standard": "n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : n == 3 ? 3 : n == 6 ? 4 : 5",
+            "php": "(n == 0) ? 0 : ((n == 1) ? 1 : ((n == 2) ? 2 : ((n == 3) ? 3 : ((n == 6) ? 4 : 5))))"
+        },
         "plurals": 6,
         "cases": [
             "zero",
@@ -440,7 +533,10 @@
     },
     "da": {
         "name": "Danish",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -453,7 +549,10 @@
     },
     "de": {
         "name": "German",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -466,7 +565,10 @@
     },
     "doi": {
         "name": "Dogri",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -479,7 +581,10 @@
     },
     "dsb": {
         "name": "Lower Sorbian",
-        "formula": "(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : ((n % 100 == 3 || n % 100 == 4) ? 2 : 3))",
+        "formulas": {
+            "standard": "n % 100 == 1 ? 0 : n % 100 == 2 ? 1 : (n % 100 == 3 || n % 100 == 4) ? 2 : 3",
+            "php": "(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : ((n % 100 == 3 || n % 100 == 4) ? 2 : 3))"
+        },
         "plurals": 4,
         "cases": [
             "one",
@@ -496,7 +601,10 @@
     },
     "dv": {
         "name": "Divehi",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -509,7 +617,10 @@
     },
     "dz": {
         "name": "Dzongkha",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -520,7 +631,10 @@
     },
     "ee": {
         "name": "Ewe",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -533,7 +647,10 @@
     },
     "el": {
         "name": "Greek",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -546,7 +663,10 @@
     },
     "en": {
         "name": "English",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -559,7 +679,10 @@
     },
     "eo": {
         "name": "Esperanto",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -572,7 +695,10 @@
     },
     "es": {
         "name": "Spanish",
-        "formula": "(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -587,7 +713,10 @@
     },
     "et": {
         "name": "Estonian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -600,7 +729,10 @@
     },
     "eu": {
         "name": "Basque",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -613,7 +745,10 @@
     },
     "fa": {
         "name": "Persian",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -626,7 +761,10 @@
     },
     "ff": {
         "name": "Fula",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -639,7 +777,10 @@
     },
     "fi": {
         "name": "Finnish",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -652,7 +793,10 @@
     },
     "fil": {
         "name": "Filipino",
-        "formula": "n != 1 && n != 2 && n != 3 && (n % 10 == 4 || n % 10 == 6 || n % 10 == 9)",
+        "formulas": {
+            "standard": "n != 1 && n != 2 && n != 3 && (n % 10 == 4 || n % 10 == 6 || n % 10 == 9)",
+            "php": "n != 1 && n != 2 && n != 3 && (n % 10 == 4 || n % 10 == 6 || n % 10 == 9)"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -665,7 +809,10 @@
     },
     "fo": {
         "name": "Faroese",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -678,7 +825,10 @@
     },
     "fr": {
         "name": "French",
-        "formula": "(n == 0 || n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)",
+        "formulas": {
+            "standard": "(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2",
+            "php": "(n == 0 || n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -693,7 +843,10 @@
     },
     "fur": {
         "name": "Friulian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -706,7 +859,10 @@
     },
     "fy": {
         "name": "Western Frisian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -719,7 +875,10 @@
     },
     "ga": {
         "name": "Irish",
-        "formula": "(n == 1) ? 0 : ((n == 2) ? 1 : ((n >= 3 && n <= 6) ? 2 : ((n >= 7 && n <= 10) ? 3 : 4)))",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 2 ? 1 : n >= 3 && n <= 6 ? 2 : n >= 7 && n <= 10 ? 3 : 4",
+            "php": "(n == 1) ? 0 : ((n == 2) ? 1 : ((n >= 3 && n <= 6) ? 2 : ((n >= 7 && n <= 10) ? 3 : 4)))"
+        },
         "plurals": 5,
         "cases": [
             "one",
@@ -738,7 +897,10 @@
     },
     "gd": {
         "name": "Scottish Gaelic",
-        "formula": "(n == 1 || n == 11) ? 0 : ((n == 2 || n == 12) ? 1 : ((n >= 3 && n <= 10 || n >= 13 && n <= 19) ? 2 : 3))",
+        "formulas": {
+            "standard": "(n == 1 || n == 11) ? 0 : (n == 2 || n == 12) ? 1 : (n >= 3 && n <= 10 || n >= 13 && n <= 19) ? 2 : 3",
+            "php": "(n == 1 || n == 11) ? 0 : ((n == 2 || n == 12) ? 1 : ((n >= 3 && n <= 10 || n >= 13 && n <= 19) ? 2 : 3))"
+        },
         "plurals": 4,
         "cases": [
             "one",
@@ -755,7 +917,10 @@
     },
     "gl": {
         "name": "Galician",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -768,7 +933,10 @@
     },
     "gsw": {
         "name": "Swiss German",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -781,7 +949,10 @@
     },
     "gu": {
         "name": "Gujarati",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -794,7 +965,10 @@
     },
     "guw": {
         "name": "Gun",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -807,7 +981,10 @@
     },
     "gv": {
         "name": "Manx",
-        "formula": "(n % 10 == 1) ? 0 : ((n % 10 == 2) ? 1 : ((n % 100 == 0 || n % 100 == 20 || n % 100 == 40 || n % 100 == 60 || n % 100 == 80) ? 2 : 3))",
+        "formulas": {
+            "standard": "n % 10 == 1 ? 0 : n % 10 == 2 ? 1 : (n % 100 == 0 || n % 100 == 20 || n % 100 == 40 || n % 100 == 60 || n % 100 == 80) ? 2 : 3",
+            "php": "(n % 10 == 1) ? 0 : ((n % 10 == 2) ? 1 : ((n % 100 == 0 || n % 100 == 20 || n % 100 == 40 || n % 100 == 60 || n % 100 == 80) ? 2 : 3))"
+        },
         "plurals": 4,
         "cases": [
             "one",
@@ -824,7 +1001,10 @@
     },
     "ha": {
         "name": "Hausa",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -837,7 +1017,10 @@
     },
     "haw": {
         "name": "Hawaiian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -850,7 +1033,10 @@
     },
     "he": {
         "name": "Hebrew",
-        "formula": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 2 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -865,7 +1051,10 @@
     },
     "hi": {
         "name": "Hindi",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -878,7 +1067,10 @@
     },
     "hnj": {
         "name": "Hmong Njua",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -889,7 +1081,10 @@
     },
     "hr": {
         "name": "Croatian",
-        "formula": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)",
+        "formulas": {
+            "standard": "n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : 2",
+            "php": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -904,7 +1099,10 @@
     },
     "hsb": {
         "name": "Upper Sorbian",
-        "formula": "(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : ((n % 100 == 3 || n % 100 == 4) ? 2 : 3))",
+        "formulas": {
+            "standard": "n % 100 == 1 ? 0 : n % 100 == 2 ? 1 : (n % 100 == 3 || n % 100 == 4) ? 2 : 3",
+            "php": "(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : ((n % 100 == 3 || n % 100 == 4) ? 2 : 3))"
+        },
         "plurals": 4,
         "cases": [
             "one",
@@ -921,7 +1119,10 @@
     },
     "hu": {
         "name": "Hungarian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -934,7 +1135,10 @@
     },
     "hy": {
         "name": "Armenian",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -947,7 +1151,10 @@
     },
     "ia": {
         "name": "Interlingua",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -960,7 +1167,10 @@
     },
     "id": {
         "name": "Indonesian",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -971,7 +1181,10 @@
     },
     "ig": {
         "name": "Igbo",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -982,7 +1195,10 @@
     },
     "ii": {
         "name": "Sichuan Yi",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -993,7 +1209,10 @@
     },
     "io": {
         "name": "Ido",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1006,7 +1225,10 @@
     },
     "is": {
         "name": "Icelandic",
-        "formula": "n % 10 != 1 || n % 100 == 11",
+        "formulas": {
+            "standard": "n % 10 != 1 || n % 100 == 11",
+            "php": "n % 10 != 1 || n % 100 == 11"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1019,7 +1241,10 @@
     },
     "it": {
         "name": "Italian",
-        "formula": "(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -1034,7 +1259,10 @@
     },
     "iu": {
         "name": "Inuktitut",
-        "formula": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 2 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -1049,7 +1277,10 @@
     },
     "ja": {
         "name": "Japanese",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1060,7 +1291,10 @@
     },
     "jbo": {
         "name": "Lojban",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1071,7 +1305,10 @@
     },
     "jgo": {
         "name": "Ngomba",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1084,7 +1321,10 @@
     },
     "jmc": {
         "name": "Machame",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1097,7 +1337,10 @@
     },
     "jv": {
         "name": "Javanese",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1108,7 +1351,10 @@
     },
     "ka": {
         "name": "Georgian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1121,7 +1367,10 @@
     },
     "kab": {
         "name": "Kabyle",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1134,7 +1383,10 @@
     },
     "kaj": {
         "name": "Jju",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1147,7 +1399,10 @@
     },
     "kcg": {
         "name": "Tyap",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1160,7 +1415,10 @@
     },
     "kde": {
         "name": "Makonde",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1171,7 +1429,10 @@
     },
     "kea": {
         "name": "Kabuverdianu",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1182,7 +1443,10 @@
     },
     "kk": {
         "name": "Kazakh",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1195,7 +1459,10 @@
     },
     "kkj": {
         "name": "Kako",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1208,7 +1475,10 @@
     },
     "kl": {
         "name": "Kalaallisut",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1221,7 +1491,10 @@
     },
     "km": {
         "name": "Khmer",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1232,7 +1505,10 @@
     },
     "kn": {
         "name": "Kannada",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1245,7 +1521,10 @@
     },
     "ko": {
         "name": "Korean",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1256,7 +1535,10 @@
     },
     "ks": {
         "name": "Kashmiri",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1269,7 +1551,10 @@
     },
     "ksb": {
         "name": "Shambala",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1282,7 +1567,10 @@
     },
     "ksh": {
         "name": "Colognian",
-        "formula": "(n == 0) ? 0 : ((n == 1) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 0 ? 0 : n == 1 ? 1 : 2",
+            "php": "(n == 0) ? 0 : ((n == 1) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "zero",
@@ -1297,7 +1585,10 @@
     },
     "ku": {
         "name": "Kurdish",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1310,7 +1601,10 @@
     },
     "kw": {
         "name": "Cornish",
-        "formula": "(n == 0) ? 0 : ((n == 1) ? 1 : (((n % 100 == 2 || n % 100 == 22 || n % 100 == 42 || n % 100 == 62 || n % 100 == 82) || n % 1000 == 0 && (n % 100000 >= 1000 && n % 100000 <= 20000 || n % 100000 == 40000 || n % 100000 == 60000 || n % 100000 == 80000) || n != 0 && n % 1000000 == 100000) ? 2 : ((n % 100 == 3 || n % 100 == 23 || n % 100 == 43 || n % 100 == 63 || n % 100 == 83) ? 3 : ((n != 1 && (n % 100 == 1 || n % 100 == 21 || n % 100 == 41 || n % 100 == 61 || n % 100 == 81)) ? 4 : 5))))",
+        "formulas": {
+            "standard": "n == 0 ? 0 : n == 1 ? 1 : (n % 100 == 2 || n % 100 == 22 || n % 100 == 42 || n % 100 == 62 || n % 100 == 82) || n % 1000 == 0 && (n % 100000 >= 1000 && n % 100000 <= 20000 || n % 100000 == 40000 || n % 100000 == 60000 || n % 100000 == 80000) || n != 0 && n % 1000000 == 100000 ? 2 : (n % 100 == 3 || n % 100 == 23 || n % 100 == 43 || n % 100 == 63 || n % 100 == 83) ? 3 : n != 1 && (n % 100 == 1 || n % 100 == 21 || n % 100 == 41 || n % 100 == 61 || n % 100 == 81) ? 4 : 5",
+            "php": "(n == 0) ? 0 : ((n == 1) ? 1 : (((n % 100 == 2 || n % 100 == 22 || n % 100 == 42 || n % 100 == 62 || n % 100 == 82) || n % 1000 == 0 && (n % 100000 >= 1000 && n % 100000 <= 20000 || n % 100000 == 40000 || n % 100000 == 60000 || n % 100000 == 80000) || n != 0 && n % 1000000 == 100000) ? 2 : ((n % 100 == 3 || n % 100 == 23 || n % 100 == 43 || n % 100 == 63 || n % 100 == 83) ? 3 : ((n != 1 && (n % 100 == 1 || n % 100 == 21 || n % 100 == 41 || n % 100 == 61 || n % 100 == 81)) ? 4 : 5))))"
+        },
         "plurals": 6,
         "cases": [
             "zero",
@@ -1331,7 +1625,10 @@
     },
     "ky": {
         "name": "Kyrgyz",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1344,7 +1641,10 @@
     },
     "lag": {
         "name": "Langi",
-        "formula": "(n == 0) ? 0 : ((n == 1) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 0 ? 0 : n == 1 ? 1 : 2",
+            "php": "(n == 0) ? 0 : ((n == 1) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "zero",
@@ -1359,7 +1659,10 @@
     },
     "lb": {
         "name": "Luxembourgish",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1372,7 +1675,10 @@
     },
     "lg": {
         "name": "Ganda",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1385,7 +1691,10 @@
     },
     "lij": {
         "name": "Ligurian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1398,7 +1707,10 @@
     },
     "lkt": {
         "name": "Lakota",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1409,7 +1721,10 @@
     },
     "ln": {
         "name": "Lingala",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1422,7 +1737,10 @@
     },
     "lo": {
         "name": "Lao",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1433,7 +1751,10 @@
     },
     "lt": {
         "name": "Lithuanian",
-        "formula": "(n % 10 == 1 && (n % 100 < 11 || n % 100 > 19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? 1 : 2)",
+        "formulas": {
+            "standard": "n % 10 == 1 && (n % 100 < 11 || n % 100 > 19) ? 0 : n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19) ? 1 : 2",
+            "php": "(n % 10 == 1 && (n % 100 < 11 || n % 100 > 19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -1448,7 +1769,10 @@
     },
     "lv": {
         "name": "Latvian",
-        "formula": "(n % 10 == 0 || n % 100 >= 11 && n % 100 <= 19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2)",
+        "formulas": {
+            "standard": "n % 10 == 0 || n % 100 >= 11 && n % 100 <= 19 ? 0 : n % 10 == 1 && n % 100 != 11 ? 1 : 2",
+            "php": "(n % 10 == 0 || n % 100 >= 11 && n % 100 <= 19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "zero",
@@ -1463,7 +1787,10 @@
     },
     "mas": {
         "name": "Masai",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1476,7 +1803,10 @@
     },
     "mg": {
         "name": "Malagasy",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1489,7 +1819,10 @@
     },
     "mgo": {
         "name": "Metaʼ",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1502,7 +1835,10 @@
     },
     "mk": {
         "name": "Macedonian",
-        "formula": "n % 10 != 1 || n % 100 == 11",
+        "formulas": {
+            "standard": "n % 10 != 1 || n % 100 == 11",
+            "php": "n % 10 != 1 || n % 100 == 11"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1515,7 +1851,10 @@
     },
     "ml": {
         "name": "Malayalam",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1528,7 +1867,10 @@
     },
     "mn": {
         "name": "Mongolian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1541,7 +1883,10 @@
     },
     "mr": {
         "name": "Marathi",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1554,7 +1899,10 @@
     },
     "ms": {
         "name": "Malay",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1565,7 +1913,10 @@
     },
     "mt": {
         "name": "Maltese",
-        "formula": "(n == 1) ? 0 : ((n == 2) ? 1 : ((n == 0 || n % 100 >= 3 && n % 100 <= 10) ? 2 : ((n % 100 >= 11 && n % 100 <= 19) ? 3 : 4)))",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 2 ? 1 : n == 0 || n % 100 >= 3 && n % 100 <= 10 ? 2 : n % 100 >= 11 && n % 100 <= 19 ? 3 : 4",
+            "php": "(n == 1) ? 0 : ((n == 2) ? 1 : ((n == 0 || n % 100 >= 3 && n % 100 <= 10) ? 2 : ((n % 100 >= 11 && n % 100 <= 19) ? 3 : 4)))"
+        },
         "plurals": 5,
         "cases": [
             "one",
@@ -1584,7 +1935,10 @@
     },
     "my": {
         "name": "Burmese",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1595,7 +1949,10 @@
     },
     "nah": {
         "name": "Nahuatl",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1608,7 +1965,10 @@
     },
     "naq": {
         "name": "Nama",
-        "formula": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 2 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -1623,7 +1983,10 @@
     },
     "nb": {
         "name": "Norwegian Bokmål",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1636,7 +1999,10 @@
     },
     "nd": {
         "name": "North Ndebele",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1649,7 +2015,10 @@
     },
     "ne": {
         "name": "Nepali",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1662,7 +2031,10 @@
     },
     "nl": {
         "name": "Dutch",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1675,7 +2047,10 @@
     },
     "nn": {
         "name": "Norwegian Nynorsk",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1688,7 +2063,10 @@
     },
     "nnh": {
         "name": "Ngiemboon",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1701,7 +2079,10 @@
     },
     "no": {
         "name": "Norwegian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1714,7 +2095,10 @@
     },
     "nqo": {
         "name": "N’Ko",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1725,7 +2109,10 @@
     },
     "nr": {
         "name": "South Ndebele",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1738,7 +2125,10 @@
     },
     "nso": {
         "name": "Northern Sotho",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1751,7 +2141,10 @@
     },
     "ny": {
         "name": "Nyanja",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1764,7 +2157,10 @@
     },
     "nyn": {
         "name": "Nyankole",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1777,7 +2173,10 @@
     },
     "om": {
         "name": "Oromo",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1790,7 +2189,10 @@
     },
     "or": {
         "name": "Odia",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1803,7 +2205,10 @@
     },
     "os": {
         "name": "Ossetic",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1816,7 +2221,10 @@
     },
     "osa": {
         "name": "Osage",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -1827,7 +2235,10 @@
     },
     "pa": {
         "name": "Punjabi",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1840,7 +2251,10 @@
     },
     "pap": {
         "name": "Papiamento",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1853,7 +2267,10 @@
     },
     "pcm": {
         "name": "Nigerian Pidgin",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1866,7 +2283,10 @@
     },
     "pl": {
         "name": "Polish",
-        "formula": "(n == 1) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -1881,7 +2301,10 @@
     },
     "prg": {
         "name": "Prussian",
-        "formula": "(n % 10 == 0 || n % 100 >= 11 && n % 100 <= 19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2)",
+        "formulas": {
+            "standard": "n % 10 == 0 || n % 100 >= 11 && n % 100 <= 19 ? 0 : n % 10 == 1 && n % 100 != 11 ? 1 : 2",
+            "php": "(n % 10 == 0 || n % 100 >= 11 && n % 100 <= 19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "zero",
@@ -1896,7 +2319,10 @@
     },
     "ps": {
         "name": "Pashto",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1909,7 +2335,10 @@
     },
     "pt": {
         "name": "Portuguese",
-        "formula": "(n == 0 || n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)",
+        "formulas": {
+            "standard": "(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2",
+            "php": "(n == 0 || n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -1926,7 +2355,10 @@
         "name": "European Portuguese",
         "territory": "Portugal",
         "baseLanguage": "Portuguese",
-        "formula": "(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -1941,7 +2373,10 @@
     },
     "rm": {
         "name": "Romansh",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1954,7 +2389,10 @@
     },
     "ro": {
         "name": "Romanian",
-        "formula": "(n == 1) ? 0 : ((n == 0 || n != 1 && n % 100 >= 1 && n % 100 <= 19) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 0 || n != 1 && n % 100 >= 1 && n % 100 <= 19 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n == 0 || n != 1 && n % 100 >= 1 && n % 100 <= 19) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -1969,7 +2407,10 @@
     },
     "rof": {
         "name": "Rombo",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -1982,7 +2423,10 @@
     },
     "ru": {
         "name": "Russian",
-        "formula": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)",
+        "formulas": {
+            "standard": "n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : 2",
+            "php": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -1997,7 +2441,10 @@
     },
     "rwk": {
         "name": "Rwa",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2010,7 +2457,10 @@
     },
     "sah": {
         "name": "Yakut",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -2021,7 +2471,10 @@
     },
     "saq": {
         "name": "Samburu",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2034,7 +2487,10 @@
     },
     "sat": {
         "name": "Santali",
-        "formula": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 2 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2049,7 +2505,10 @@
     },
     "sc": {
         "name": "Sardinian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2062,7 +2521,10 @@
     },
     "scn": {
         "name": "Sicilian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2075,7 +2537,10 @@
     },
     "sd": {
         "name": "Sindhi",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2088,7 +2553,10 @@
     },
     "sdh": {
         "name": "Southern Kurdish",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2101,7 +2569,10 @@
     },
     "se": {
         "name": "Northern Sami",
-        "formula": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 2 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2116,7 +2587,10 @@
     },
     "seh": {
         "name": "Sena",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2129,7 +2603,10 @@
     },
     "ses": {
         "name": "Koyraboro Senni",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -2140,7 +2617,10 @@
     },
     "sg": {
         "name": "Sango",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -2151,7 +2631,10 @@
     },
     "sh": {
         "name": "Serbo-Croatian",
-        "formula": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)",
+        "formulas": {
+            "standard": "n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : 2",
+            "php": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2166,7 +2649,10 @@
     },
     "shi": {
         "name": "Tachelhit",
-        "formula": "(n == 0 || n == 1) ? 0 : ((n >= 2 && n <= 10) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 0 || n == 1 ? 0 : n >= 2 && n <= 10 ? 1 : 2",
+            "php": "(n == 0 || n == 1) ? 0 : ((n >= 2 && n <= 10) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2181,7 +2667,10 @@
     },
     "si": {
         "name": "Sinhala",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2194,7 +2683,10 @@
     },
     "sk": {
         "name": "Slovak",
-        "formula": "(n == 1) ? 0 : ((n >= 2 && n <= 4) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n >= 2 && n <= 4 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n >= 2 && n <= 4) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2209,7 +2701,10 @@
     },
     "sl": {
         "name": "Slovenian",
-        "formula": "(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : ((n % 100 == 3 || n % 100 == 4) ? 2 : 3))",
+        "formulas": {
+            "standard": "n % 100 == 1 ? 0 : n % 100 == 2 ? 1 : (n % 100 == 3 || n % 100 == 4) ? 2 : 3",
+            "php": "(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : ((n % 100 == 3 || n % 100 == 4) ? 2 : 3))"
+        },
         "plurals": 4,
         "cases": [
             "one",
@@ -2226,7 +2721,10 @@
     },
     "sma": {
         "name": "Southern Sami",
-        "formula": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 2 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2241,7 +2739,10 @@
     },
     "smi": {
         "name": "Sami",
-        "formula": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 2 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2256,7 +2757,10 @@
     },
     "smj": {
         "name": "Lule Sami",
-        "formula": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 2 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2271,7 +2775,10 @@
     },
     "smn": {
         "name": "Inari Sami",
-        "formula": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 2 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2286,7 +2793,10 @@
     },
     "sms": {
         "name": "Skolt Sami",
-        "formula": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n == 2 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n == 2) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2301,7 +2811,10 @@
     },
     "sn": {
         "name": "Shona",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2314,7 +2827,10 @@
     },
     "so": {
         "name": "Somali",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2327,7 +2843,10 @@
     },
     "sq": {
         "name": "Albanian",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2340,7 +2859,10 @@
     },
     "sr": {
         "name": "Serbian",
-        "formula": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)",
+        "formulas": {
+            "standard": "n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : 2",
+            "php": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2355,7 +2877,10 @@
     },
     "ss": {
         "name": "Swati",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2368,7 +2893,10 @@
     },
     "ssy": {
         "name": "Saho",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2381,7 +2909,10 @@
     },
     "st": {
         "name": "Southern Sotho",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2394,7 +2925,10 @@
     },
     "su": {
         "name": "Sundanese",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -2405,7 +2939,10 @@
     },
     "sv": {
         "name": "Swedish",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2418,7 +2955,10 @@
     },
     "sw": {
         "name": "Swahili",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2431,7 +2971,10 @@
     },
     "syr": {
         "name": "Syriac",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2444,7 +2987,10 @@
     },
     "ta": {
         "name": "Tamil",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2457,7 +3003,10 @@
     },
     "te": {
         "name": "Telugu",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2470,7 +3019,10 @@
     },
     "teo": {
         "name": "Teso",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2483,7 +3035,10 @@
     },
     "th": {
         "name": "Thai",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -2494,7 +3049,10 @@
     },
     "ti": {
         "name": "Tigrinya",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2507,7 +3065,10 @@
     },
     "tig": {
         "name": "Tigre",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2520,7 +3081,10 @@
     },
     "tk": {
         "name": "Turkmen",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2533,7 +3097,10 @@
     },
     "tl": {
         "name": "Tagalog",
-        "formula": "n != 1 && n != 2 && n != 3 && (n % 10 == 4 || n % 10 == 6 || n % 10 == 9)",
+        "formulas": {
+            "standard": "n != 1 && n != 2 && n != 3 && (n % 10 == 4 || n % 10 == 6 || n % 10 == 9)",
+            "php": "n != 1 && n != 2 && n != 3 && (n % 10 == 4 || n % 10 == 6 || n % 10 == 9)"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2546,7 +3113,10 @@
     },
     "tn": {
         "name": "Tswana",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2559,7 +3129,10 @@
     },
     "to": {
         "name": "Tongan",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -2570,7 +3143,10 @@
     },
     "tpi": {
         "name": "Tok Pisin",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -2581,7 +3157,10 @@
     },
     "tr": {
         "name": "Turkish",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2594,7 +3173,10 @@
     },
     "ts": {
         "name": "Tsonga",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2607,7 +3189,10 @@
     },
     "tzm": {
         "name": "Central Atlas Tamazight",
-        "formula": "n >= 2 && (n < 11 || n > 99)",
+        "formulas": {
+            "standard": "n >= 2 && (n < 11 || n > 99)",
+            "php": "n >= 2 && (n < 11 || n > 99)"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2620,7 +3205,10 @@
     },
     "ug": {
         "name": "Uyghur",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2633,7 +3221,10 @@
     },
     "uk": {
         "name": "Ukrainian",
-        "formula": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)",
+        "formulas": {
+            "standard": "n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : 2",
+            "php": "(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2648,7 +3239,10 @@
     },
     "ur": {
         "name": "Urdu",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2661,7 +3255,10 @@
     },
     "uz": {
         "name": "Uzbek",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2674,7 +3271,10 @@
     },
     "ve": {
         "name": "Venda",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2687,7 +3287,10 @@
     },
     "vec": {
         "name": "Venetian",
-        "formula": "(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)",
+        "formulas": {
+            "standard": "n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2",
+            "php": "(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2)"
+        },
         "plurals": 3,
         "cases": [
             "one",
@@ -2702,7 +3305,10 @@
     },
     "vi": {
         "name": "Vietnamese",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -2713,7 +3319,10 @@
     },
     "vo": {
         "name": "Volapük",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2726,7 +3335,10 @@
     },
     "vun": {
         "name": "Vunjo",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2739,7 +3351,10 @@
     },
     "wa": {
         "name": "Walloon",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2752,7 +3367,10 @@
     },
     "wae": {
         "name": "Walser",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2765,7 +3383,10 @@
     },
     "wo": {
         "name": "Wolof",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -2776,7 +3397,10 @@
     },
     "xh": {
         "name": "Xhosa",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2789,7 +3413,10 @@
     },
     "xog": {
         "name": "Soga",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2802,7 +3429,10 @@
     },
     "yi": {
         "name": "Yiddish",
-        "formula": "n != 1",
+        "formulas": {
+            "standard": "n != 1",
+            "php": "n != 1"
+        },
         "plurals": 2,
         "cases": [
             "one",
@@ -2815,7 +3445,10 @@
     },
     "yo": {
         "name": "Yoruba",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -2826,7 +3459,10 @@
     },
     "yue": {
         "name": "Cantonese",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -2837,7 +3473,10 @@
     },
     "zh": {
         "name": "Chinese",
-        "formula": "0",
+        "formulas": {
+            "standard": "0",
+            "php": "0"
+        },
         "plurals": 1,
         "cases": [
             "other"
@@ -2848,7 +3487,10 @@
     },
     "zu": {
         "name": "Zulu",
-        "formula": "n > 1",
+        "formulas": {
+            "standard": "n > 1",
+            "php": "n > 1"
+        },
         "plurals": 2,
         "cases": [
             "one",

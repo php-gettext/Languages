@@ -2,6 +2,7 @@
 import {
   getAvailableVersions,
   getVersion,
+  type Formulas,
   type Language,
   type Version,
 } from './Version';
@@ -17,6 +18,8 @@ const wantedVersion = ref<string>('');
 const searchText = ref<string>('');
 const version = ref<Version | null>(null);
 const sortBy = ref<SortBys>('id');
+const displayFormula = ref<Formulas>('standard');
+
 const differModal = ref<InstanceType<typeof DifferModal> | null>(null);
 
 onMounted(async () => {
@@ -78,7 +81,7 @@ const displayLanguages = computed<Language[]>(() => {
 <template>
   <div class="container" v-if="availableVersions !== null">
     <div class="row justify-content-center mb-3">
-      <div class="col-12" style="max-width: 400px">
+      <div class="col-12" style="max-width: 600px">
         <div class="input-group input-group-sm">
           <label for="wanted-version" class="input-group-text">Version</label>
           <select
@@ -92,6 +95,16 @@ const displayLanguages = computed<Language[]>(() => {
               {{ v }}
             </option>
           </select>
+          <label for="display-formula" class="input-group-text">Formulas</label>
+          <select
+            id="display-formula"
+            v-model="displayFormula"
+            class="form-control"
+            style="max-width: 80px"
+          >
+            <option value="standard">Standard</option>
+            <option value="php">PHP</option>
+          </select>
           <input
             type="search"
             class="form-control"
@@ -102,7 +115,7 @@ const displayLanguages = computed<Language[]>(() => {
             v-if="version !== null"
             type="button"
             class="btn btn-outline-secondary"
-            @click="differModal?.open(version.version)"
+            @click="differModal?.open(version.version, displayFormula)"
           >
             Compare
           </button>
@@ -167,7 +180,7 @@ const displayLanguages = computed<Language[]>(() => {
             {{ language.plurals }}
           </td>
           <td>
-            <code>{{ language.formula }}</code>
+            <code>{{ language.formulas[displayFormula] }}</code>
           </td>
           <td class="text-nowrap">
             <ol class="list-unstyled">

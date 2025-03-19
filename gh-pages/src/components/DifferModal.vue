@@ -2,16 +2,19 @@
 import {Modal} from 'bootstrap';
 import Differ from './Differ.vue';
 import {ref} from 'vue';
-
+import {type Formulas} from '../Version';
 const differInitialVersion = ref<string>('');
+const differDisplayFormula = ref<Formulas>('standard');
+
 const div = ref<HTMLDivElement | null>(null);
 
 const isOpen = ref<boolean>(false);
-function open(initialVersion?: string) {
+function open(initialVersion?: string, displayFormula?: Formulas) {
   if (!div.value) {
     return;
   }
   differInitialVersion.value = initialVersion || '';
+  differDisplayFormula.value = displayFormula || 'standard';
   isOpen.value = true;
   let modal = Modal.getInstance(div.value);
   if (!modal) {
@@ -39,7 +42,11 @@ defineExpose({open});
           ></button>
         </div>
         <div class="modal-body">
-          <Differ v-if="isOpen" :initial-version="differInitialVersion" />
+          <Differ
+            v-if="isOpen"
+            :initial-version="differInitialVersion"
+            :display-formula="differDisplayFormula"
+          />
         </div>
       </div>
     </div>
