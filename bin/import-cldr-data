@@ -497,12 +497,18 @@ abstract class LocaleDisplayName extends Processor
         $data = array();
         $xpath = new DOMXPath($doc);
         $xElementList = $xpath->query($this->getXPathSelector());
+        $expectedKeys = array();
         foreach ($xElementList as $xElement) {
             $type = (string) $xElement->getAttribute('type');
             if ($type === '') {
                 throw new RuntimeException('Missing type attribute');
             }
             $key = str_replace('_', '-', $type);
+            $menu = (string) $xElement->getAttribute('menu');
+            if ($menu !== '') {
+                $expectedKeys[] = $key;
+                continue;
+            }
             $alt = (string) $xElement->getAttribute('alt');
             if ($alt !== '') {
                 $key = "{$key}-alt-{$alt}";
@@ -511,6 +517,11 @@ abstract class LocaleDisplayName extends Processor
                 throw new RuntimeException("Duplicate key: {$key}");
             }
             $data[$key] = (string) $xElement->textContent;
+        }
+        foreach (array_unique($expectedKeys) as $expectedKey) {
+            if (!isset($data[$expectedKey])) {
+                throw new RuntimeException("Missing expected key {$expectedKey}");
+            }
         }
         if ($data === array()) {
             throw new RuntimeException('No elements found');
