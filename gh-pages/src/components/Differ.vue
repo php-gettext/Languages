@@ -91,7 +91,7 @@ onMounted(async () => {
     props.initialVersion &&
     availableVersions.value.includes(props.initialVersion)
       ? props.initialVersion
-      : availableVersions.value![0] as string;
+      : (availableVersions.value![0] as string);
   const toVersionIndex = availableVersions.value!.indexOf(toVersionText.value);
   fromVersionText.value = availableVersions.value![toVersionIndex + 1] || '';
 });

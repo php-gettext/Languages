@@ -27,9 +27,13 @@ VERSIONS.forEach((version, index) => {
     return;
   }
   const previousVersion = VERSIONS[index - 1];
-  const previousVersionCoerced = semver.coerce(previousVersion, {includePrerelease: true});
+  const previousVersionCoerced = semver.coerce(previousVersion, {
+    includePrerelease: true,
+  });
   if (!previousVersionCoerced) {
-    throw new Error(`Invalid version in ${DATADIR}/versions.json: ${previousVersion}`);
+    throw new Error(
+      `Invalid version in ${DATADIR}/versions.json: ${previousVersion}`,
+    );
   }
   const versionCoerced = semver.coerce(version, {includePrerelease: true});
   if (!versionCoerced) {
