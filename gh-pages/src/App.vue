@@ -28,7 +28,7 @@ onMounted(async () => {
   wantedVersion.value =
     initialVersion && availableVersions.value.includes(initialVersion)
       ? initialVersion
-      : availableVersions.value![0];
+      : availableVersions.value![0] as string;
   UrlService.onVersionChanged((v) => {
     if (v && availableVersions.value?.includes(v)) {
       wantedVersion.value = v;
