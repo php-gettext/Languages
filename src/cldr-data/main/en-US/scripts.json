@@ -3,7 +3,7 @@
         "en-US": {
             "identity": {
                 "version": {
-                    "_cldrVersion": "48.1"
+                    "_cldrVersion": "47"
                 },
                 "language": "en",
                 "territory": "US"
@@ -25,7 +25,6 @@
                     "Bass": "Bassa Vah",
                     "Batk": "Batak",
                     "Beng": "Bangla",
-                    "Berf": "Beria Erfe",
                     "Bhks": "Bhaiksuki",
                     "Blis": "Blissymbols",
                     "Bopo": "Bopomofo",
@@ -174,7 +173,6 @@
                     "Shaw": "Shavian",
                     "Shrd": "Sharada",
                     "Sidd": "Siddham",
-                    "Sidt": "Sidetic",
                     "Sind": "Khudawadi",
                     "Sinh": "Sinhala",
                     "Sogd": "Sogdian",
@@ -195,7 +193,6 @@
                     "Taml": "Tamil",
                     "Tang": "Tangut",
                     "Tavt": "Tai Viet",
-                    "Tayo": "Tai Yo",
                     "Telu": "Telugu",
                     "Teng": "Tengwar",
                     "Tfng": "Tifinagh",
@@ -206,7 +203,6 @@
                     "Tirh": "Tirhuta",
                     "Tnsa": "Tangsa",
                     "Todr": "Todhri",
-                    "Tols": "Tolong Siki",
                     "Toto": "Toto",
                     "Tutg": "Tulu-Tigalari",
                     "Ugar": "Ugaritic",
