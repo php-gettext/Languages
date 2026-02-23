@@ -3,7 +3,7 @@
         "en-US": {
             "identity": {
                 "version": {
-                    "_cldrVersion": "47"
+                    "_cldrVersion": "48.1"
                 },
                 "language": "en",
                 "territory": "US"
@@ -58,8 +58,8 @@
                     "AW": "Aruba",
                     "AX": "Åland Islands",
                     "AZ": "Azerbaijan",
-                    "BA": "Bosnia & Herzegovina",
                     "BA-alt-short": "Bosnia",
+                    "BA": "Bosnia & Herzegovina",
                     "BB": "Barbados",
                     "BD": "Bangladesh",
                     "BE": "Belgium",
@@ -247,8 +247,8 @@
                     "PN": "Pitcairn Islands",
                     "PN-alt-short": "Pitcairn",
                     "PR": "Puerto Rico",
-                    "PS": "Palestinian Territories",
                     "PS-alt-short": "Palestine",
+                    "PS": "Palestinian Territories",
                     "PT": "Portugal",
                     "PW": "Palau",
                     "PY": "Paraguay",

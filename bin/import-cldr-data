@@ -390,11 +390,23 @@ class Plurals extends Processor
             'root' => '',
         );
         $unrecognizedLocaleCodes = array();
+        $m = null;
         foreach ($xPluralRulesList as $xPluralRules) {
             $locales = preg_split('/\s+/', (string) $xPluralRules->getAttribute('locales'), -1, PREG_SPLIT_NO_EMPTY);
             if ($locales === array()) {
                 throw new RuntimeException('No locales found in pluralRules element');
             }
+            $localesWithScript = array();
+            foreach ($locales as $locale) {
+                if (preg_match('/^([a-z]{2,3})[_\-][A-Z][a-z]{3}$/', $locale, $m)) {
+                    $localesWithScript[$locale] = $m[1];
+                }
+            }
+            $missingLocales = array_diff($localesWithScript, $locales);
+            if ($missingLocales !== array()) {
+                throw new RuntimeException("Found locales with script without matching locales without script:-\n" . implode("\n- ", $missingLocales));
+            }
+            $locales = array_diff($locales, array_keys($localesWithScript));
             $elements = array(
                 'pluralRule-count-zero' => null,
                 'pluralRule-count-one' => null,
@@ -497,12 +509,18 @@ abstract class LocaleDisplayName extends Processor
         $data = array();
         $xpath = new DOMXPath($doc);
         $xElementList = $xpath->query($this->getXPathSelector());
+        $expectedKeys = array();
         foreach ($xElementList as $xElement) {
             $type = (string) $xElement->getAttribute('type');
             if ($type === '') {
                 throw new RuntimeException('Missing type attribute');
             }
             $key = str_replace('_', '-', $type);
+            $menu = (string) $xElement->getAttribute('menu');
+            if ($menu !== '') {
+                $expectedKeys[] = $key;
+                continue;
+            }
             $alt = (string) $xElement->getAttribute('alt');
             if ($alt !== '') {
                 $key = "{$key}-alt-{$alt}";
@@ -511,6 +529,11 @@ abstract class LocaleDisplayName extends Processor
                 throw new RuntimeException("Duplicate key: {$key}");
             }
             $data[$key] = (string) $xElement->textContent;
+        }
+        foreach (array_unique($expectedKeys) as $expectedKey) {
+            if (!isset($data[$expectedKey])) {
+                throw new RuntimeException("Missing expected key {$expectedKey}");
+            }
         }
         if ($data === array()) {
             throw new RuntimeException('No elements found');
