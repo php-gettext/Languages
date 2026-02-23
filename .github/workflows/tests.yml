@@ -31,7 +31,7 @@ jobs:
           coverage: none
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Check PHP coding style
         run: php-cs-fixer fix --config=./.php-cs-fixer.dist.php --dry-run --using-cache=no --diff --show-progress=dots --verbose --no-interaction --ansi
@@ -55,7 +55,7 @@ jobs:
           coverage: none
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Check PHP syntax
         uses: mlocati/check-php-syntax@v1
@@ -109,7 +109,7 @@ jobs:
           coverage: none
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Install Composer dependencies
         run: composer update --no-progress --no-suggest --optimize-autoloader --ansi --no-interaction
@@ -135,7 +135,7 @@ jobs:
           coverage: none
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Build CLDR data
         run: php ./bin/import-cldr-data ${{ env.BUILD_CLDR_VERSION }}
